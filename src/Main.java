@@ -1,16 +1,11 @@
 public class Main {
 
     public static void main(String[] args) {
-        String game = ".....0...S\n" +
-                "....0.....\n" +
-                "0.....0..0\n" +
-                "...0....0.\n" +
-                ".F......0.\n" +
-                ".0........\n" +
-                ".......0..\n" +
-                ".0.0..0..0\n" +
-                "0.........\n" +
-                ".00.....0.\n";
-        System.out.println(game);
+        String data;
+        ReadInputData readFromFile = new ReadInputData();
+        data = readFromFile.readFromFile("src/test.txt");
+        System.out.println(data);
+        data = readFromFile.readFromCommandLine("Enter data: ");
+        System.out.println(data);
     }
 }
