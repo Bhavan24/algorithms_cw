@@ -30,22 +30,19 @@ public class Main {
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_RED = "\033[1;91m";
 
-        for (int k = 0; k < paths.size(); k++) {
-            for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map.length; j++) {
-                    if (k < paths.size()) {
-                        if (paths.get(k).get(0) == i && paths.get(k).get(1) == j) {
-                            System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
-                        } else {
-                            System.out.print(map[i][j]);
-                        }
-                    } else {
-                        System.out.print(map[i][j]);
-                    }
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                List<Integer> coordinates = new ArrayList<>();
+                coordinates.add(i);
+                coordinates.add(j);
+                if (paths.contains(coordinates)) {
+                    System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
+                } else {
+                    System.out.print(map[i][j]);
                 }
-                System.out.println();
             }
             System.out.println();
         }
+        System.out.println();
     }
 }
