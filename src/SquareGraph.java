@@ -1,8 +1,6 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.*;
 
 public class SquareGraph {
 
@@ -96,13 +94,27 @@ public class SquareGraph {
         return path;
     }
 
+
+    public List<List<Integer>> getPathsToList(ArrayList<Node> path) {
+        List<List<Integer>> paths = new ArrayList<>();
+        for (int i = 0; i < path.size(); i++) {
+            Node node = path.get(i);
+            List<Integer> newList = new ArrayList<>();
+            newList.add(node.getX());
+            newList.add(node.getY());
+            paths.add(i, newList);
+        }
+        return paths;
+    }
+
     public void printPath(ArrayList<Node> path) {
         for (int i = 0; i < path.size(); i++) {
             Node node = path.get(i);
-            if(i == 0){
+            if (i == 0) {
                 System.out.printf("Start at (%d,%d) \n", (node.getY() + 1), (node.getX() + 1));
+            } else {
+                System.out.printf("Move to (%d,%d) \n", (node.getY() + 1), (node.getX() + 1));
             }
-            System.out.printf("Move to (%d,%d) \n", (node.getY() + 1), (node.getX() + 1));
         }
     }
 

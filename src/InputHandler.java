@@ -49,4 +49,27 @@ public class InputHandler {
             in.close();
         }
     }
+
+    public String[][] readMapToArray(String filename) throws IOException, InvalidLetterException {
+
+        File file = new File(filename);
+
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+
+            String dimension = in.readLine();
+            int mapDimension = Integer.parseInt(dimension);
+
+            String[][] graphArray = new String[mapDimension][mapDimension];
+
+            String line;
+            for (int i = 0; i < mapDimension; i++) {
+                line = in.readLine();
+                for (int j = 0; j < mapDimension; j++) {
+                    char typeSymbol = line.charAt(j);
+                    graphArray[i][j] = String.valueOf(typeSymbol);
+                }
+            }
+            return graphArray;
+        }
+    }
 }
