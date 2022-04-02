@@ -7,7 +7,7 @@ public class Heap<T extends Comparable> extends PriorityQueue<T> {
     protected T[] array;
     protected int size;
 
-    @SuppressWarnings("unchecked")
+
     public Heap() {
         array = (T[]) new Comparable[DEFAULT_CAPACITY];
         size = 0;
@@ -130,12 +130,5 @@ public class Heap<T extends Comparable> extends PriorityQueue<T> {
         array[index1] = array[index2];
         array[index2] = tmp;
     }
+
 }
-
-class HeapException extends Exception {
-    public HeapException(String message) {
-        super(message);
-    }
-}
-
-

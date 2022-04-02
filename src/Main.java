@@ -1,3 +1,6 @@
+import test.ReadInputData;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,20 +9,31 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            String filename = "src/test.txt";
 
-            InputHandler handler = new InputHandler();
-            SquareGraph graph = handler.readMap(filename);
+            String basePath = "src/test_inputs/";
+            File[] files = new File(basePath).listFiles();
+            assert files != null;
+            for (File file : files) {
+                if (file.isFile()) {
+                    String fileName = file.getName();
+                    int length = Integer.parseInt(fileName.split("_")[1].replace(".txt", ""));
+                    String[][] result = new ReadInputData().readFromFile(basePath + fileName, length);
 
-            ArrayList<Node> path = graph.executeAStar();
+                    InputHandler handler = new InputHandler();
+                    SquareGraph graph = handler.initializeMap(result, length);
+                    ArrayList<Node> path = graph.executeAStar();
 
-            if (path == null) {
-                System.out.println("There is no path to target");
-            } else {
-                graph.printPath(path);
-                System.out.println("Done!");
-                colorPrintGraph(graph.getPathsToList(path), handler.readMapToArray(filename));
+                    if (path == null) {
+                        System.out.println("There is no path to target");
+                    } else {
+                        graph.printPath(path);
+                        System.out.println("Done!");
+                        colorPrintGraph(graph.getPathsToList(path), result);
+                    }
+                }
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
