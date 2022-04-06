@@ -1,16 +1,23 @@
 package real;
 
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static real.GameConstants.*;
 
 public class PuzzleFileHandler {
-    public PuzzleFileHandler() {
+
+    private final String filePath;
+    private String fileContents;
+    private int rows;
+    private int columns;
+
+    public PuzzleFileHandler(String filePath) {
+        this.filePath = filePath;
     }
 
-    public String readPuzzleFile(String filePath) {
-        String fileContents = "";
+    public String readPuzzleFile() {
         try {
             Scanner reader = new Scanner(new FileReader(filePath));
             StringBuilder stringBuilder = new StringBuilder();
@@ -29,21 +36,20 @@ public class PuzzleFileHandler {
     }
 
 
-    public PuzzleMap initializePuzzleMap(String fileContents) {
-
-        PuzzleMap puzzleMap = new PuzzleMap();
+    public PuzzleMap initializePuzzleMap() {
 
         if (fileContents == null || (fileContents = fileContents.trim()).equals("")) {
             System.out.println(FILE_IS_EMPTY);
             return null;
         }
 
-        String[] lines = fileContents.split("[\r]?\n");
-        int rows = lines.length;
-        int columns = lines[0].length();
+        String[] lines = getFileLines();
+        rows = lines.length;
+        columns = lines[0].length();
+
+        int[][] puzzleMap = new int[rows][columns];
 
         System.out.println(rows + " X " + columns);
-
 
         for (int i = 0; i < rows; i++) {
             if (lines[i].length() != columns) {
@@ -51,27 +57,42 @@ public class PuzzleFileHandler {
                 return null;
             } else {
                 for (int j = 0; j < columns; j++) {
-                    switch (lines[i].charAt(j)){
+                    switch (lines[i].charAt(j)) {
                         case ICE:
-                            System.out.println("ICE");
+                            puzzleMap[i][j] = ICE_VALUE;
                             break;
                         case ROCK:
-                            System.out.println("ROCK");
+                            puzzleMap[i][j] = ROCK_VALUE;
                             break;
                         case START:
-                            System.out.println("START");
-                            System.out.println(i + " " + j);
+                            puzzleMap[i][j] = START_VALUE;
                             break;
                         case FINISH:
-                            System.out.println("FINISH");
-                            System.out.println(i + " " + j);
+                            puzzleMap[i][j] = FINISH_VALUE;
                             break;
                     }
                 }
             }
         }
-
-        return puzzleMap;
+        System.out.println(Arrays.deepToString(puzzleMap));
+        return new PuzzleMap();
     }
 
+    private String[] getFileLines() {
+        return fileContents.split("[\r]?\n");
+    }
+
+    public int getRows() {
+        rows = getFileLines().length;
+        return rows;
+    }
+
+    public int getColumns() {
+        columns = getFileLines()[0].length();
+        return columns;
+    }
+
+    public String getFileContents() {
+        return fileContents;
+    }
 }

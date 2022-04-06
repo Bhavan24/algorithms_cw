@@ -16,4 +16,11 @@ public class GameConstants {
     public static final char ROCK = '0';
     public static final char START = 'S';
     public static final char FINISH = 'F';
+
+    // Algorithmic Constants
+    public static final int ICE_VALUE = 0;
+    public static final int ROCK_VALUE = 1;
+    public static final int START_VALUE = 2;
+    public static final int FINISH_VALUE = 3;
+    public static final int PATH_VALUE = 4;
 }
