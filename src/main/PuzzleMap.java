@@ -64,13 +64,13 @@ public class PuzzleMap {
                         System.out.print(ROCK + " ");
                         break;
                     case START_VALUE:
-                        System.out.print(START + " ");
+                        System.out.print(ANSI_RED + START + ANSI_RESET + " ");
                         break;
                     case FINISH_VALUE:
-                        System.out.print(FINISH + " ");
+                        System.out.print(ANSI_RED + FINISH + ANSI_RESET + " ");
                         break;
                     case PATH_VALUE:
-                        System.out.print("\033[1;91m. \u001B[0m");
+                        System.out.print(ANSI_RED + ". " + ANSI_RESET);
                         break;
                 }
             }
