@@ -32,7 +32,7 @@ def profile():
     for m in methods:
         for i in inputs:
             with tempfile.NamedTemporaryFile(suffix='.png') as tmp:
-                solve(SolverFactory(), m, "examples/%s.png" % i, tmp.name)
+                solve(SolverFactory(), m, "test/%s.png" % i, tmp.name)
 
 profiler = BProfile('profiler.png')
 with profiler:
