@@ -1,7 +1,6 @@
 package main;
 
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import static main.GameConstants.*;
@@ -10,8 +9,6 @@ public class PuzzleFileHandler {
 
     private final String filePath;
     private String fileContents;
-    private int rows;
-    private int columns;
 
     public PuzzleFileHandler(String filePath) {
         this.filePath = filePath;
@@ -34,29 +31,15 @@ public class PuzzleFileHandler {
         return fileContents;
     }
 
-    private String[] getFileLines() {
-        return fileContents.split("[\r]?\n");
-    }
-
-    public int getRows() {
-        rows = getFileLines().length;
-        return rows;
-    }
-
-    public int getColumns() {
-        columns = getFileLines()[0].length();
-        return columns;
-    }
-
     public String getFileContents() {
         return fileContents;
     }
 
     public void prettyPrintFile() {
         String[] lines = fileContents.split("[\r]?\n");
-        for (int i = 0; i < lines.length; i++) {
-            for (int j = 0; j < lines[i].length(); j++) {
-                System.out.print(lines[i].charAt(j) + " ");
+        for (String line : lines) {
+            for (int j = 0; j < line.length(); j++) {
+                System.out.print(line.charAt(j) + " ");
             }
             System.out.println();
         }
