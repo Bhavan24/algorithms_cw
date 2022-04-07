@@ -10,14 +10,14 @@ public class SlidingPuzzleGame {
         System.out.print(WELCOME_TEXT);
 //        Scanner scanner = new Scanner(System.in);
 //        String puzzleFilePath = scanner.next();
-        String puzzleFilePath = "src/test.txt";
+        String puzzleFilePath = "src/test_inputs/test.txt";
 
         // read the file from using the file handler
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        int[][] puzzleMap = fileHandler.initializePuzzleMap();
-        fileHandler.printPuzzleMap(puzzleMap);
-
+        fileHandler.prettyPrintFile();
+        PuzzleMap puzzleMap = new PuzzleMap();
+        puzzleMap.initializePuzzleMap(fileContents);
     }
 
 }

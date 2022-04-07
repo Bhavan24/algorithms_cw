@@ -5,8 +5,8 @@ import java.util.List;
 
 public class MazeDriver {
     public static void main(String[] args) throws Exception {
-        File maze1 = new File("src/main/resources/maze/maze1.txt");
-        File maze2 = new File("src/main/resources/maze/maze2.txt");
+        File maze1 = new File("src/test_inputs/maze1.txt");
+        File maze2 = new File("src/test_inputs/maze2.txt");
 
         execute(maze1);
         execute(maze2);

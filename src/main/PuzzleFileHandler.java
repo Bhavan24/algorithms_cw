@@ -1,6 +1,7 @@
 package main;
 
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static main.GameConstants.*;
@@ -33,45 +34,6 @@ public class PuzzleFileHandler {
         return fileContents;
     }
 
-    public int[][] initializePuzzleMap() {
-
-        if (fileContents == null || (fileContents = fileContents.trim()).equals("")) {
-            System.out.println(FILE_IS_EMPTY);
-            return null;
-        }
-
-        String[] lines = getFileLines();
-        rows = lines.length;
-        columns = lines[0].length();
-
-        int[][] puzzleMapArray = new int[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            if (lines[i].length() != columns) {
-                System.out.println(INVALID_DATA);
-                return null;
-            } else {
-                for (int j = 0; j < columns; j++) {
-                    switch (lines[i].charAt(j)) {
-                        case ICE:
-                            puzzleMapArray[i][j] = ICE_VALUE;
-                            break;
-                        case ROCK:
-                            puzzleMapArray[i][j] = ROCK_VALUE;
-                            break;
-                        case START:
-                            puzzleMapArray[i][j] = START_VALUE;
-                            break;
-                        case FINISH:
-                            puzzleMapArray[i][j] = FINISH_VALUE;
-                            break;
-                    }
-                }
-            }
-        }
-        return puzzleMapArray;
-    }
-
     private String[] getFileLines() {
         return fileContents.split("[\r]?\n");
     }
@@ -90,34 +52,14 @@ public class PuzzleFileHandler {
         return fileContents;
     }
 
-    public void printPuzzleMapAsIntArray(int[][] puzzleMapArray) {
-        for (int[] ints : puzzleMapArray) {
-            for (int anInt : ints) {
-                System.out.print(anInt + " ");
+    public void prettyPrintFile() {
+        String[] lines = fileContents.split("[\r]?\n");
+        for (int i = 0; i < lines.length; i++) {
+            for (int j = 0; j < lines[i].length(); j++) {
+                System.out.print(lines[i].charAt(j) + " ");
             }
             System.out.println();
         }
     }
 
-    public void printPuzzleMap(int[][] puzzleMapArray) {
-        for (int[] ints : puzzleMapArray) {
-            for (int anInt : ints) {
-                switch (anInt) {
-                    case ICE_VALUE:
-                        System.out.print(ICE + " ");
-                        break;
-                    case ROCK_VALUE:
-                        System.out.print(ROCK + " ");
-                        break;
-                    case START_VALUE:
-                        System.out.print(START + " ");
-                        break;
-                    case FINISH_VALUE:
-                        System.out.print(FINISH + " ");
-                        break;
-                }
-            }
-            System.out.println();
-        }
-    }
 }
