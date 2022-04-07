@@ -22,7 +22,7 @@ public class Main {
 //                }
 //            }
 
-            String[][] result = new ReadInputData().readFromFile("src/test_inputs/test.txt", 10);
+            String[][] result = new ReadInputData().readFromFile("src/inputs/test.txt", 10);
 
             InputHandler handler = new InputHandler();
             SquareGraph graph = handler.initializeMap(result, 10);

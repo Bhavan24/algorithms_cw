@@ -2,32 +2,22 @@ package test.example4;
 
 import test.test.ReadInputData;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        String basePath = "src/test_inputs/";
-        File[] files = new File(basePath).listFiles();
-        assert files != null;
-        for (File file : files) {
-            if (file.isFile()) {
-                String fileName = file.getName();
-                int length = Integer.parseInt(fileName.split("_")[1].replace(".txt", ""));
-                String[][] result = new ReadInputData().readFromFile(basePath + fileName, length);
-                Puzzle p = new Puzzle();
-                p.setFileLocation(basePath + fileName);
-                p.initializePuzzleArray();
-                p.fillPuzzleArray();
-                UndirectedGraph g = new UndirectedGraph();
-                p.createGraph(g);
-                p.printPathDetails(g);
-                System.out.println("\n" + fileName + "\n");
-                colorPrintGraph(p.getPathList(g), result);
-            }
-        }
+        String file = "src/test/example4/test.txt";
+        String[][] result = new ReadInputData().readFromFile(file, 10);
+        Puzzle p = new Puzzle();
+        p.setFileLocation(file);
+        p.initializePuzzleArray();
+        p.fillPuzzleArray();
+        UndirectedGraph g = new UndirectedGraph();
+        p.createGraph(g);
+        p.printPathDetails(g);
+        colorPrintGraph(p.getPathList(g), result);
     }
 
     public static void colorPrintGraph(List<List<Integer>> paths, String[][] map) {

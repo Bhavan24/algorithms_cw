@@ -51,4 +51,9 @@ public class PuzzleSolver {
 
         return path;
     }
+
+    public List<PuzzleCoordinate> solveAStar(PuzzleMap puzzleMap) {
+        LinkedList<PuzzleCoordinate> list = new LinkedList<>();
+        return list;
+    }
 }
