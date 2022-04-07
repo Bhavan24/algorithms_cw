@@ -1,5 +1,8 @@
 package main;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static main.GameConstants.*;
 
 public class PuzzleMap {
@@ -66,6 +69,9 @@ public class PuzzleMap {
                     case FINISH_VALUE:
                         System.out.print(FINISH + " ");
                         break;
+                    case PATH_VALUE:
+                        System.out.print("\033[1;91m. \u001B[0m");
+                        break;
                 }
             }
             System.out.println();
@@ -114,6 +120,17 @@ public class PuzzleMap {
 
     public void setVisited(int row, int col, boolean value) {
         visitedArray[row][col] = value;
+    }
+
+    public void printPath(List<PuzzleCoordinate> path) {
+        int[][] tempPuzzleMapArray = Arrays.stream(puzzleMapArray).map(int[]::clone).toArray(int[][]::new);
+        for (PuzzleCoordinate coordinate : path) {
+            if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
+                continue;
+            }
+            tempPuzzleMapArray[coordinate.getX()][coordinate.getY()] = PATH_VALUE;
+        }
+        printPuzzleMap(tempPuzzleMapArray);
     }
 
 }

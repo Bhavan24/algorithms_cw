@@ -17,11 +17,12 @@ public class SlidingPuzzleGame {
         // read the file from using the file handler
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        fileHandler.prettyPrintFile();
+//        fileHandler.prettyPrintFile();
         PuzzleMap puzzleMap = new PuzzleMap();
         puzzleMap.initializePuzzleMap(fileContents);
         PuzzleSolver puzzleSolver = new PuzzleSolver();
         List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+        puzzleMap.printPath(path);
 
     }
 
