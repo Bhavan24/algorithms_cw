@@ -11,20 +11,31 @@ public class SlidingPuzzleGame {
     public static void main(String[] args) {
 
         System.out.print(WELCOME_TEXT);
-        String[] puzzleFiles = loadPuzzleFiles();
 
         while (true) {
             try {
-                System.out.print(SELECT_FILE);
                 Scanner scanner = new Scanner(System.in);
-                int fileId = scanner.nextInt();
-                if (fileId == 0) break;
-                solvePuzzle(puzzleFiles[fileId - 1]);
+                System.out.print(ENTER_PROGRAM_TYPE);
+                int programType = scanner.nextInt();
+
+                if (programType == 1) {
+                    System.out.print(ENTER_PATH);
+                    String puzzleFilePath = scanner.next();
+                    solvePuzzle(puzzleFilePath);
+                } else if (programType == 2) {
+                    String[] puzzleFiles = loadPuzzleFiles();
+                    System.out.print(SELECT_FILE);
+                    int fileId = scanner.nextInt();
+                    if (fileId == 0) break;
+                    solvePuzzle(puzzleFiles[fileId - 1]);
+                } else {
+                    System.out.print(ENTER_VALID_VALUE);
+                }
+
             } catch (Exception e) {
-                System.out.print(ENTER_VALID_FILE_ID);
+                System.out.print(ENTER_VALID_VALUE);
             }
         }
-
     }
 
     public static String[] loadPuzzleFiles() {
@@ -47,11 +58,13 @@ public class SlidingPuzzleGame {
     public static void solvePuzzle(String puzzleFilePath) {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        PuzzleMap puzzleMap = new PuzzleMap();
-        puzzleMap.initializePuzzleMap(fileContents);
-        PuzzleSolver puzzleSolver = new PuzzleSolver();
-        List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
-        puzzleMap.printPath(path);
+        if(fileContents != null) {
+            PuzzleMap puzzleMap = new PuzzleMap();
+            puzzleMap.initializePuzzleMap(fileContents);
+            PuzzleSolver puzzleSolver = new PuzzleSolver();
+            List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+            puzzleMap.printPath(path);
+        }
     }
 
 }
