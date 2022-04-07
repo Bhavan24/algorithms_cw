@@ -26,7 +26,7 @@ public class PuzzleFileHandler {
             System.out.println(PUZZLE_LOADED);
         } catch (Exception e) {
             System.out.println(FILE_DOES_NOT_EXIST);
-            System.out.println(THANK_YOU);
+            System.out.println(TRY_AGAIN);
         }
         return fileContents;
     }

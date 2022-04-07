@@ -28,6 +28,8 @@ public class SlidingPuzzleGame {
                     int fileId = scanner.nextInt();
                     if (fileId == 0) break;
                     solvePuzzle(puzzleFiles[fileId - 1]);
+                } else if (programType == 0) {
+                    break;
                 } else {
                     System.out.print(ENTER_VALID_VALUE);
                 }
@@ -36,6 +38,7 @@ public class SlidingPuzzleGame {
                 System.out.print(ENTER_VALID_VALUE);
             }
         }
+        System.out.print(THANK_YOU);
     }
 
     public static String[] loadPuzzleFiles() {
@@ -58,7 +61,7 @@ public class SlidingPuzzleGame {
     public static void solvePuzzle(String puzzleFilePath) {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        if(fileContents != null) {
+        if (fileContents != null) {
             PuzzleMap puzzleMap = new PuzzleMap();
             puzzleMap.initializePuzzleMap(fileContents);
             PuzzleSolver puzzleSolver = new PuzzleSolver();

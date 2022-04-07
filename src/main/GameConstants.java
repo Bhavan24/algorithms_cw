@@ -9,12 +9,15 @@ public class GameConstants {
                     "+ - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|      1. RUN A PUZZLE FROM FILE PATH         |\n" +
                     "|      2. SELECT A PUZZLE FROM ALL PUZZLES    |\n" +
+                    "|      0. EXIT                                |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - +\n";
+
     public static final String ENTER_PROGRAM_TYPE = "\nPLEASE ENTER THE PUZZLE TYPE: ";
     public static final String ENTER_PATH = "\nPLEASE ENTER THE PUZZLE FILE PATH: ";
     public static final String PUZZLE_LOADED = "\nPUZZLE LOADED!\n";
     public static final String FILE_DOES_NOT_EXIST = "\nFILE DOES NOT EXIST!";
-    public static final String THANK_YOU = "\nPLEASE TRY AGAIN!";
+    public static final String TRY_AGAIN = "\nPLEASE TRY AGAIN!";
+    public static final String THANK_YOU = "\nTHANK YOU!";
     public static final String FILE_IS_EMPTY = "\nPUZZLE FILE IS EMPTY!";
     public static final String INVALID_DATA = "\nPUZZLE FILE CONTAINS INVALID DATA!";
     public static final String SELECT_FILE = "\nENTER FILE ID (ENTER 0 TO EXIT): ";
