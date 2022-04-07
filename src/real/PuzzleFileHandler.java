@@ -1,7 +1,6 @@
 package real;
 
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import static real.GameConstants.*;
@@ -27,7 +26,6 @@ public class PuzzleFileHandler {
             reader.close();
             fileContents = stringBuilder.toString();
             System.out.println(PUZZLE_LOADED);
-            System.out.println(fileContents);
         } catch (Exception e) {
             System.out.println(FILE_DOES_NOT_EXIST);
             System.out.println(THANK_YOU);
@@ -36,7 +34,7 @@ public class PuzzleFileHandler {
     }
 
 
-    public PuzzleMap initializePuzzleMap() {
+    public int[][] initializePuzzleMap() {
 
         if (fileContents == null || (fileContents = fileContents.trim()).equals("")) {
             System.out.println(FILE_IS_EMPTY);
@@ -47,9 +45,7 @@ public class PuzzleFileHandler {
         rows = lines.length;
         columns = lines[0].length();
 
-        int[][] puzzleMap = new int[rows][columns];
-
-        System.out.println(rows + " X " + columns);
+        int[][] puzzleMapArray = new int[rows][columns];
 
         for (int i = 0; i < rows; i++) {
             if (lines[i].length() != columns) {
@@ -59,23 +55,22 @@ public class PuzzleFileHandler {
                 for (int j = 0; j < columns; j++) {
                     switch (lines[i].charAt(j)) {
                         case ICE:
-                            puzzleMap[i][j] = ICE_VALUE;
+                            puzzleMapArray[i][j] = ICE_VALUE;
                             break;
                         case ROCK:
-                            puzzleMap[i][j] = ROCK_VALUE;
+                            puzzleMapArray[i][j] = ROCK_VALUE;
                             break;
                         case START:
-                            puzzleMap[i][j] = START_VALUE;
+                            puzzleMapArray[i][j] = START_VALUE;
                             break;
                         case FINISH:
-                            puzzleMap[i][j] = FINISH_VALUE;
+                            puzzleMapArray[i][j] = FINISH_VALUE;
                             break;
                     }
                 }
             }
         }
-        System.out.println(Arrays.deepToString(puzzleMap));
-        return new PuzzleMap();
+        return puzzleMapArray;
     }
 
     private String[] getFileLines() {
@@ -94,5 +89,37 @@ public class PuzzleFileHandler {
 
     public String getFileContents() {
         return fileContents;
+    }
+
+
+    public void printPuzzleMapAsIntArray(int[][] puzzleMapArray) {
+        for (int[] ints : puzzleMapArray) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printPuzzleMap(int[][] puzzleMapArray) {
+        for (int[] ints : puzzleMapArray) {
+            for (int anInt : ints) {
+                switch (anInt) {
+                    case ICE_VALUE:
+                        System.out.print(ICE + " ");
+                        break;
+                    case ROCK_VALUE:
+                        System.out.print(ROCK + " ");
+                        break;
+                    case START_VALUE:
+                        System.out.print(START + " ");
+                        break;
+                    case FINISH_VALUE:
+                        System.out.print(FINISH + " ");
+                        break;
+                }
+            }
+            System.out.println();
+        }
     }
 }

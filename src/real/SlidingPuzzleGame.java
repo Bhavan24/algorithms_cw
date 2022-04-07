@@ -15,7 +15,9 @@ public class SlidingPuzzleGame {
         // read the file from using the file handler
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        PuzzleMap puzzleMap = fileHandler.initializePuzzleMap();
+        int[][] puzzleMap = fileHandler.initializePuzzleMap();
+        fileHandler.printPuzzleMap(puzzleMap);
+
     }
 
 }
