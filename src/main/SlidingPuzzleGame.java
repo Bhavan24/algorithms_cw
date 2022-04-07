@@ -1,5 +1,7 @@
 package main;
 
+import java.util.List;
+
 import static main.GameConstants.WELCOME_TEXT;
 
 public class SlidingPuzzleGame {
@@ -18,6 +20,9 @@ public class SlidingPuzzleGame {
         fileHandler.prettyPrintFile();
         PuzzleMap puzzleMap = new PuzzleMap();
         puzzleMap.initializePuzzleMap(fileContents);
+        PuzzleSolver puzzleSolver = new PuzzleSolver();
+        List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+
     }
 
 }

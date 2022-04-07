@@ -25,5 +25,5 @@ public class GameConstants {
     public static final int PATH_VALUE = 4;
 
     // DIRECTIONS: top, right, down, left
-    private static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 }
