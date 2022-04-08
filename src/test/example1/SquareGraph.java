@@ -67,12 +67,20 @@ public class SquareGraph {
     }
 
     public Set<Node> getNeighbours(Node n) {
+        // move in the direction until the next one is a rock on outside the map
         Set<Node> neighbours = new HashSet<Node>();
         int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        for (int[] d: DIRECTIONS ) {
-            if (!(d[0] == 0 && d[1]  == 0)) if (isInsideMap(new Point(n.getX() + d[0] , n.getY() + d[1]))) {
-                Node temp = getMapCell(new Point(n.getX() + d[0] , n.getY() + d[1]));
-                if (!temp.isObstacle()) neighbours.add(temp);
+        for (int[] d : DIRECTIONS) {
+            if (!(d[0] == 0 && d[1] == 0)) {
+                Point point = new Point(n.getX() + d[0], n.getY() + d[1]);
+                if (isInsideMap(point)) {
+                    Node temp = getMapCell(point);
+                    if (!temp.isObstacle()) {
+                        if(temp.isNormal()){
+                            neighbours.add(temp);
+                        }
+                    }
+                }
             }
         }
         return neighbours;

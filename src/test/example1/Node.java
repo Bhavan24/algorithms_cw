@@ -73,6 +73,10 @@ class Node implements Comparable<Node> {
         this.totalCost = cost;
     }
 
+    public boolean isNormal() {
+        return this.type == Type.NORMAL;
+    }
+
     public boolean isObstacle() {
         return this.type == Type.OBSTACLE;
     }
