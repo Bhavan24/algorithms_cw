@@ -53,31 +53,6 @@ public class PuzzleMap {
         }
     }
 
-    public void printPuzzleMap(int[][] puzzleMapArray) {
-        for (int[] ints : puzzleMapArray) {
-            for (int anInt : ints) {
-                switch (anInt) {
-                    case ICE_VALUE:
-                        System.out.print(ICE + " ");
-                        break;
-                    case ROCK_VALUE:
-                        System.out.print(ROCK + " ");
-                        break;
-                    case START_VALUE:
-                        System.out.print(ANSI_RED + START + ANSI_RESET + " ");
-                        break;
-                    case FINISH_VALUE:
-                        System.out.print(ANSI_RED + FINISH + ANSI_RESET + " ");
-                        break;
-                    case PATH_VALUE:
-                        System.out.print(ANSI_RED + ". " + ANSI_RESET);
-                        break;
-                }
-            }
-            System.out.println();
-        }
-    }
-
     public int getRows() {
         return puzzleMapArray.length;
     }
@@ -128,9 +103,35 @@ public class PuzzleMap {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
                 continue;
             }
-            tempPuzzleMapArray[coordinate.getX()][coordinate.getY()] = PATH_VALUE;
+            tempPuzzleMapArray[coordinate.getX()][coordinate.getY()] = SHORTEST_PATH_VALUE;
         }
         printPuzzleMap(tempPuzzleMapArray);
+    }
+
+    public void printPuzzleMap(int[][] puzzleMapArray) {
+        for (int[] ints : puzzleMapArray) {
+            for (int anInt : ints) {
+                switch (anInt) {
+                    case ICE_VALUE:
+                        System.out.print(ICE);
+                        break;
+                    case ROCK_VALUE:
+                        System.out.print(ROCK);
+                        break;
+                    case START_VALUE:
+                        System.out.print(ANSI_RED + START + ANSI_RESET);
+                        break;
+                    case FINISH_VALUE:
+                        System.out.print(ANSI_RED + FINISH + ANSI_RESET);
+                        break;
+                    case SHORTEST_PATH_VALUE:
+                        System.out.print(ANSI_RED + SHORTEST_PATH + ANSI_RESET);
+                        break;
+                }
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
     }
 
 }
