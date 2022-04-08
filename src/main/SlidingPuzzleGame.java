@@ -65,7 +65,7 @@ public class SlidingPuzzleGame {
             PuzzleMap puzzleMap = new PuzzleMap();
             puzzleMap.initializePuzzleMap(fileContents);
             PuzzleSolver puzzleSolver = new PuzzleSolver();
-            List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+            List<PuzzleCoordinate> path = puzzleSolver.solveAStar(puzzleMap);
             puzzleMap.printPath(path);
         }
     }

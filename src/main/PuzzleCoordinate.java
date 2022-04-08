@@ -30,4 +30,11 @@ public class PuzzleCoordinate {
         return parent;
     }
 
+    @Override
+    public String toString() {
+        return "PuzzleCoordinate{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
