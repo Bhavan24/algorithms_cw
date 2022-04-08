@@ -18,7 +18,7 @@ public class PuzzleSolver {
         while (!nextToVisit.isEmpty()) {
             PuzzleCoordinate cur = nextToVisit.remove();
 
-            if (!puzzleMap.isInsideMap(cur.getX(), cur.getY()) || puzzleMap.isVisited(cur.getX(), cur.getY())) {
+            if (!puzzleMap.isValidCoordinate(cur.getX(), cur.getY()) || puzzleMap.isVisited(cur.getX(), cur.getY())) {
                 continue;
             }
 

@@ -77,7 +77,7 @@ public class PuzzleMap {
         return x == end.getX() && y == end.getY();
     }
 
-    public boolean isInsideMap(int row, int col) {
+    public boolean isValidCoordinate(int row, int col) {
         return (row >= 0 && row < getRows()) && (col >= 0 && col < getColumns());
     }
 
