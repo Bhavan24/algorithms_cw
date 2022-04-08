@@ -28,8 +28,8 @@ public class Main {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map.length; j++) {
                 List<Integer> coordinates = new ArrayList<>();
-                coordinates.add(i);
                 coordinates.add(j);
+                coordinates.add(i);
                 if (paths.contains(coordinates)) {
                     System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
                 } else {

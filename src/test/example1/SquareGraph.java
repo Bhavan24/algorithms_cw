@@ -68,13 +68,11 @@ public class SquareGraph {
 
     public Set<Node> getNeighbours(Node n) {
         Set<Node> neighbours = new HashSet<Node>();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (!(i == 0 && j == 0)) if (isInsideMap(new Point(n.getX() + i, n.getY() + j))) {
-                    Node temp = getMapCell(new Point(n.getX() + i, n.getY() + j));
-                    if (!temp.isObstacle()) neighbours.add(temp);
-                }
-
+        int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (int[] d: DIRECTIONS ) {
+            if (!(d[0] == 0 && d[1]  == 0)) if (isInsideMap(new Point(n.getX() + d[0] , n.getY() + d[1]))) {
+                Node temp = getMapCell(new Point(n.getX() + d[0] , n.getY() + d[1]));
+                if (!temp.isObstacle()) neighbours.add(temp);
             }
         }
         return neighbours;
