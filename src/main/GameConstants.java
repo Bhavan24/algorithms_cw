@@ -4,15 +4,29 @@ public class GameConstants {
 
     // Message Constants
     public static final String WELCOME_TEXT =
-                    "+ - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|         WELCOME TO SLIDING PUZZLES          |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|      1. RUN A PUZZLE FROM FILE PATH         |\n" +
-                    "|      2. SELECT A PUZZLE FROM ALL PUZZLES    |\n" +
-                    "|      0. EXIT                                |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - +\n";
-
-    public static final String ENTER_PROGRAM_TYPE = "\nPLEASE ENTER THE PUZZLE TYPE: ";
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|                    PUZZLE FILES                   |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|  1. RUN A PUZZLE FROM FILE PATH                   |\n" +
+                    "|  2. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+    public static final String SELECT_MOVABLE_TYPE =
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|                 MOVING DIRECTIONS                 |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|  1. 4-CARDINAL DIRECTIONS (TOP,DOWN,RIGHT,LEFT)   |\n" +
+                    "|  2. 8-CARDINAL DIRECTIONS (ALL DIRECTIONS)        |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+    public static final String SELECT_ALGORITHM_TYPE =
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|             STATE OF THE PUZZLE ICE               |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+                    "|  1. FRICTIONLESS ICE (USER WILL SLIDE)            |\n" +
+                    "|  2. ICE WITHOUT FRICTION (USER WILL NOT SLIDE)    |\n" +
+                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+    public static final String ENTER_PUZZLE_FILE_TYPE = "\nPLEASE ENTER THE PUZZLE FILE TYPE: ";
+    public static final String ENTER_DIRECTION_TYPE = "\nPLEASE ENTER THE MOVING DIRECTION TYPE: ";
+    public static final String ENTER_ICE_STATE_TYPE = "\nPLEASE ENTER THE PUZZLE ICE STATE TYPE: ";
     public static final String ENTER_PATH = "\nPLEASE ENTER THE PUZZLE FILE PATH: ";
     public static final String PUZZLE_LOADED = "\nPUZZLE LOADED!\n";
     public static final String FILE_DOES_NOT_EXIST = "\nFILE DOES NOT EXIST!";
@@ -23,6 +37,7 @@ public class GameConstants {
     public static final String SELECT_FILE = "\nENTER FILE ID (ENTER 0 TO EXIT): ";
     public static final String ENTER_VALID_VALUE = "\nPLEASE ENTER A VALID VALUE!\n";
     public static final String RUNNING_TIME = "\nALGORITHM RUNNING TIME: ";
+    public static final String PUZZLE_FILES = "\n--------PUZZLE FILES--------";
 
     // Map Constants
     public static final char ICE = '.';
