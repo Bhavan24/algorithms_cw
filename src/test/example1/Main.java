@@ -1,6 +1,6 @@
 package test.example1;
 
-import test.test.ReadInputData;
+import test.example5.ReadInputData;
 
 import java.util.ArrayList;
 import java.util.List;

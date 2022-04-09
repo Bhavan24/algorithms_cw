@@ -1,4 +1,4 @@
-package test.test;
+package test.example5;
 
 public class JavaTest {
     public static void main(String[] args) {

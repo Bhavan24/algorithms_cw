@@ -1,7 +1,5 @@
 package test.example4;
 
-import test.test.ReadInputData;
-
 import java.util.ArrayList;
 import java.util.List;
 
