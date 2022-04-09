@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
-        String filePath = "src/test.txt";
+        String filePath = "src/inputs/test.txt";
         ArrayList<String[]> maps = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
