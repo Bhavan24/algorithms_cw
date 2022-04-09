@@ -55,6 +55,10 @@ public class PuzzleMap {
         }
     }
 
+    public PuzzleCoordinate[][] getPuzzleMapArray() {
+        return puzzleMapArray;
+    }
+
     public int getRows() {
         return puzzleMapArray.length;
     }
@@ -93,6 +97,30 @@ public class PuzzleMap {
 
     public boolean isIce(int row, int col) {
         return puzzleMapArray[row][col].getValue() == ICE_VALUE;
+    }
+
+    public boolean isStart(PuzzleCoordinate p) {
+        return (p != null) && isStart(p.getX(), p.getY());
+    }
+
+    public boolean isEnd(PuzzleCoordinate p) {
+        return (p != null) && isEnd(p.getX(), p.getY());
+    }
+
+    public boolean isValidCoordinate(PuzzleCoordinate p) {
+        return (p != null) && isValidCoordinate(p.getX(), p.getY());
+    }
+
+    public boolean isVisited(PuzzleCoordinate p) {
+        return (p != null) && isVisited(p.getX(), p.getY());
+    }
+
+    public boolean isRock(PuzzleCoordinate p) {
+        return (p != null) && isRock(p.getX(), p.getY());
+    }
+
+    public boolean isIce(PuzzleCoordinate p) {
+        return (p != null) && isIce(p.getX(), p.getY());
     }
 
     public void setVisited(int row, int col, boolean value) {

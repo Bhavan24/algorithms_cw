@@ -64,9 +64,12 @@ public class SlidingPuzzleGame {
         if (fileContents != null) {
             PuzzleMap puzzleMap = new PuzzleMap();
             puzzleMap.initializePuzzleMap(fileContents);
-            PuzzleSolver puzzleSolver = new PuzzleSolver();
-            List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
-            puzzleMap.printPath(path);
+//            PuzzleSolver puzzleSolver = new PuzzleSolver();
+//            List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+//            puzzleMap.printPath(path);
+            PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap);
+            PuzzleGraph puzzleGraph = new PuzzleGraph();
+            puzzleSolver2.solve(puzzleGraph);
         }
     }
 
