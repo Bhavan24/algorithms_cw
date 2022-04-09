@@ -4,7 +4,7 @@ from mazes import Maze
 from factory import SolverFactory
 Image.MAX_IMAGE_PIXELS = None
 
-# Read command line arguments - the python argparse class is convenient here.
+# Read command line arguments - the test.python argparse class is convenient here.
 import argparse
 
 def solve(factory, method, input_file, output_file):

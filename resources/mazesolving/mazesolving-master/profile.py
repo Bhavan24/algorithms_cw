@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env test.python
 
 from bprofile import BProfile
 
