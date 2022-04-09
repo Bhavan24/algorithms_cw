@@ -67,10 +67,10 @@ public class Puzzle {
     }
 
     public Point getPointFromArray(int vertexId) {
-        for (int i = 0; i < puzzleArray.length; i++) {
-            for (int j = 0; j < puzzleArray[i].length; j++) {
-                if (puzzleArray[i][j].getId() == vertexId) {
-                    return puzzleArray[i][j];
+        for (Point[] points : puzzleArray) {
+            for (Point point : points) {
+                if (point.getId() == vertexId) {
+                    return point;
                 }
             }
         }
@@ -78,10 +78,10 @@ public class Puzzle {
     }
 
     public Point getPointFromArray(int x, int y) {
-        for (int i = 0; i < puzzleArray.length; i++) {
-            for (int j = 0; j < puzzleArray[i].length; j++) {
-                if (puzzleArray[i][j].getX() == x && puzzleArray[i][j].getY() == y) {
-                    return puzzleArray[i][j];
+        for (Point[] points : puzzleArray) {
+            for (Point point : points) {
+                if (point.getX() == x && point.getY() == y) {
+                    return point;
                 }
             }
         }
@@ -100,8 +100,8 @@ public class Puzzle {
         List<List<Integer>> result = new ArrayList<>();
         Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId(), finishPoint.getId());
         List<Integer> pathList = g.findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
-        for (int i = 0; i < pathList.size(); i++) {
-            Point point = getPointFromArray(pathList.get(i));
+        for (Integer integer : pathList) {
+            Point point = getPointFromArray(integer);
             List<Integer> coordinates = new ArrayList<>();
             coordinates.add(point.getX());
             coordinates.add(point.getY());
@@ -145,7 +145,7 @@ public class Puzzle {
     }
 
     public UndirectedGraph createGraph(UndirectedGraph g) {
-        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
         Point oldPoint = startPoint;
         stack.push(oldPoint.getId());
@@ -280,40 +280,28 @@ public class Puzzle {
         if (point.getY() == 0) {
             return false;
         }
-        if (!(puzzleArray[point.getY() - 1][point.getX()].getLetter().equals("0"))) {
-            return true;
-        }
-        return false;
+        return !(puzzleArray[point.getY() - 1][point.getX()].getLetter().equals("0"));
     }
 
     public boolean canTravelSouth(Point point) {
         if (point.getY() == (maxHeight - 1)) {
             return false;
         }
-        if (!(puzzleArray[point.getY() + 1][point.getX()].getLetter().equals("0"))) {
-            return true;
-        }
-        return false;
+        return !(puzzleArray[point.getY() + 1][point.getX()].getLetter().equals("0"));
     }
 
     public boolean canTravelEast(Point point) {
         if (point.getX() == (maxWidth - 1)) {
             return false;
         }
-        if (!(puzzleArray[point.getY()][point.getX() + 1].getLetter().equals("0"))) {
-            return true;
-        }
-        return false;
+        return !(puzzleArray[point.getY()][point.getX() + 1].getLetter().equals("0"));
     }
 
     public boolean canTravelWest(Point point) {
         if (point.getX() == 0) {
             return false;
         }
-        if (!(puzzleArray[point.getY()][point.getX() - 1].getLetter().equals("0"))) {
-            return true;
-        }
-        return false;
+        return !(puzzleArray[point.getY()][point.getX() - 1].getLetter().equals("0"));
     }
 
     public Point[][] getPuzzleArray() {
