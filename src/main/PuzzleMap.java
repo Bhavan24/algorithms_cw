@@ -98,6 +98,7 @@ public class PuzzleMap {
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
+        System.out.println(path);
         int[][] tempPuzzleMapArray = Arrays.stream(puzzleMapArray).map(int[]::clone).toArray(int[][]::new);
         for (PuzzleCoordinate coordinate : path) {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {

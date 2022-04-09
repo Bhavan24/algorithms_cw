@@ -83,17 +83,20 @@ public class PuzzleSolver {
             }
 
             for (int[] direction : DIRECTIONS) {
-                PuzzleCoordinate coordinate = travelSelectedDirection(puzzleMap, cur, direction);
-                nextToVisit.add(coordinate);
-                puzzleMap.setVisited(cur.getX(), cur.getY(), true);
+                PuzzleCoordinate coordinate = new PuzzleCoordinate(cur.getX() + direction[0], cur.getY() + direction[1], cur);
+                while (puzzleMap.isValidCoordinate(coordinate.getX(), coordinate.getY()) && !puzzleMap.isVisited(coordinate.getX(), coordinate.getY()) && puzzleMap.isIce(coordinate.getX(), coordinate.getY())) {
+                    coordinate = new PuzzleCoordinate(coordinate.getX() + direction[0], coordinate.getY() + direction[1], cur);
+                    nextToVisit.add(coordinate);
+                    puzzleMap.setVisited(cur.getX(), cur.getY(), true);
+                }
             }
-
         }
         return Collections.emptyList();
     }
 
     public PuzzleCoordinate travelSelectedDirection(PuzzleMap puzzleMap, PuzzleCoordinate cur, int[] direction) {
         PuzzleCoordinate newPoint = new PuzzleCoordinate(cur.getX() + direction[0], cur.getY() + direction[1], cur);
+        System.out.println(newPoint);
         if (direction[0] == 0 && direction[1] == 1) {
             while (canTravelTopDirection(puzzleMap, newPoint)) {
                 newPoint = new PuzzleCoordinate(newPoint.getX() + direction[0], newPoint.getY() + direction[1], newPoint);
