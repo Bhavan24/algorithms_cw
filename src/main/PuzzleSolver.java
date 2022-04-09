@@ -52,15 +52,16 @@ public class PuzzleSolver {
         return path;
     }
 
+    /*
     public List<PuzzleCoordinate> solveAStar(PuzzleMap puzzleMap) {
         LinkedList<PuzzleCoordinate> list = new LinkedList<>();
-        /*
-         1. Create Graph
-            Graph data structure ahouls be used, integrated with coordinates
-            should maintain a stack / heap for that
-            if it is final path need to say path is there
-         2. Send the created graph to an algorithm and get the result
-         */
+
+//         1. Create Graph
+//            Graph data structure ahouls be used, integrated with coordinates
+//            should maintain a stack / heap for that
+//            if it is final path need to say path is there
+//         2. Send the created graph to an algorithm and get the result
+
 
         LinkedList<PuzzleCoordinate> nextToVisit = new LinkedList<>();
         PuzzleCoordinate start = puzzleMap.getStart();
@@ -93,7 +94,9 @@ public class PuzzleSolver {
         }
         return Collections.emptyList();
     }
+    */
 
+    /*
     public PuzzleCoordinate travelSelectedDirection(PuzzleMap puzzleMap, PuzzleCoordinate cur, int[] direction) {
         PuzzleCoordinate newPoint = new PuzzleCoordinate(cur.getX() + direction[0], cur.getY() + direction[1], cur);
         System.out.println(newPoint);
@@ -139,5 +142,6 @@ public class PuzzleSolver {
         if (point.getX() == 0) return false;
         return puzzleMap.isValidCoordinate(point.getX(), point.getY()) && !puzzleMap.isRock(point.getX(), point.getY());
     }
+     */
 
 }
