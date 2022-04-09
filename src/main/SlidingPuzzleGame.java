@@ -22,6 +22,7 @@ public class SlidingPuzzleGame {
             int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
 
             Scanner scanner = new Scanner(System.in);
+
             if (puzzleFileType == 1) {
                 System.out.print(ENTER_PATH);
                 String puzzleFilePath = scanner.next();
@@ -85,7 +86,6 @@ public class SlidingPuzzleGame {
 
     public static void solvePuzzle(String puzzleFilePath, int directionType, int iceState) {
         int[][] DIRECTIONS = selectDirectionType(directionType);
-        System.out.println(Arrays.deepToString(DIRECTIONS));
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {

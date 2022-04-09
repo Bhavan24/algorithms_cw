@@ -22,7 +22,7 @@ public class GameConstants {
                     "|             STATE OF THE PUZZLE ICE               |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|  1. FRICTIONLESS ICE (USER WILL SLIDE)            |\n" +
-                    "|  2. ICE WITHOUT FRICTION (USER WILL NOT SLIDE)    |\n" +
+                    "|  2. ICE WITH FRICTION (USER WILL NOT SLIDE)       |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String ENTER_PUZZLE_FILE_TYPE = "\nPLEASE ENTER THE PUZZLE FILE TYPE: ";
     public static final String ENTER_DIRECTION_TYPE = "\nPLEASE ENTER THE MOVING DIRECTION TYPE: ";

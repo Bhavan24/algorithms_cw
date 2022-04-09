@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import static main.GameConstants.DIRECTIONS;
+import static main.GameConstants.*;
 
 public class PuzzleSolver2 {
 
@@ -13,6 +13,48 @@ public class PuzzleSolver2 {
     PuzzleCoordinate[][] puzzleCoordinates;
     private final PuzzleCoordinate startPoint;
     private final PuzzleCoordinate finishPoint;
+
+    public void initializePuzzleMap(String fileContents) {
+
+        if (fileContents == null || fileContents.trim().equals("")) {
+            System.out.println(FILE_IS_EMPTY);
+            return;
+        }
+
+        String[] lines = fileContents.split("[\r]?\n");
+        int rows = lines.length;
+        int columns = lines[0].length();
+
+        puzzleCoordinates = new PuzzleCoordinate[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            if (lines[i].length() != columns) {
+                System.out.println(INVALID_DATA);
+                return;
+            } else {
+                int id = 0;
+                for (int j = 0; j < columns; j++) {
+                    switch (lines[i].charAt(j)) {
+                        case ICE:
+                            puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, ICE, ICE_VALUE);
+                            break;
+                        case ROCK:
+                            puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, ROCK, ROCK_VALUE);
+                            break;
+                        case START:
+                            puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, START, START_VALUE);
+                            PuzzleCoordinate start = puzzleCoordinates[i][j];
+                            break;
+                        case FINISH:
+                            puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, FINISH, FINISH_VALUE);
+                            PuzzleCoordinate end = puzzleCoordinates[i][j];
+                            break;
+                    }
+                    id++;
+                }
+            }
+        }
+    }
 
     public PuzzleSolver2(PuzzleMap puzzleMap) {
         this.puzzleMap = puzzleMap;
