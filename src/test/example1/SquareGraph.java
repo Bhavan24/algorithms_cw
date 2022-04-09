@@ -73,10 +73,13 @@ public class SquareGraph {
         for (int[] d : DIRECTIONS) {
             if (!(d[0] == 0 && d[1] == 0)) {
                 Point point = new Point(n.getX() + d[0], n.getY() + d[1]);
-                if (isInsideMap(point)) {
+                if(isInsideMap(point)) {
                     Node temp = getMapCell(point);
-                    if (!temp.isObstacle()) {
-                        if(temp.isNormal()){
+                    while (isInsideMap(point) && !temp.isClosed() && temp.isNormal()) {
+                        point = new Point(temp.getX() + d[0], temp.getY() + d[1]);
+                        if(isInsideMap(point)){
+                            temp = getMapCell(point);
+                            System.out.println(temp.getPosition());
                             neighbours.add(temp);
                         }
                     }

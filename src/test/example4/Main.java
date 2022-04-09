@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         String file = "src/test/example4/test.txt";
-        String[][] result = new ReadInputData().readFromFile(file, 10);
+//        String[][] result = new ReadInputData().readFromFile(file, 20);
         Puzzle p = new Puzzle();
         p.setFileLocation(file);
         p.initializePuzzleArray();
@@ -17,7 +17,7 @@ public class Main {
         UndirectedGraph g = new UndirectedGraph();
         p.createGraph(g);
         p.printPathDetails(g);
-        colorPrintGraph(p.getPathList(g), result);
+//        colorPrintGraph(p.getPathList(g), result);
     }
 
     public static void colorPrintGraph(List<List<Integer>> paths, String[][] map) {

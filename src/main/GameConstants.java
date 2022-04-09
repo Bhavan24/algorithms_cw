@@ -41,6 +41,10 @@ public class GameConstants {
     // DIRECTIONS: top, right, down, left
     public static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
+    public enum Directions {
+        TOP, RIGHT, LEFT, DOWN
+    }
+
     // Console Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\033[1;91m";
