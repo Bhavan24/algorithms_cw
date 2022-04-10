@@ -5,11 +5,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static main.GameConstants.DIRECTIONS;
 
 public class PuzzleSolver {
 
-    public List<PuzzleCoordinate> solve(PuzzleMap puzzleMap) {
+    public List<PuzzleCoordinate> solve(PuzzleMap puzzleMap, int[][] directions) {
 
         LinkedList<PuzzleCoordinate> nextToVisit = new LinkedList<>();
         PuzzleCoordinate start = puzzleMap.getStart();
@@ -31,7 +30,7 @@ public class PuzzleSolver {
                 return backtrackPath(cur);
             }
 
-            for (int[] direction : DIRECTIONS) {
+            for (int[] direction : directions) {
                 PuzzleCoordinate coordinate = new PuzzleCoordinate(cur.getX() + direction[0], cur.getY() + direction[1], cur);
                 nextToVisit.add(coordinate);
                 puzzleMap.setVisited(cur.getX(), cur.getY(), true);

@@ -1,7 +1,6 @@
 package main;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,19 +17,21 @@ public class SlidingPuzzleGame {
         try {
 
             int puzzleFileType = handleUserInput(ENTER_PUZZLE_FILE_TYPE);
-            int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
-            int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
 
             Scanner scanner = new Scanner(System.in);
 
             if (puzzleFileType == 1) {
                 System.out.print(ENTER_PATH);
                 String puzzleFilePath = scanner.next();
+                int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
+                int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
                 solvePuzzle(puzzleFilePath, directionType, iceState);
             } else if (puzzleFileType == 2) {
                 String[] puzzleFiles = loadPuzzleFiles();
                 System.out.print(SELECT_FILE);
                 int fileId = scanner.nextInt();
+                int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
+                int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
                 solvePuzzle(puzzleFiles[fileId - 1], directionType, iceState);
             } else {
                 System.out.print(ENTER_VALID_VALUE);
@@ -75,9 +76,9 @@ public class SlidingPuzzleGame {
     public static int[][] selectDirectionType(int directionType) {
         int[][] DIRECTIONS = null;
         if (directionType == 1) {
-            DIRECTIONS = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            DIRECTIONS = CARDINAL_DIRECTIONS;
         } else if (directionType == 2) {
-            DIRECTIONS = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+            DIRECTIONS = ALL_DIRECTIONS;
         } else {
             System.out.print(ENTER_VALID_VALUE);
         }
@@ -85,19 +86,19 @@ public class SlidingPuzzleGame {
     }
 
     public static void solvePuzzle(String puzzleFilePath, int directionType, int iceState) {
-        int[][] DIRECTIONS = selectDirectionType(directionType);
+        int[][] directions = selectDirectionType(directionType);
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {
             PuzzleMap puzzleMap = new PuzzleMap();
             puzzleMap.initializePuzzleMap(fileContents);
             if (iceState == 1) {
-                PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap);
+                PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap, directions);
                 PuzzleGraph puzzleGraph = new PuzzleGraph();
                 puzzleSolver2.solve(puzzleGraph);
             } else if (iceState == 2) {
                 PuzzleSolver puzzleSolver = new PuzzleSolver();
-                List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap);
+                List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap, directions);
                 puzzleMap.printPath(path);
             } else {
                 System.out.print(ENTER_VALID_VALUE);

@@ -13,6 +13,7 @@ public class PuzzleSolver2 {
     PuzzleCoordinate[][] puzzleCoordinates;
     private final PuzzleCoordinate startPoint;
     private final PuzzleCoordinate finishPoint;
+    int[][] DIRECTIONS;
 
     public void initializePuzzleMap(String fileContents) {
 
@@ -56,11 +57,12 @@ public class PuzzleSolver2 {
         }
     }
 
-    public PuzzleSolver2(PuzzleMap puzzleMap) {
+    public PuzzleSolver2(PuzzleMap puzzleMap, int[][] directions) {
         this.puzzleMap = puzzleMap;
         this.puzzleCoordinates = puzzleMap.getPuzzleMapArray();
         this.startPoint = puzzleMap.getStart();
         this.finishPoint = puzzleMap.getEnd();
+        this.DIRECTIONS = directions;
     }
 
     public void solve(PuzzleGraph puzzleGraph) {
