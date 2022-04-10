@@ -31,7 +31,7 @@ public class PuzzleSolver {
             }
 
             for (int[] direction : directions) {
-                PuzzleCoordinate coordinate = new PuzzleCoordinate(cur.getX() + direction[0], cur.getY() + direction[1], cur);
+                PuzzleCoordinate coordinate = new PuzzleCoordinate(cur.getX() + direction[1], cur.getY() + direction[0], cur);
                 nextToVisit.add(coordinate);
                 puzzleMap.setVisited(cur.getX(), cur.getY(), true);
             }

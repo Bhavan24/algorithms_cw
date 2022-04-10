@@ -1,6 +1,7 @@
 package main;
 
 public class PuzzleVertex {
+
     private int label;
 
     public PuzzleVertex(int label) {
@@ -34,4 +35,5 @@ public class PuzzleVertex {
     public String toString() {
         return "Vertex [label=" + label + "]";
     }
+
 }

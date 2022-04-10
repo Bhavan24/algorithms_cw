@@ -26,27 +26,27 @@ public class PuzzleMap {
         puzzleMapArray = new PuzzleCoordinate[rows][columns];
         visitedArray = new boolean[rows][columns];
 
-        for (int i = 0; i < rows; i++) {
-            if (lines[i].length() != columns) {
+        int id = 0;
+        for (int y = 0; y < rows; y++) {
+            if (lines[y].length() != columns) {
                 System.out.println(INVALID_DATA);
                 return;
             } else {
-                int id = 0;
-                for (int j = 0; j < columns; j++) {
-                    switch (lines[i].charAt(j)) {
+                for (int x = 0; x < columns; x++) {
+                    switch (lines[y].charAt(x)) {
                         case ICE:
-                            puzzleMapArray[i][j] = new PuzzleCoordinate(id, i, j, ICE, ICE_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ICE, ICE_VALUE);
                             break;
                         case ROCK:
-                            puzzleMapArray[i][j] = new PuzzleCoordinate(id, i, j, ROCK, ROCK_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ROCK, ROCK_VALUE);
                             break;
                         case START:
-                            puzzleMapArray[i][j] = new PuzzleCoordinate(id, i, j, START, START_VALUE);
-                            start = puzzleMapArray[i][j];
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, START, START_VALUE);
+                            start = puzzleMapArray[y][x];
                             break;
                         case FINISH:
-                            puzzleMapArray[i][j] = new PuzzleCoordinate(id, i, j, FINISH, FINISH_VALUE);
-                            end = puzzleMapArray[i][j];
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, FINISH, FINISH_VALUE);
+                            end = puzzleMapArray[y][x];
                             break;
                     }
                     id++;
@@ -88,15 +88,15 @@ public class PuzzleMap {
     }
 
     public boolean isVisited(int row, int col) {
-        return visitedArray[row][col];
+        return visitedArray[col][row];
     }
 
     public boolean isRock(int row, int col) {
-        return puzzleMapArray[row][col].getValue() == ROCK_VALUE;
+        return puzzleMapArray[col][row].getValue() == ROCK_VALUE;
     }
 
     public boolean isIce(int row, int col) {
-        return puzzleMapArray[row][col].getValue() == ICE_VALUE;
+        return puzzleMapArray[col][row].getValue() == ICE_VALUE;
     }
 
     public boolean isStart(PuzzleCoordinate p) {
@@ -124,7 +124,7 @@ public class PuzzleMap {
     }
 
     public void setVisited(int row, int col, boolean value) {
-        visitedArray[row][col] = value;
+        visitedArray[col][row] = value;
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
@@ -134,7 +134,7 @@ public class PuzzleMap {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
                 continue;
             }
-            tempPuzzleMapArray[coordinate.getX()][coordinate.getY()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH, SHORTEST_PATH_VALUE);
+            tempPuzzleMapArray[coordinate.getY()][coordinate.getX()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH, SHORTEST_PATH_VALUE);
             id++;
         }
         printPuzzleMap(tempPuzzleMapArray);
