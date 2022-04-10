@@ -2,7 +2,7 @@ package main;
 
 public class PuzzleVertex {
 
-    private int label;
+    private final int label;
 
     public PuzzleVertex(int label) {
         this.label = label;
@@ -10,10 +10,6 @@ public class PuzzleVertex {
 
     public int getLabel() {
         return label;
-    }
-
-    public void setLabel(int label) {
-        this.label = label;
     }
 
     @Override

@@ -31,18 +31,4 @@ public class PuzzleFileHandler {
         return fileContents;
     }
 
-    public String getFileContents() {
-        return fileContents;
-    }
-
-    public void prettyPrintFile() {
-        String[] lines = fileContents.split("[\r]?\n");
-        for (String line : lines) {
-            for (int j = 0; j < line.length(); j++) {
-                System.out.print(line.charAt(j) + " ");
-            }
-            System.out.println();
-        }
-    }
-
 }

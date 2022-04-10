@@ -57,10 +57,6 @@ public class GameConstants {
     public static final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     public static final int[][] CARDINAL_DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
-    public enum Directions {
-        TOP, RIGHT, LEFT, DOWN
-    }
-
     public enum IceStates {
         FRICTIONLESS, FRICTION
     }

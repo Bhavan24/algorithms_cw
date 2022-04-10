@@ -4,21 +4,9 @@ import java.util.*;
 
 public class PuzzleGraph {
 
-    private Map<PuzzleVertex, List<PuzzleVertex>> adjVertices = new HashMap<>();
+    private final Map<PuzzleVertex, List<PuzzleVertex>> adjVertices = new HashMap<>();
 
     public PuzzleGraph() {
-    }
-
-    public PuzzleGraph(Map<PuzzleVertex, List<PuzzleVertex>> adjVertices) {
-        this.adjVertices = adjVertices;
-    }
-
-    public Map<PuzzleVertex, List<PuzzleVertex>> getAdjVertices() {
-        return adjVertices;
-    }
-
-    public void setAdjVertices(Map<PuzzleVertex, List<PuzzleVertex>> adjVertices) {
-        this.adjVertices = adjVertices;
     }
 
     public void addVertex(int label) {

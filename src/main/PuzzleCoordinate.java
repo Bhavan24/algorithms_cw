@@ -44,10 +44,6 @@ public class PuzzleCoordinate {
         return value;
     }
 
-    public PuzzleCoordinate getParent() {
-        return parent;
-    }
-
     @Override
     public String toString() {
         return "PuzzleCoordinate {" + "id=" + id + ", x=" + x + ", y=" + y + ", character=" + character + ", value=" + value + '}';
