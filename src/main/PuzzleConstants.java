@@ -65,4 +65,5 @@ public class PuzzleConstants {
 
     // EOF Regex
     public static final String EOF_REGEX = "[\r]?\n";
+
 }
