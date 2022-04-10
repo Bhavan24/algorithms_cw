@@ -83,20 +83,20 @@ public class PuzzleMap {
         return x == end.getX() && y == end.getY();
     }
 
-    public boolean isValidCoordinate(int row, int col) {
-        return (row >= 0 && row < getRows()) && (col >= 0 && col < getColumns());
+    public boolean isValidCoordinate(int x, int y) {
+        return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
     }
 
-    public boolean isVisited(int row, int col) {
-        return visitedArray[col][row];
+    public boolean isVisited(int x, int y) {
+        return visitedArray[y][x];
     }
 
-    public boolean isRock(int row, int col) {
-        return puzzleMapArray[col][row].getValue() == ROCK_VALUE;
+    public boolean isRock(int x, int y) {
+        return puzzleMapArray[y][x].getValue() == ROCK_VALUE;
     }
 
-    public boolean isIce(int row, int col) {
-        return puzzleMapArray[col][row].getValue() == ICE_VALUE;
+    public boolean isIce(int x, int y) {
+        return puzzleMapArray[y][x].getValue() == ICE_VALUE;
     }
 
     public boolean isStart(PuzzleCoordinate p) {
@@ -123,8 +123,8 @@ public class PuzzleMap {
         return (p != null) && isIce(p.getX(), p.getY());
     }
 
-    public void setVisited(int row, int col, boolean value) {
-        visitedArray[col][row] = value;
+    public void setVisited(int x, int y, boolean value) {
+        visitedArray[y][x] = value;
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
