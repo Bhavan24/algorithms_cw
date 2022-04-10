@@ -2,7 +2,10 @@ package test.example4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
+
+import static main.GameConstants.*;
 
 public class Puzzle {
 
@@ -63,6 +66,74 @@ public class Puzzle {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+    }
+
+
+    public void initializePuzzleMap(String filePath) {
+
+        String fileContents = "";
+
+        try {
+            Scanner reader = new Scanner(new FileReader(filePath));
+            StringBuilder stringBuilder = new StringBuilder();
+            while (reader.hasNext()) {
+                stringBuilder.append(reader.nextLine()).append("\n");
+            }
+            reader.close();
+            fileContents = stringBuilder.toString();
+            System.out.println(PUZZLE_LOADED);
+        } catch (Exception e) {
+            System.out.println(FILE_DOES_NOT_EXIST);
+            System.out.println(TRY_AGAIN);
+        }
+
+
+        if (fileContents == null || fileContents.trim().equals("")) {
+            System.out.println(FILE_IS_EMPTY);
+            return;
+        }
+
+        String[] lines = fileContents.split("[\r]?\n");
+        int rows = lines.length;
+        int columns = lines[0].length();
+        maxHeight = rows;
+        maxWidth = columns;
+
+        puzzleArray = new Point[rows][columns];
+        int id = 0;
+        for (int x = 0; x < rows; x++) {
+            if (lines[x].length() != columns) {
+                System.out.println(INVALID_DATA);
+                return;
+            } else {
+
+                for (int y = 0; y < columns; y++) {
+                    switch (lines[x].charAt(y)) {
+                        case ICE:
+                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(ICE));
+                            break;
+                        case ROCK:
+                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(ROCK));
+                            break;
+                        case START:
+                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(START));
+                            startPoint = puzzleArray[x][y];
+                            break;
+                        case FINISH:
+                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(FINISH));
+                            finishPoint = puzzleArray[x][y];
+                            break;
+                    }
+                    id++;
+                }
+            }
+        }
+
+        for (Point[] points : puzzleArray) {
+            for (Point point : points) {
+//                System.out.println(point);
+            }
         }
     }
 
