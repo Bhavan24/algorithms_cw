@@ -23,6 +23,13 @@ public class SlidingPuzzleGame {
             if (puzzleFileType == 1) {
                 System.out.print(ENTER_PATH);
                 String puzzleFilePath = scanner.next();
+                File file = new File(puzzleFilePath);
+                if (!file.exists()) {
+                    System.out.println(FILE_DOES_NOT_EXIST);
+                    System.out.println(TRY_AGAIN);
+                    System.out.print(THANK_YOU);
+                    return;
+                }
                 int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
                 int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
                 solvePuzzle(puzzleFilePath, directionType, iceState);
@@ -70,6 +77,7 @@ public class SlidingPuzzleGame {
         } catch (Exception e) {
             System.out.print(ENTER_VALID_VALUE);
         }
+        if (userInput == -1) System.out.print(ENTER_VALID_VALUE);
         return userInput;
     }
 
