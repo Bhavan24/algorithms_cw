@@ -198,8 +198,8 @@ public class PuzzleSolver {
                 break;
             } else {
                 for (int[] direction : directions) {
-                    if (canTravel(oldPoint, direction)) {
-                        PuzzleCoordinate newPoint = travel(oldPoint, direction);
+                    if (canGo(oldPoint, direction)) {
+                        PuzzleCoordinate newPoint = goInThisDirection(oldPoint, direction);
                         if (!visited.contains(newPoint.getId())) {
                             stack.push(newPoint.getId());
                             g.addVertex(newPoint.getId());
@@ -247,22 +247,22 @@ public class PuzzleSolver {
         return true;
     }
 
-    public PuzzleCoordinate travel(PuzzleCoordinate point, int[] direction) {
+    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate point, int[] direction) {
         PuzzleCoordinate newPoint = point;
-        while (canTravel(newPoint, direction)) {
+        while (canGo(newPoint, direction)) {
             newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];
         }
         return newPoint;
     }
 
-    public boolean canTravel(PuzzleCoordinate point, int[] direction) {
-        int y = point.getY() + direction[1];
+    public boolean canGo(PuzzleCoordinate point, int[] direction) {
         int x = point.getX() + direction[0];
-        boolean b = false;
+        int y = point.getY() + direction[1];
+        boolean canGoInThisDirection = false;
         try {
-            b = !(puzzleArray[y][x].getValue() == ROCK);
+            canGoInThisDirection = !(puzzleArray[y][x].getValue() == ROCK);
         } catch (Exception ignored) {
         }
-        return b;
+        return canGoInThisDirection;
     }
 }
