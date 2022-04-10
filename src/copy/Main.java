@@ -7,12 +7,15 @@ public class Main {
 
     public static void main(String[] args) {
         String file = "src/inputs/test.txt";
+
         Puzzle p = new Puzzle();
+        UndirectedGraph g = new UndirectedGraph();
+
         String fileContent = p.readPuzzleFile(file);
         p.initializePuzzleMap(fileContent);
-        UndirectedGraph g = new UndirectedGraph();
         p.createGraph(g);
         p.printPathDetails(g);
+
         colorPrintGraph(p.getPathList(g), fileContent);
     }
 
