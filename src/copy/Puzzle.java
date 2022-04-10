@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-import static main.GameConstants.*;
 
 public class Puzzle {
 
@@ -26,35 +25,51 @@ public class Puzzle {
             }
             reader.close();
             fileContents = stringBuilder.toString();
-            System.out.println(PUZZLE_LOADED);
+            System.out.println("PUZZLE_LOADED");
         } catch (Exception e) {
-            System.out.println(FILE_DOES_NOT_EXIST);
-            System.out.println(TRY_AGAIN);
+            System.out.println("FILE_DOES_NOT_EXIST");
+            System.out.println("TRY_AGAIN");
         }
         return fileContents;
     }
 
-    public void initializePuzzleArray() {
-        String data = "";
-        int height = 0;
-        int width = 0;
-        try {
-            File myObj = new File(fileLocation);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
-                height++;
+    public void initializePuzzleMap(String fileContents) {
+
+        if (fileContents == null || fileContents.trim().equals("")) {
+            System.out.println("Empty File");
+            return;
+        }
+
+        String[] lines = fileContents.split("[\r]?\n");
+        maxHeight = lines.length;
+        maxWidth = lines[0].length();
+
+        puzzleArray = new Point[maxHeight][maxWidth];
+
+        int id = 0;
+        for (int x = 0; x < maxHeight; x++) {
+            if (lines[x].length() != maxWidth) {
+                System.out.println("INVALID_DATA");
+                return;
+            } else {
+                for (int y = 0; y < maxWidth; y++) {
+                    char c = lines[x].charAt(y);
+                    switch (c) {
+                        case 'S':
+                            startPoint = new Point(id, x, y, Character.toString(c));
+                            break;
+                        case 'F':
+                            finishPoint = new Point(id, x, y, Character.toString(c));
+                            break;
+                    }
+                    Point point = new Point(id, x, y, Character.toString(c));
+                    id++;
+                    puzzleArray[y][x] = point;
+                }
             }
-            width = data.length();
-            maxHeight = height;
-            maxWidth = width;
-            myReader.close();
-            puzzleArray = new Point[maxHeight][maxWidth];
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
     }
+
 
     public void fillPuzzleArray() {
         String data = "";
@@ -87,73 +102,6 @@ public class Puzzle {
         }
     }
 
-
-    public void initializePuzzleMap(String filePath) {
-
-        String fileContents = "";
-
-        try {
-            Scanner reader = new Scanner(new FileReader(filePath));
-            StringBuilder stringBuilder = new StringBuilder();
-            while (reader.hasNext()) {
-                stringBuilder.append(reader.nextLine()).append("\n");
-            }
-            reader.close();
-            fileContents = stringBuilder.toString();
-            System.out.println(PUZZLE_LOADED);
-        } catch (Exception e) {
-            System.out.println(FILE_DOES_NOT_EXIST);
-            System.out.println(TRY_AGAIN);
-        }
-
-
-        if (fileContents == null || fileContents.trim().equals("")) {
-            System.out.println(FILE_IS_EMPTY);
-            return;
-        }
-
-        String[] lines = fileContents.split("[\r]?\n");
-        int rows = lines.length;
-        int columns = lines[0].length();
-        maxHeight = rows;
-        maxWidth = columns;
-
-        puzzleArray = new Point[rows][columns];
-        int id = 0;
-        for (int x = 0; x < rows; x++) {
-            if (lines[x].length() != columns) {
-                System.out.println(INVALID_DATA);
-                return;
-            } else {
-
-                for (int y = 0; y < columns; y++) {
-                    switch (lines[x].charAt(y)) {
-                        case ICE:
-                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(ICE));
-                            break;
-                        case ROCK:
-                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(ROCK));
-                            break;
-                        case START:
-                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(START));
-                            startPoint = puzzleArray[x][y];
-                            break;
-                        case FINISH:
-                            puzzleArray[y][x] = new Point(id, x, y, String.valueOf(FINISH));
-                            finishPoint = puzzleArray[x][y];
-                            break;
-                    }
-                    id++;
-                }
-            }
-        }
-
-        for (Point[] points : puzzleArray) {
-            for (Point point : points) {
-//                System.out.println(point);
-            }
-        }
-    }
 
     public Point getPointFromArray(int vertexId) {
         for (Point[] points : puzzleArray) {

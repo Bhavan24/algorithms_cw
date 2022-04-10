@@ -1,7 +1,5 @@
 package copy;
 
-import test.example5.ReadInputData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,18 +7,24 @@ public class Main {
 
     public static void main(String[] args) {
         String file = "src/inputs/test.txt";
-        String[][] result = new ReadInputData().readFromFile(file, 10);
         Puzzle p = new Puzzle();
-        p.setFileLocation(file);
-        p.initializePuzzleArray();
-        p.fillPuzzleArray();
+        String fileContent = p.readPuzzleFile(file);
+        p.initializePuzzleMap(fileContent);
         UndirectedGraph g = new UndirectedGraph();
         p.createGraph(g);
         p.printPathDetails(g);
-        colorPrintGraph(p.getPathList(g), result);
+        colorPrintGraph(p.getPathList(g), fileContent);
     }
 
-    public static void colorPrintGraph(List<List<Integer>> paths, String[][] map) {
+    public static void colorPrintGraph(List<List<Integer>> paths, String fileContent) {
+
+        String[] lines = fileContent.split("[\r]?\n");
+        int rows = lines.length;
+        int columns = lines[0].length();
+        String[][] map = new String[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(lines[i].split(""), 0, map[i], 0, columns);
+        }
 
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_RED = "\033[1;91m";
