@@ -26,8 +26,10 @@ public class PuzzleSolver {
     }
 
     public void solveWithFrictionIce() {
-        List<PuzzleCoordinate> path = performAlgorithm();
-        puzzleMap.printPath(path);
+//        List<PuzzleCoordinate> path = performAlgorithm();
+//        puzzleMap.printPath(path);
+        PuzzleGraph puzzleGraph = createGraphForSome();
+        printPathDetails(puzzleGraph);
     }
 
     public void solveWithFrictionlessIce() {
@@ -200,6 +202,44 @@ public class PuzzleSolver {
                 for (int[] direction : directions) {
                     if (canGo(oldPoint, direction)) {
                         PuzzleCoordinate newPoint = goInThisDirection(oldPoint, direction);
+                        if (!visited.contains(newPoint.getId())) {
+                            stack.push(newPoint.getId());
+                            g.addVertex(newPoint.getId());
+                            g.addEdge(vertexId, newPoint.getId());
+                        }
+                    }
+                }
+            }
+        }
+        if (pathPresent) {
+            return g;
+        } else {
+            return null;
+        }
+    }
+
+    public PuzzleGraph createGraphForSome() {
+        PuzzleGraph g = new PuzzleGraph();
+        Stack<Integer> stack = new Stack<>();
+        List<Integer> visited = new ArrayList<>();
+        PuzzleCoordinate oldPoint = startPoint;
+        stack.push(oldPoint.getId());
+        g.addVertex(oldPoint.getId());
+        boolean pathPresent = false;
+        while (!stack.isEmpty()) {
+            int vertexId = stack.pop();
+            visited.add(vertexId);
+            oldPoint = getPointFromArray(vertexId);
+            if (oldPoint == finishPoint) {
+                g.addVertex(finishPoint.getId());
+                g.addEdge(vertexId, finishPoint.getId());
+                pathPresent = true;
+                stack.clear();
+                break;
+            } else {
+                for (int[] direction : directions) {
+                    if (canGo(oldPoint, direction)) {
+                        PuzzleCoordinate newPoint = puzzleArray[oldPoint.getY() + direction[1]][oldPoint.getX() + direction[0]];
                         if (!visited.contains(newPoint.getId())) {
                             stack.push(newPoint.getId());
                             g.addVertex(newPoint.getId());
