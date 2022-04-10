@@ -12,9 +12,9 @@ public class Puzzle {
     private Point startPoint;
     private Point finishPoint;
     private String fileLocation;
-    private final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+    private final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     private final int[][] CARDINAL_DIRECTIONS = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
-    int[][] directions = CARDINAL_DIRECTIONS;
+    int[][] directions = ALL_DIRECTIONS;
 
     public String readPuzzleFile(String filePath) {
         String fileContents = "";
@@ -177,38 +177,6 @@ public class Puzzle {
                         }
                     }
                 }
-//                if (canTravelNorth(oldPoint)) {
-//                    Point newPoint = travelNorthPoint(oldPoint);
-//                    if (!visited.contains(newPoint.getId())) {
-//                        stack.push(newPoint.getId());
-//                        g.addVertex(newPoint.getId());
-//                        g.addEdge(vertexId, newPoint.getId());
-//                    }
-//                }
-//                if (canTravelSouth(oldPoint)) {
-//                    Point newPoint = travelSouthPoint(oldPoint);
-//                    if (!visited.contains(newPoint.getId())) {
-//                        stack.push(newPoint.getId());
-//                        g.addVertex(newPoint.getId());
-//                        g.addEdge(vertexId, newPoint.getId());
-//                    }
-//                }
-//                if (canTravelEast(oldPoint)) {
-//                    Point newPoint = travelEastPoint(oldPoint);
-//                    if (!visited.contains(newPoint.getId())) {
-//                        stack.push(newPoint.getId());
-//                        g.addVertex(newPoint.getId());
-//                        g.addEdge(vertexId, newPoint.getId());
-//                    }
-//                }
-//                if (canTravelWest(oldPoint)) {
-//                    Point newPoint = travelWestPoint(oldPoint);
-//                    if (!visited.contains(newPoint.getId())) {
-//                        stack.push(newPoint.getId());
-//                        g.addVertex(newPoint.getId());
-//                        g.addEdge(vertexId, newPoint.getId());
-//                    }
-//                }
             }
         }
         if (pathPresent) {
@@ -216,38 +184,6 @@ public class Puzzle {
         } else {
             return null;
         }
-    }
-
-    public Point travelNorthPoint(Point point) {
-        Point newPoint = point;
-        while (canTravelNorth(newPoint)) {
-            newPoint = puzzleArray[newPoint.getY() - 1][newPoint.getX()];
-        }
-        return newPoint;
-    }
-
-    public Point travelSouthPoint(Point point) {
-        Point newPoint = point;
-        while (canTravelSouth(newPoint)) {
-            newPoint = puzzleArray[newPoint.getY() + 1][newPoint.getX()];
-        }
-        return newPoint;
-    }
-
-    public Point travelEastPoint(Point point) {
-        Point newPoint = point;
-        while (canTravelEast(newPoint)) {
-            newPoint = puzzleArray[newPoint.getY()][newPoint.getX() + 1];
-        }
-        return newPoint;
-    }
-
-    public Point travelWestPoint(Point point) {
-        Point newPoint = point;
-        while (canTravelWest(newPoint)) {
-            newPoint = puzzleArray[newPoint.getY()][newPoint.getX() - 1];
-        }
-        return newPoint;
     }
 
     public boolean finishVertexInPath(Point point) {
@@ -289,34 +225,6 @@ public class Puzzle {
             }
         }
         return true;
-    }
-
-    public boolean canTravelNorth(Point point) {
-        if (point.getY() == 0) {
-            return false;
-        }
-        return !(puzzleArray[point.getY() - 1][point.getX()].getLetter().equals("0"));
-    }
-
-    public boolean canTravelSouth(Point point) {
-        if (point.getY() == (maxHeight - 1)) {
-            return false;
-        }
-        return !(puzzleArray[point.getY() + 1][point.getX()].getLetter().equals("0"));
-    }
-
-    public boolean canTravelEast(Point point) {
-        if (point.getX() == (maxWidth - 1)) {
-            return false;
-        }
-        return !(puzzleArray[point.getY()][point.getX() + 1].getLetter().equals("0"));
-    }
-
-    public boolean canTravelWest(Point point) {
-        if (point.getX() == 0) {
-            return false;
-        }
-        return !(puzzleArray[point.getY()][point.getX() - 1].getLetter().equals("0"));
     }
 
     public Point travel(Point point, int[] direction) {
