@@ -10,7 +10,7 @@ public class Main {
         Puzzle p = new Puzzle();
         String fileContent = p.readPuzzleFile(file);
 //        p.initializePuzzleMap(fileContent);
-        p.initializePuzzleMap2(file, fileContent);
+        p.initializePuzzleMap2(fileContent);
         UndirectedGraph g = new UndirectedGraph();
         p.createGraph(g);
         p.printPathDetails(g);
@@ -38,8 +38,7 @@ public class Main {
                 if (paths.contains(coordinates)) {
                     if (map[i][j].equals("S") || map[i][j].equals("F"))
                         System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
-                    else
-                        System.out.print(ANSI_RED + "*" + ANSI_RESET);
+                    else System.out.print(ANSI_RED + "*" + ANSI_RESET);
                 } else {
                     System.out.print(map[i][j]);
                 }

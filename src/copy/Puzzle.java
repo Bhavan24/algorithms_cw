@@ -1,7 +1,5 @@
 package copy;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
@@ -70,7 +68,7 @@ public class Puzzle {
         }
     }
 
-    public void initializePuzzleMap2(String filePath, String fileContents) {
+    public void initializePuzzleMap2(String fileContents) {
 
         if (fileContents == null || fileContents.trim().equals("")) {
             System.out.println("Empty File");
@@ -82,40 +80,29 @@ public class Puzzle {
         maxWidth = lines[0].length();
         puzzleArray = new Point[maxHeight][maxWidth];
 
-        fillPuzzleArray(filePath);
-    }
-
-    public void fillPuzzleArray(String fileLocation) {
-        String data = "";
-        int yCord = 0;
-        try {
-            File myObj = new File(fileLocation);
-            Scanner myReader = new Scanner(myObj);
-            int id = 0;
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
-                for (int i = 0; i < data.length(); i++) {
-                    char c = data.charAt(i);
-                    if (c == 'S') {
-                        startPoint = new Point(id, i, yCord, Character.toString(c));
+        int id = 0;
+        for (int x = 0; x < maxHeight; x++) {
+            if (lines[x].length() != maxWidth) {
+                System.out.println("INVALID_DATA");
+            } else {
+                for (int y = 0; y < maxWidth; y++) {
+                    char c = lines[x].charAt(y);
+                    switch (c) {
+                        case 'S':
+                            startPoint = new Point(id, y, x, Character.toString(c));
+                            break;
+                        case 'F':
+                            finishPoint = new Point(id, y, x, Character.toString(c));
+                            break;
                     }
-                    if (c == 'F') {
-                        finishPoint = new Point(id, i, yCord, Character.toString(c));
-                    }
-                    Point point = new Point(id, i, yCord, Character.toString(c));
+                    Point point = new Point(id, y, x, Character.toString(c));
                     id++;
-                    puzzleArray[yCord][i] = point;
+                    puzzleArray[x][y] = point;
                 }
-                yCord++;
             }
-            myReader.close();
-            //System.out.println(Arrays.deepToString(puzzleArray).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
-    }
 
+    }
 
     public Point getPointFromArray(int vertexId) {
         for (Point[] points : puzzleArray) {
