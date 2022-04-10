@@ -5,6 +5,7 @@ import java.util.*;
 import static main.PuzzleConstants.IceState;
 import static main.PuzzleConstants.IceState.FRICTION;
 import static main.PuzzleConstants.IceState.FRICTIONLESS;
+import static main.PuzzleConstants.PathDirection;
 
 public class PuzzleSolver {
 
@@ -75,17 +76,13 @@ public class PuzzleSolver {
                 PuzzleCoordinate point = getPointFromArray(pathList.get(i));
                 if (oldPoint != null) {
                     if (point.getY() == oldPoint.getY()) {
-                        if (point.getX() > oldPoint.getX()) {
-                            direction = "right";
-                        } else {
-                            direction = "left";
-                        }
+                        direction = (point.getX() > oldPoint.getX()) ?
+                                PathDirection.right.toString() :
+                                PathDirection.left.toString();
                     } else {
-                        if (point.getY() > oldPoint.getY()) {
-                            direction = "down";
-                        } else {
-                            direction = "up";
-                        }
+                        direction = (point.getY() > oldPoint.getY()) ?
+                                PathDirection.down.toString() :
+                                PathDirection.up.toString();
                     }
                 }
                 System.out.println((i + 1) + ". " + getDirectionDetails(point, direction));

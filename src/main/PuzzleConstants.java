@@ -54,6 +54,10 @@ public class PuzzleConstants {
         FRICTIONLESS, FRICTION
     }
 
+    public enum PathDirection {
+        up, down, left, right
+    }
+
     // Console Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\033[1;91m";
