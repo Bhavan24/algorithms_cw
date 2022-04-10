@@ -115,11 +115,7 @@ public class SlidingPuzzleGame {
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {
             PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions);
-            if (iceState == FRICTION) {
-                puzzleSolver.solveWithFrictionIce();
-            } else if (iceState == FRICTIONLESS) {
-                puzzleSolver.solveWithFrictionlessIce();
-            }
+            puzzleSolver.solve(iceState);
         }
     }
 

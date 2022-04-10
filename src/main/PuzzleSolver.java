@@ -2,6 +2,10 @@ package main;
 
 import java.util.*;
 
+import static main.GameConstants.IceStates;
+import static main.GameConstants.IceStates.FRICTION;
+import static main.GameConstants.IceStates.FRICTIONLESS;
+
 public class PuzzleSolver {
 
     private final PuzzleCoordinate[][] puzzleArray;
@@ -21,13 +25,8 @@ public class PuzzleSolver {
         this.finishPoint = puzzleMap.getEnd();
     }
 
-    public void solveWithFrictionIce() {
-        PuzzleGraph puzzleGraph = createGraphForSome();
-        printPathDetails(puzzleGraph);
-    }
-
-    public void solveWithFrictionlessIce() {
-        PuzzleGraph puzzleGraph = createGraph();
+    public void solve(IceStates iceStates) {
+        PuzzleGraph puzzleGraph = createGraph(iceStates);
         printPathDetails(puzzleGraph);
     }
 
@@ -131,7 +130,7 @@ public class PuzzleSolver {
         return pathList;
     }
 
-    public PuzzleGraph createGraph() {
+    public PuzzleGraph createGraph(IceStates iceState) {
         PuzzleGraph g = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
@@ -143,7 +142,7 @@ public class PuzzleSolver {
             int vertexId = stack.pop();
             visited.add(vertexId);
             oldPoint = getPointFromArray(vertexId);
-            if (finishVertexInPath(oldPoint)) {
+            if (finishVertexInPath(oldPoint, iceState)) {
                 g.addVertex(finishPoint.getId());
                 g.addEdge(vertexId, finishPoint.getId());
                 pathPresent = true;
@@ -152,7 +151,7 @@ public class PuzzleSolver {
             } else {
                 for (int[] direction : directions) {
                     if (canGo(oldPoint, direction)) {
-                        PuzzleCoordinate newPoint = goInThisDirection(oldPoint, direction);
+                        PuzzleCoordinate newPoint = goInThisDirection(oldPoint, direction, iceState);
                         if (!visited.contains(newPoint.getId())) {
                             stack.push(newPoint.getId());
                             g.addVertex(newPoint.getId());
@@ -169,79 +168,50 @@ public class PuzzleSolver {
         }
     }
 
-    public PuzzleGraph createGraphForSome() {
-        PuzzleGraph g = new PuzzleGraph();
-        Stack<Integer> stack = new Stack<>();
-        List<Integer> visited = new ArrayList<>();
-        PuzzleCoordinate oldPoint = startPoint;
-        stack.push(oldPoint.getId());
-        g.addVertex(oldPoint.getId());
-        boolean pathPresent = false;
-        while (!stack.isEmpty()) {
-            int vertexId = stack.pop();
-            visited.add(vertexId);
-            oldPoint = getPointFromArray(vertexId);
-            if (oldPoint == finishPoint) {
-                g.addVertex(finishPoint.getId());
-                g.addEdge(vertexId, finishPoint.getId());
-                pathPresent = true;
-                stack.clear();
-                break;
+    public boolean finishVertexInPath(PuzzleCoordinate point, IceStates iceState) {
+        if (iceState.equals(FRICTION)) {
+            return (point == finishPoint);
+        } else if (iceState.equals(FRICTIONLESS)) {
+            if (point.getId() == finishPoint.getId()) {
+                return true;
+            }
+            if (!(point.getX() == finishPoint.getX() || point.getY() == finishPoint.getY())) {
+                return false;
+            }
+            int start;
+            int end;
+            if (point.getX() == finishPoint.getX()) {
+                start = Math.min(point.getY(), finishPoint.getY());
+                end = Math.max(point.getY(), finishPoint.getY());
+                for (int i = start; i <= end; i++) {
+                    PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
+                    if (puzzleMap.isRock(p)) {
+                        return false;
+                    }
+                }
             } else {
-                for (int[] direction : directions) {
-                    if (canGo(oldPoint, direction)) {
-                        PuzzleCoordinate newPoint = puzzleArray[oldPoint.getY() + direction[1]][oldPoint.getX() + direction[0]];
-                        if (!visited.contains(newPoint.getId())) {
-                            stack.push(newPoint.getId());
-                            g.addVertex(newPoint.getId());
-                            g.addEdge(vertexId, newPoint.getId());
-                        }
+                start = Math.min(point.getX(), finishPoint.getX());
+                end = Math.max(point.getX(), finishPoint.getX());
+                for (int i = start; i <= end; i++) {
+                    PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
+                    if (puzzleMap.isRock(p)) {
+                        return false;
                     }
                 }
             }
-        }
-        if (pathPresent) {
-            return g;
-        } else {
-            return null;
-        }
-    }
-
-    public boolean finishVertexInPath(PuzzleCoordinate point) {
-        if (point.getId() == finishPoint.getId()) {
             return true;
-        }
-        if (!(point.getX() == finishPoint.getX() || point.getY() == finishPoint.getY())) {
-            return false;
-        }
-        int start;
-        int end;
-        if (point.getX() == finishPoint.getX()) {
-            start = Math.min(point.getY(), finishPoint.getY());
-            end = Math.max(point.getY(), finishPoint.getY());
-            for (int i = start; i <= end; i++) {
-                PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
-                if (puzzleMap.isRock(p)) {
-                    return false;
-                }
-            }
-        } else {
-            start = Math.min(point.getX(), finishPoint.getX());
-            end = Math.max(point.getX(), finishPoint.getX());
-            for (int i = start; i <= end; i++) {
-                PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
-                if (puzzleMap.isRock(p)) {
-                    return false;
-                }
-            }
         }
         return true;
     }
 
-    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate point, int[] direction) {
+    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate point, int[] direction, IceStates iceState) {
         PuzzleCoordinate newPoint = point;
-        while (canGo(newPoint, direction)) {
+        if (iceState.equals(FRICTION)) {
             newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];
+        } else if (iceState.equals(FRICTIONLESS)) {
+            while (canGo(newPoint, direction)) {
+                newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];
+            }
         }
         return newPoint;
     }
