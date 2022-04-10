@@ -53,11 +53,13 @@ public class PuzzleSolver {
     }
 
     public String getDirectionDetails(PuzzleCoordinate point, String direction) {
+        String directionDetail;
         if (puzzleMap.isStart(point)) {
-            return "Start at (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
+            directionDetail = String.format("Start at (%d,%d)", (point.getX() + 1), (point.getY() + 1));
         } else {
-            return "Move " + direction + " to (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
+            directionDetail = String.format("Move %s to (%d,%d)", direction, (point.getX() + 1), (point.getY() + 1));
         }
+        return directionDetail;
     }
 
     public void printPathDetails(PuzzleGraph g) {
@@ -86,7 +88,7 @@ public class PuzzleSolver {
                         }
                     }
                 }
-                System.out.println(i + ". " + getDirectionDetails(point, direction));
+                System.out.println((i + 1) + ". " + getDirectionDetails(point, direction));
                 oldPoint = point;
                 if (i == pathList.size() - 1) {
                     System.out.println(i + 1 + ". Done!");
@@ -142,7 +144,7 @@ public class PuzzleSolver {
             int vertexId = stack.pop();
             visited.add(vertexId);
             oldPoint = getPointFromArray(vertexId);
-            if (finishVertexInPath(oldPoint, iceState)) {
+            if (canFinishInThisPath(oldPoint, iceState)) {
                 g.addVertex(finishPoint.getId());
                 g.addEdge(vertexId, finishPoint.getId());
                 pathPresent = true;
@@ -161,18 +163,14 @@ public class PuzzleSolver {
                 }
             }
         }
-        if (pathPresent) {
-            return g;
-        } else {
-            return null;
-        }
+        return (pathPresent) ? g : null;
     }
 
-    public boolean finishVertexInPath(PuzzleCoordinate point, IceState iceState) {
+    public boolean canFinishInThisPath(PuzzleCoordinate point, IceState iceState) {
         if (iceState.equals(FRICTION)) {
-            return (point == finishPoint);
+            return puzzleMap.isEnd(point);
         } else if (iceState.equals(FRICTIONLESS)) {
-            if (point.getId() == finishPoint.getId()) {
+            if (puzzleMap.isEnd(point)) {
                 return true;
             }
             if (!(point.getX() == finishPoint.getX() || point.getY() == finishPoint.getY())) {
