@@ -9,7 +9,8 @@ public class Main {
         String file = "src/inputs/test.txt";
         Puzzle p = new Puzzle();
         String fileContent = p.readPuzzleFile(file);
-        p.initializePuzzleMap(fileContent);
+//        p.initializePuzzleMap(fileContent);
+        p.initializePuzzleMap2(file, fileContent);
         UndirectedGraph g = new UndirectedGraph();
         p.createGraph(g);
         p.printPathDetails(g);

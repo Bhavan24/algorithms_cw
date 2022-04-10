@@ -70,8 +70,22 @@ public class Puzzle {
         }
     }
 
+    public void initializePuzzleMap2(String filePath, String fileContents) {
 
-    public void fillPuzzleArray() {
+        if (fileContents == null || fileContents.trim().equals("")) {
+            System.out.println("Empty File");
+            return;
+        }
+
+        String[] lines = fileContents.split("[\r]?\n");
+        maxHeight = lines.length;
+        maxWidth = lines[0].length();
+        puzzleArray = new Point[maxHeight][maxWidth];
+
+        fillPuzzleArray(filePath);
+    }
+
+    public void fillPuzzleArray(String fileLocation) {
         String data = "";
         int yCord = 0;
         try {
