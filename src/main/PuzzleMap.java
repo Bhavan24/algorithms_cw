@@ -35,17 +35,17 @@ public class PuzzleMap {
                 for (int x = 0; x < columns; x++) {
                     switch (lines[y].charAt(x)) {
                         case ICE:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ICE, ICE_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ICE);
                             break;
                         case ROCK:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ROCK, ROCK_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ROCK);
                             break;
                         case START:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, START, START_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, START);
                             start = puzzleMapArray[y][x];
                             break;
                         case FINISH:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, FINISH, FINISH_VALUE);
+                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, FINISH);
                             end = puzzleMapArray[y][x];
                             break;
                     }
@@ -92,11 +92,11 @@ public class PuzzleMap {
     }
 
     public boolean isRock(int x, int y) {
-        return puzzleMapArray[y][x].getValue() == ROCK_VALUE;
+        return puzzleMapArray[y][x].getValue() == ROCK;
     }
 
     public boolean isIce(int x, int y) {
-        return puzzleMapArray[y][x].getValue() == ICE_VALUE;
+        return puzzleMapArray[y][x].getValue() == ICE;
     }
 
     public boolean isStart(PuzzleCoordinate p) {
@@ -134,7 +134,7 @@ public class PuzzleMap {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
                 continue;
             }
-            tempPuzzleMapArray[coordinate.getY()][coordinate.getX()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH, SHORTEST_PATH_VALUE);
+            tempPuzzleMapArray[coordinate.getY()][coordinate.getX()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH);
             id++;
         }
         printPuzzleMap(tempPuzzleMapArray);
@@ -143,7 +143,7 @@ public class PuzzleMap {
     public void printPuzzleMap(PuzzleCoordinate[][] puzzleMapArray) {
         for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
-                switch (puzzleCoordinate.getCharacter()) {
+                switch (puzzleCoordinate.getValue()) {
                     case ICE:
                         System.out.print(ICE);
                         break;

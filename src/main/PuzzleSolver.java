@@ -133,7 +133,7 @@ public class PuzzleSolver {
     }
 
     public String getDirectionDetails(PuzzleCoordinate point, String direction) {
-        if (point.getValue() == START_VALUE) {
+        if (point.getValue() == START) {
             return "Start at (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
         } else {
             return "Move " + direction + " to (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
@@ -232,7 +232,7 @@ public class PuzzleSolver {
             end = Math.max(point.getY(), finishPoint.getY());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
-                if (p.getValue() == ROCK_VALUE) {
+                if (p.getValue() == ROCK) {
                     return false;
                 }
             }
@@ -241,7 +241,7 @@ public class PuzzleSolver {
             end = Math.max(point.getX(), finishPoint.getX());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
-                if (p.getValue() == ROCK_VALUE) {
+                if (p.getValue() == ROCK) {
                     return false;
                 }
             }
@@ -262,7 +262,7 @@ public class PuzzleSolver {
         int x = point.getX() + direction[0];
         boolean b = false;
         try {
-            b = !(puzzleArray[y][x].getValue() == ROCK_VALUE);
+            b = !(puzzleArray[y][x].getValue() == ROCK);
         } catch (Exception ignored) {
         }
         return b;

@@ -4,21 +4,21 @@ public class GameConstants {
 
     // Message Constants
     public static final String WELCOME_TEXT =
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|                    PUZZLE FILES                   |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|  1. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
                     "|  2. RUN A PUZZLE FROM FILE PATH                   |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String SELECT_MOVABLE_TYPE =
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|                 MOVING DIRECTIONS                 |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|  1. 4-CARDINAL DIRECTIONS (TOP,DOWN,RIGHT,LEFT)   |\n" +
                     "|  2. 8-CARDINAL DIRECTIONS (ALL DIRECTIONS)        |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String SELECT_ALGORITHM_TYPE =
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|             STATE OF THE PUZZLE ICE               |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|  1. FRICTIONLESS ICE (USER WILL SLIDE)            |\n" +
@@ -46,14 +46,7 @@ public class GameConstants {
     public static final char FINISH = 'F';
     public static final char SHORTEST_PATH = '*';
 
-    // Algorithmic Constants
-    public static final int ICE_VALUE = 0;
-    public static final int ROCK_VALUE = 1;
-    public static final int START_VALUE = 2;
-    public static final int FINISH_VALUE = 3;
-    public static final int SHORTEST_PATH_VALUE = 4;
-
-    // DIRECTIONS: top, right, down, left
+    // Directions
     public static final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     public static final int[][] CARDINAL_DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 

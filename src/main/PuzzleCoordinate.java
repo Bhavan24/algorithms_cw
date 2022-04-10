@@ -6,8 +6,7 @@ public class PuzzleCoordinate {
     int id;
     int x;
     int y;
-    char character;
-    int value;
+    char value;
     PuzzleCoordinate parent;
 
     public PuzzleCoordinate(int x, int y, PuzzleCoordinate parent) {
@@ -16,11 +15,10 @@ public class PuzzleCoordinate {
         this.parent = parent;
     }
 
-    public PuzzleCoordinate(int id, int x, int y, char character, int value) {
+    public PuzzleCoordinate(int id, int x, int y, char value) {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.character = character;
         this.value = value;
     }
 
@@ -28,24 +26,44 @@ public class PuzzleCoordinate {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getX() {
         return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
 
     public int getY() {
         return y;
     }
 
-    public char getCharacter() {
-        return character;
+    public void setY(int y) {
+        this.y = y;
     }
 
-    public int getValue() {
+    public char getValue() {
         return value;
+    }
+
+    public void setValue(char value) {
+        this.value = value;
+    }
+
+    public PuzzleCoordinate getParent() {
+        return parent;
+    }
+
+    public void setParent(PuzzleCoordinate parent) {
+        this.parent = parent;
     }
 
     @Override
     public String toString() {
-        return "PuzzleCoordinate {" + "id=" + id + ", x=" + x + ", y=" + y + ", character=" + character + ", value=" + value + '}';
+        return "PuzzleCoordinate {" + "id=" + id + ", x=" + x + ", y=" + y + ", character=" + value + '}';
     }
 }
