@@ -124,7 +124,7 @@ public class SlidingPuzzleGame {
             } else if (iceState == FRICTIONLESS) {
                 PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap, directions);
                 PuzzleGraph puzzleGraph = new PuzzleGraph();
-                puzzleSolver2.solve(puzzleGraph);
+                puzzleSolver2.solve(puzzleGraph, fileContents);
             }
         }
     }

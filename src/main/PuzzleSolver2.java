@@ -23,8 +23,42 @@ public class PuzzleSolver2 {
         this.directions = directions;
     }
 
-    public void solve(PuzzleGraph puzzleGraph){
+    public void solve(PuzzleGraph puzzleGraph, String fileContent) {
+        PuzzleGraph pg = createGraph(puzzleGraph);
+        printPathDetails(pg);
+        colorPrintGraph(getPathList(pg), fileContent);
+    }
 
+    public void colorPrintGraph(List<List<Integer>> paths, String fileContent) {
+
+        String[] lines = fileContent.split("[\r]?\n");
+        int rows = lines.length;
+        int columns = lines[0].length();
+        String[][] map = new String[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(lines[i].split(""), 0, map[i], 0, columns);
+        }
+
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED = "\033[1;91m";
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                List<Integer> coordinates = new ArrayList<>();
+                coordinates.add(j);
+                coordinates.add(i);
+                if (paths.contains(coordinates)) {
+                    if (map[i][j].equals("S") || map[i][j].equals("F"))
+                        System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
+                    else System.out.print(ANSI_RED + "*" + ANSI_RESET);
+                } else {
+                    System.out.print(map[i][j]);
+                }
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 
