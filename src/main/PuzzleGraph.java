@@ -20,7 +20,6 @@ public class PuzzleGraph {
         PuzzleVertex v1 = new PuzzleVertex(label1);
         PuzzleVertex v2 = new PuzzleVertex(label2);
         adjVertices.get(v1).add(v2);
-        //adjVertices.get(v2).add(v1);
     }
 
     public List<PuzzleVertex> getAdjVertices(int label) {

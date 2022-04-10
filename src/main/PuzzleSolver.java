@@ -9,20 +9,18 @@ import static main.PuzzleConstants.IceState.FRICTIONLESS;
 public class PuzzleSolver {
 
     private final PuzzleCoordinate[][] puzzleArray;
-    private final PuzzleCoordinate startPoint;
-    private final PuzzleCoordinate finishPoint;
-    String fileContents;
-    PuzzleMap puzzleMap;
-    int[][] directions;
+    private final PuzzleCoordinate startPuzzleCoordinate;
+    private final PuzzleCoordinate endPuzzleCoordinate;
+    private final PuzzleMap puzzleMap;
+    private final int[][] directions;
 
     public PuzzleSolver(String fileContents, int[][] directions) {
-        this.fileContents = fileContents;
         this.directions = directions;
         this.puzzleMap = new PuzzleMap();
         this.puzzleMap.initializePuzzleMap(fileContents);
         this.puzzleArray = puzzleMap.getPuzzleMapArray();
-        this.startPoint = puzzleMap.getStart();
-        this.finishPoint = puzzleMap.getEnd();
+        this.startPuzzleCoordinate = puzzleMap.getStart();
+        this.endPuzzleCoordinate = puzzleMap.getEnd();
     }
 
     public void solve(IceState iceState) {
@@ -31,10 +29,10 @@ public class PuzzleSolver {
     }
 
     public PuzzleCoordinate getPointFromArray(int vertexId) {
-        for (PuzzleCoordinate[] points : puzzleArray) {
-            for (PuzzleCoordinate point : points) {
-                if (point.getId() == vertexId) {
-                    return point;
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleArray) {
+            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
+                if (puzzleCoordinate.getId() == vertexId) {
+                    return puzzleCoordinate;
                 }
             }
         }
@@ -42,50 +40,50 @@ public class PuzzleSolver {
     }
 
     public PuzzleCoordinate getPointFromArray(int x, int y) {
-        for (PuzzleCoordinate[] points : puzzleArray) {
-            for (PuzzleCoordinate point : points) {
-                if (point.getX() == x && point.getY() == y) {
-                    return point;
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleArray) {
+            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
+                if (puzzleCoordinate.getX() == x && puzzleCoordinate.getY() == y) {
+                    return puzzleCoordinate;
                 }
             }
         }
         return null;
     }
 
-    public String getSteps(int id, PuzzleCoordinate point, String direction) {
-        String steps;
-        if (puzzleMap.isStart(point)) {
-            steps = String.format("%d. Start at (%d,%d)", id, (point.getX() + 1), (point.getY() + 1));
+    public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
+        String step;
+        if (puzzleMap.isStart(puzzleCoordinate)) {
+            step = String.format("%d. Start at (%d,%d)", id, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
         } else {
-            steps = String.format("%d. Move %s to (%d,%d)", id, direction, (point.getX() + 1), (point.getY() + 1));
-            if (puzzleMap.isEnd(point)) {
-                steps += String.format("\n%d. Done!\n", (id + 1));
+            step = String.format("%d. Move %s to (%d,%d)", id, direction, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
+            if (puzzleMap.isEnd(puzzleCoordinate)) {
+                step += String.format("\n%d. Done!\n", (id + 1));
             }
         }
-        return steps;
+        System.out.println(step);
     }
 
     public void printPathDetails(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        Map<Integer, Integer> pastVertexMap = breadthFirstTraversal(graph, startPoint.getId());
-        List<Integer> paths = findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
+        Map<Integer, Integer> traversalMap = breadthFirstTraversal(graph, startPuzzleCoordinate.getId());
+        List<Integer> paths = findPathList(traversalMap, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
         if (paths.isEmpty()) {
             System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {
-            PuzzleCoordinate oldPoint = null;
+            PuzzleCoordinate currentCoordinate = null;
             for (int i = 0; i < paths.size(); i++) {
                 String direction = "";
-                PuzzleCoordinate point = getPointFromArray(paths.get(i));
-                if (oldPoint != null) {
-                    if (point.getX() == oldPoint.getX()) {
-                        direction = (point.getY() > oldPoint.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
+                PuzzleCoordinate puzzleCoordinate = getPointFromArray(paths.get(i));
+                if (currentCoordinate != null) {
+                    if (puzzleCoordinate.getX() == currentCoordinate.getX()) {
+                        direction = (puzzleCoordinate.getY() > currentCoordinate.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
                     } else {
-                        direction = (point.getX() > oldPoint.getX()) ? PathDirection.right.toString() : PathDirection.left.toString();
+                        direction = (puzzleCoordinate.getX() > currentCoordinate.getX()) ? PathDirection.right.toString() : PathDirection.left.toString();
                     }
                 }
-                System.out.println(getSteps((i + 1), point, direction));
-                oldPoint = point;
-                result.add(point);
+                printStep((i + 1), puzzleCoordinate, direction);
+                currentCoordinate = puzzleCoordinate;
+                result.add(puzzleCoordinate);
             }
         }
         puzzleMap.printPath(result);
@@ -128,7 +126,7 @@ public class PuzzleSolver {
         PuzzleGraph g = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
-        PuzzleCoordinate oldPoint = startPoint;
+        PuzzleCoordinate oldPoint = startPuzzleCoordinate;
         stack.push(oldPoint.getId());
         g.addVertex(oldPoint.getId());
         boolean pathPresent = false;
@@ -137,8 +135,8 @@ public class PuzzleSolver {
             visited.add(vertexId);
             oldPoint = getPointFromArray(vertexId);
             if (canFinishInThisPath(oldPoint, iceState)) {
-                g.addVertex(finishPoint.getId());
-                g.addEdge(vertexId, finishPoint.getId());
+                g.addVertex(endPuzzleCoordinate.getId());
+                g.addEdge(vertexId, endPuzzleCoordinate.getId());
                 pathPresent = true;
                 stack.clear();
                 break;
@@ -158,32 +156,32 @@ public class PuzzleSolver {
         return (pathPresent) ? g : null;
     }
 
-    public boolean canFinishInThisPath(PuzzleCoordinate point, IceState iceState) {
+    public boolean canFinishInThisPath(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
         if (iceState.equals(FRICTION)) {
-            return puzzleMap.isEnd(point);
+            return puzzleMap.isEnd(puzzleCoordinate);
         } else if (iceState.equals(FRICTIONLESS)) {
-            if (puzzleMap.isEnd(point)) {
+            if (puzzleMap.isEnd(puzzleCoordinate)) {
                 return true;
             }
-            if (!(point.getX() == finishPoint.getX() || point.getY() == finishPoint.getY())) {
+            if (!(puzzleCoordinate.getX() == endPuzzleCoordinate.getX() || puzzleCoordinate.getY() == endPuzzleCoordinate.getY())) {
                 return false;
             }
             int start;
             int end;
-            if (point.getX() == finishPoint.getX()) {
-                start = Math.min(point.getY(), finishPoint.getY());
-                end = Math.max(point.getY(), finishPoint.getY());
+            if (puzzleCoordinate.getX() == endPuzzleCoordinate.getX()) {
+                start = Math.min(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
+                end = Math.max(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
                 for (int i = start; i <= end; i++) {
-                    PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
+                    PuzzleCoordinate p = getPointFromArray(endPuzzleCoordinate.getX(), i);
                     if (puzzleMap.isRock(p)) {
                         return false;
                     }
                 }
             } else {
-                start = Math.min(point.getX(), finishPoint.getX());
-                end = Math.max(point.getX(), finishPoint.getX());
+                start = Math.min(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
+                end = Math.max(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
                 for (int i = start; i <= end; i++) {
-                    PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
+                    PuzzleCoordinate p = getPointFromArray(i, endPuzzleCoordinate.getY());
                     if (puzzleMap.isRock(p)) {
                         return false;
                     }
