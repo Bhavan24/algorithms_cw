@@ -36,7 +36,7 @@ public class PuzzleGraph {
         return adjVertices.get(new PuzzleVertex(label));
     }
 
-    public Map<Integer, Integer> breadthFirstTraversal(PuzzleGraph graph, int startId, int endId) {
+    public Map<Integer, Integer> breadthFirstTraversal(PuzzleGraph graph, int startId) {
         Set<Integer> visited = new LinkedHashSet<>();
         Queue<Integer> queue = new LinkedList<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
