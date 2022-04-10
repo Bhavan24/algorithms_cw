@@ -2,8 +2,7 @@ package main;
 
 import java.util.*;
 
-import static main.GameConstants.ROCK_VALUE;
-import static main.GameConstants.START_VALUE;
+import static main.GameConstants.*;
 
 
 public class PuzzleSolver {
@@ -81,7 +80,7 @@ public class PuzzleSolver {
 
     public void colorPrintGraph(List<List<Integer>> paths, String fileContent) {
 
-        String[] lines = fileContent.split("[\r]?\n");
+        String[] lines = fileContent.split(EOF_REGEX);
         int rows = lines.length;
         int columns = lines[0].length();
         String[][] map = new String[rows][columns];

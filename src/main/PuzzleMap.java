@@ -19,7 +19,7 @@ public class PuzzleMap {
             return;
         }
 
-        String[] lines = fileContents.split("[\r]?\n");
+        String[] lines = fileContents.split(EOF_REGEX);
         int rows = lines.length;
         int columns = lines[0].length();
 

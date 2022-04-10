@@ -38,12 +38,12 @@ public class SlidingPuzzleGame {
 
     public void selectPuzzleFile(int puzzleFileType) {
         if (puzzleFileType == 1) {
-            String puzzleFilePath = handleUserInput(ENTER_PATH);
-            selectPuzzleProperties(puzzleFilePath);
-        } else if (puzzleFileType == 2) {
             String[] puzzleFiles = loadPuzzleFiles();
             int fileId = Integer.parseInt(handleUserInput(SELECT_FILE));
             String puzzleFilePath = puzzleFiles[fileId - 1];
+            selectPuzzleProperties(puzzleFilePath);
+        } else if (puzzleFileType == 2) {
+            String puzzleFilePath = handleUserInput(ENTER_PATH);
             selectPuzzleProperties(puzzleFilePath);
         } else {
             System.out.print(ENTER_VALID_VALUE);

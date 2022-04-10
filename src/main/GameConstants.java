@@ -7,8 +7,8 @@ public class GameConstants {
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
                     "|                    PUZZLE FILES                   |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|  1. RUN A PUZZLE FROM FILE PATH                   |\n" +
-                    "|  2. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
+                    "|  1. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
+                    "|  2. RUN A PUZZLE FROM FILE PATH                   |\n" +
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String SELECT_MOVABLE_TYPE =
                     "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
@@ -64,4 +64,7 @@ public class GameConstants {
     // Console Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\033[1;91m";
+
+    // EOF Regex
+    public static final String EOF_REGEX = "[\r]?\n";
 }
