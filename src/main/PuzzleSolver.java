@@ -67,15 +67,15 @@ public class PuzzleSolver {
         return path;
     }
 
-    public void solve() {
+    public void solveWithFrictionIce() {
         List<PuzzleCoordinate> path = performAlgorithm();
         puzzleMap.printPath(path);
     }
 
-    public void solve2() {
-        PuzzleGraph pg = createGraph(new PuzzleGraph());
-        printPathDetails(pg);
-        colorPrintGraph(getPathList(pg), fileContents);
+    public void solveWithFrictionlessIce() {
+        PuzzleGraph puzzleGraph = createGraph();
+        printPathDetails(puzzleGraph);
+        colorPrintGraph(getPathList(puzzleGraph), fileContents);
     }
 
     public void colorPrintGraph(List<List<Integer>> paths, String fileContent) {
@@ -189,7 +189,8 @@ public class PuzzleSolver {
         }
     }
 
-    public PuzzleGraph createGraph(PuzzleGraph g) {
+    public PuzzleGraph createGraph() {
+        PuzzleGraph g = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
         PuzzleCoordinate oldPoint = startPoint;

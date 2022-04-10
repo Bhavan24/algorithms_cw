@@ -116,9 +116,9 @@ public class SlidingPuzzleGame {
         if (fileContents != null) {
             PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions);
             if (iceState == FRICTION) {
-                puzzleSolver.solve();
+                puzzleSolver.solveWithFrictionIce();
             } else if (iceState == FRICTIONLESS) {
-                puzzleSolver.solve2();
+                puzzleSolver.solveWithFrictionlessIce();
             }
         }
     }
