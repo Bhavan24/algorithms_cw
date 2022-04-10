@@ -2,10 +2,9 @@ package main;
 
 import java.util.*;
 
-import static main.PuzzleConstants.IceState;
+import static main.PuzzleConstants.*;
 import static main.PuzzleConstants.IceState.FRICTION;
 import static main.PuzzleConstants.IceState.FRICTIONLESS;
-import static main.PuzzleConstants.PathDirection;
 
 public class PuzzleSolver {
 
@@ -53,43 +52,39 @@ public class PuzzleSolver {
         return null;
     }
 
-    public String getDirectionDetails(PuzzleCoordinate point, String direction) {
-        String directionDetail;
+    public String getSteps(int id, PuzzleCoordinate point, String direction) {
+        String steps;
         if (puzzleMap.isStart(point)) {
-            directionDetail = String.format("Start at (%d,%d)", (point.getX() + 1), (point.getY() + 1));
+            steps = String.format("%d. Start at (%d,%d)", id, (point.getX() + 1), (point.getY() + 1));
         } else {
-            directionDetail = String.format("Move %s to (%d,%d)", direction, (point.getX() + 1), (point.getY() + 1));
+            steps = String.format("%d. Move %s to (%d,%d)", id, direction, (point.getX() + 1), (point.getY() + 1));
+            if (puzzleMap.isEnd(point)) {
+                steps += String.format("\n%d. Done!\n", (id + 1));
+            }
         }
-        return directionDetail;
+        return steps;
     }
 
-    public void printPathDetails(PuzzleGraph g) {
+    public void printPathDetails(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        Map<Integer, Integer> pastVertexMap = breadthFirstTraversal(g, startPoint.getId());
-        List<Integer> pathList = findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
-        if (pathList.isEmpty()) {
-            System.out.println("There is no path!");
+        Map<Integer, Integer> pastVertexMap = breadthFirstTraversal(graph, startPoint.getId());
+        List<Integer> paths = findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
+        if (paths.isEmpty()) {
+            System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {
             PuzzleCoordinate oldPoint = null;
-            for (int i = 0; i < pathList.size(); i++) {
+            for (int i = 0; i < paths.size(); i++) {
                 String direction = "";
-                PuzzleCoordinate point = getPointFromArray(pathList.get(i));
+                PuzzleCoordinate point = getPointFromArray(paths.get(i));
                 if (oldPoint != null) {
-                    if (point.getY() == oldPoint.getY()) {
-                        direction = (point.getX() > oldPoint.getX()) ?
-                                PathDirection.right.toString() :
-                                PathDirection.left.toString();
+                    if (point.getX() == oldPoint.getX()) {
+                        direction = (point.getY() > oldPoint.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
                     } else {
-                        direction = (point.getY() > oldPoint.getY()) ?
-                                PathDirection.down.toString() :
-                                PathDirection.up.toString();
+                        direction = (point.getX() > oldPoint.getX()) ? PathDirection.right.toString() : PathDirection.left.toString();
                     }
                 }
-                System.out.println((i + 1) + ". " + getDirectionDetails(point, direction));
+                System.out.println(getSteps((i + 1), point, direction));
                 oldPoint = point;
-                if (i == pathList.size() - 1) {
-                    System.out.println(i + 1 + ". Done!");
-                }
                 result.add(point);
             }
         }

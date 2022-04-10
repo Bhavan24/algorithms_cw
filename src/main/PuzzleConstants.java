@@ -33,6 +33,7 @@ public class PuzzleConstants {
     public static final String TRY_AGAIN = "\nPLEASE TRY AGAIN!";
     public static final String THANK_YOU = "\nTHANK YOU!";
     public static final String FILE_IS_EMPTY = "\nPUZZLE FILE IS EMPTY!";
+    public static final String CANNOT_SOLVE_PUZZLE = "\nCANNOT SOLVE PUZZLE!";
     public static final String INVALID_DATA = "\nPUZZLE FILE CONTAINS INVALID DATA!";
     public static final String SELECT_FILE = "\nENTER FILE ID: ";
     public static final String ENTER_VALID_VALUE = "\nPLEASE ENTER A VALID VALUE!\n";
