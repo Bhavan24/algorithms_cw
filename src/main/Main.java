@@ -4,6 +4,11 @@ import static main.GameConstants.ALL_DIRECTIONS;
 
 public class Main {
     public static void main(String[] args) {
+        SlidingPuzzleGame slidingPuzzleGame = new SlidingPuzzleGame();
+        slidingPuzzleGame.startPuzzleGame();
+    }
+
+    public static void main2() {
         String puzzleFilePath = "src/inputs/test.txt";
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();

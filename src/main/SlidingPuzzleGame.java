@@ -8,49 +8,50 @@ import static main.GameConstants.*;
 
 public class SlidingPuzzleGame {
 
-    public static void main(String[] args) {
+    public void startPuzzleGame() {
 
         System.out.print(WELCOME_TEXT);
         System.out.print(SELECT_MOVABLE_TYPE);
         System.out.print(SELECT_ALGORITHM_TYPE);
 
         try {
-
-            int puzzleFileType = handleUserInput(ENTER_PUZZLE_FILE_TYPE);
-
-            Scanner scanner = new Scanner(System.in);
-
-            if (puzzleFileType == 1) {
-                System.out.print(ENTER_PATH);
-                String puzzleFilePath = scanner.next();
-                File file = new File(puzzleFilePath);
-                if (!file.exists()) {
-                    System.out.println(FILE_DOES_NOT_EXIST);
-                    System.out.println(TRY_AGAIN);
-                    System.out.print(THANK_YOU);
-                    return;
-                }
-                int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
-                int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
-                solvePuzzle(puzzleFilePath, directionType, iceState);
-            } else if (puzzleFileType == 2) {
-                String[] puzzleFiles = loadPuzzleFiles();
-                System.out.print(SELECT_FILE);
-                int fileId = scanner.nextInt();
-                int directionType = handleUserInput(ENTER_DIRECTION_TYPE);
-                int iceState = handleUserInput(ENTER_ICE_STATE_TYPE);
-                solvePuzzle(puzzleFiles[fileId - 1], directionType, iceState);
-            } else {
-                System.out.print(ENTER_VALID_VALUE);
-            }
-
+            int puzzleFileType = Integer.parseInt(handleUserInput(ENTER_PUZZLE_FILE_TYPE));
+            selectPuzzleFile(puzzleFileType);
         } catch (Exception e) {
             System.out.print(ENTER_VALID_VALUE);
         }
+
         System.out.print(THANK_YOU);
     }
 
-    public static String[] loadPuzzleFiles() {
+    public void selectPuzzleFile(int puzzleFileType) {
+        if (puzzleFileType == 1) {
+            String puzzleFilePath = handleUserInput(ENTER_PATH);
+            selectPuzzleProperties(puzzleFilePath);
+        } else if (puzzleFileType == 2) {
+            String[] puzzleFiles = loadPuzzleFiles();
+            int fileId = Integer.parseInt(handleUserInput(SELECT_FILE));
+            String puzzleFilePath = puzzleFiles[fileId - 1];
+            selectPuzzleProperties(puzzleFilePath);
+        } else {
+            System.out.print(ENTER_VALID_VALUE);
+        }
+    }
+
+
+    public void selectPuzzleProperties(String puzzleFilePath) {
+        File file = new File(puzzleFilePath);
+        if (file.exists()) {
+            int directionType = Integer.parseInt(handleUserInput(ENTER_DIRECTION_TYPE));
+            int iceState = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
+            solvePuzzle(puzzleFilePath, directionType, iceState);
+        } else {
+            System.out.println(FILE_DOES_NOT_EXIST);
+            System.out.println(TRY_AGAIN);
+        }
+    }
+
+    public String[] loadPuzzleFiles() {
         String basePath = "src/inputs/";
         File[] files = new File(basePath).listFiles();
         assert files != null;
@@ -68,32 +69,13 @@ public class SlidingPuzzleGame {
         return puzzleFiles;
     }
 
-    public static int handleUserInput(String message) {
+    public String handleUserInput(String message) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(message);
-        int userInput = -1;
-        try {
-            userInput = scanner.nextInt();
-        } catch (Exception e) {
-            System.out.print(ENTER_VALID_VALUE);
-        }
-        if (userInput == -1) System.out.print(ENTER_VALID_VALUE);
-        return userInput;
+        return scanner.next();
     }
 
-    public static int[][] selectDirectionType(int directionType) {
-        int[][] DIRECTIONS = null;
-        if (directionType == 1) {
-            DIRECTIONS = CARDINAL_DIRECTIONS;
-        } else if (directionType == 2) {
-            DIRECTIONS = ALL_DIRECTIONS;
-        } else {
-            System.out.print(ENTER_VALID_VALUE);
-        }
-        return DIRECTIONS;
-    }
-
-    public static void solvePuzzle(String puzzleFilePath, int directionType, int iceState) {
+    public void solvePuzzle(String puzzleFilePath, int directionType, int iceState) {
         int[][] directions = selectDirectionType(directionType);
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
@@ -112,6 +94,18 @@ public class SlidingPuzzleGame {
                 System.out.print(ENTER_VALID_VALUE);
             }
         }
+    }
+
+    public int[][] selectDirectionType(int directionType) {
+        int[][] DIRECTIONS = null;
+        if (directionType == 1) {
+            DIRECTIONS = CARDINAL_DIRECTIONS;
+        } else if (directionType == 2) {
+            DIRECTIONS = ALL_DIRECTIONS;
+        } else {
+            System.out.print(ENTER_VALID_VALUE);
+        }
+        return DIRECTIONS;
     }
 
 }
