@@ -2,9 +2,9 @@ package main;
 
 import java.util.*;
 
-import static main.GameConstants.IceStates;
-import static main.GameConstants.IceStates.FRICTION;
-import static main.GameConstants.IceStates.FRICTIONLESS;
+import static main.GameConstants.IceState;
+import static main.GameConstants.IceState.FRICTION;
+import static main.GameConstants.IceState.FRICTIONLESS;
 
 public class PuzzleSolver {
 
@@ -25,8 +25,8 @@ public class PuzzleSolver {
         this.finishPoint = puzzleMap.getEnd();
     }
 
-    public void solve(IceStates iceStates) {
-        PuzzleGraph puzzleGraph = createGraph(iceStates);
+    public void solve(IceState iceState) {
+        PuzzleGraph puzzleGraph = createGraph(iceState);
         printPathDetails(puzzleGraph);
     }
 
@@ -130,7 +130,7 @@ public class PuzzleSolver {
         return pathList;
     }
 
-    public PuzzleGraph createGraph(IceStates iceState) {
+    public PuzzleGraph createGraph(IceState iceState) {
         PuzzleGraph g = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
@@ -168,7 +168,7 @@ public class PuzzleSolver {
         }
     }
 
-    public boolean finishVertexInPath(PuzzleCoordinate point, IceStates iceState) {
+    public boolean finishVertexInPath(PuzzleCoordinate point, IceState iceState) {
         if (iceState.equals(FRICTION)) {
             return (point == finishPoint);
         } else if (iceState.equals(FRICTIONLESS)) {
@@ -204,7 +204,7 @@ public class PuzzleSolver {
         return true;
     }
 
-    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate point, int[] direction, IceStates iceState) {
+    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate point, int[] direction, IceState iceState) {
         PuzzleCoordinate newPoint = point;
         if (iceState.equals(FRICTION)) {
             newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];

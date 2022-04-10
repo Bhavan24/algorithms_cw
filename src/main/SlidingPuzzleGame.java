@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Scanner;
 
 import static main.GameConstants.*;
-import static main.GameConstants.IceStates.FRICTION;
-import static main.GameConstants.IceStates.FRICTIONLESS;
+import static main.GameConstants.IceState.FRICTION;
+import static main.GameConstants.IceState.FRICTIONLESS;
 
 public class SlidingPuzzleGame {
 
@@ -75,7 +75,7 @@ public class SlidingPuzzleGame {
             int[][] directions = selectDirectionType(directionType);
             if (directions != null) {
                 int iceStateType = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
-                IceStates iceState = selectIceStateType(iceStateType);
+                IceState iceState = selectIceStateType(iceStateType);
                 if (iceState != null) {
                     solvePuzzle(puzzleFilePath, directions, iceState);
                 }
@@ -98,8 +98,8 @@ public class SlidingPuzzleGame {
         return directions;
     }
 
-    public IceStates selectIceStateType(int iceStateType) {
-        IceStates iceState = null;
+    public IceState selectIceStateType(int iceStateType) {
+        IceState iceState = null;
         if (iceStateType == 1) {
             iceState = FRICTIONLESS;
         } else if (iceStateType == 2) {
@@ -110,7 +110,7 @@ public class SlidingPuzzleGame {
         return iceState;
     }
 
-    public void solvePuzzle(String puzzleFilePath, int[][] directions, IceStates iceState) {
+    public void solvePuzzle(String puzzleFilePath, int[][] directions, IceState iceState) {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {
