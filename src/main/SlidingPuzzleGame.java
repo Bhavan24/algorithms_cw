@@ -1,7 +1,6 @@
 package main;
 
 import java.io.File;
-import java.util.List;
 import java.util.Scanner;
 
 import static main.GameConstants.*;
@@ -115,16 +114,11 @@ public class SlidingPuzzleGame {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {
-            PuzzleMap puzzleMap = new PuzzleMap();
-            puzzleMap.initializePuzzleMap(fileContents);
+            PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions);
             if (iceState == FRICTION) {
-                PuzzleSolver puzzleSolver = new PuzzleSolver();
-                List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap, directions);
-                puzzleMap.printPath(path);
+                puzzleSolver.solve();
             } else if (iceState == FRICTIONLESS) {
-                PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap, directions);
-                PuzzleGraph puzzleGraph = new PuzzleGraph();
-                puzzleSolver2.solve(puzzleGraph, fileContents);
+                puzzleSolver.solve2();
             }
         }
     }
