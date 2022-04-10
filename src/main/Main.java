@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         SlidingPuzzleGame slidingPuzzleGame = new SlidingPuzzleGame();
         slidingPuzzleGame.startPuzzleGame();
+//        main2();
     }
 
     public static void main2() {

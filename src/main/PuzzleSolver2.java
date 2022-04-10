@@ -11,8 +11,8 @@ public class PuzzleSolver2 {
 
     PuzzleMap puzzleMap;
     PuzzleCoordinate[][] puzzleCoordinates;
-    private final PuzzleCoordinate startPoint;
-    private final PuzzleCoordinate finishPoint;
+    private PuzzleCoordinate startPoint;
+    private PuzzleCoordinate finishPoint;
     int[][] DIRECTIONS;
 
     public void initializePuzzleMap(String fileContents) {
@@ -44,11 +44,11 @@ public class PuzzleSolver2 {
                             break;
                         case START:
                             puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, START, START_VALUE);
-                            PuzzleCoordinate start = puzzleCoordinates[i][j];
+                            startPoint = puzzleCoordinates[i][j];
                             break;
                         case FINISH:
                             puzzleCoordinates[i][j] = new PuzzleCoordinate(id, j, i, FINISH, FINISH_VALUE);
-                            PuzzleCoordinate end = puzzleCoordinates[i][j];
+                            finishPoint = puzzleCoordinates[i][j];
                             break;
                     }
                     id++;
