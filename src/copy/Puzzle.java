@@ -45,13 +45,13 @@ public class Puzzle {
         puzzleArray = new Point[maxHeight][maxWidth];
 
         int id = 0;
-        for (int x = 0; x < maxHeight; x++) {
-            if (lines[x].length() != maxWidth) {
+        for (int y = 0; y < maxHeight; y++) {
+            if (lines[y].length() != maxWidth) {
                 System.out.println("INVALID_DATA");
                 return;
             } else {
-                for (int y = 0; y < maxWidth; y++) {
-                    char c = lines[x].charAt(y);
+                for (int x = 0; x < maxWidth; x++) {
+                    char c = lines[y].charAt(x);
                     switch (c) {
                         case 'S':
                             startPoint = new Point(id, x, y, Character.toString(c));
@@ -66,42 +66,6 @@ public class Puzzle {
                 }
             }
         }
-    }
-
-    public void initializePuzzleMap2(String fileContents) {
-
-        if (fileContents == null || fileContents.trim().equals("")) {
-            System.out.println("Empty File");
-            return;
-        }
-
-        String[] lines = fileContents.split("[\r]?\n");
-        maxHeight = lines.length;
-        maxWidth = lines[0].length();
-        puzzleArray = new Point[maxHeight][maxWidth];
-
-        int id = 0;
-        for (int x = 0; x < maxHeight; x++) {
-            if (lines[x].length() != maxWidth) {
-                System.out.println("INVALID_DATA");
-            } else {
-                for (int y = 0; y < maxWidth; y++) {
-                    char c = lines[x].charAt(y);
-                    switch (c) {
-                        case 'S':
-                            startPoint = new Point(id, y, x, Character.toString(c));
-                            break;
-                        case 'F':
-                            finishPoint = new Point(id, y, x, Character.toString(c));
-                            break;
-                    }
-                    Point point = new Point(id, y, x, Character.toString(c));
-                    id++;
-                    puzzleArray[x][y] = point;
-                }
-            }
-        }
-
     }
 
     public Point getPointFromArray(int vertexId) {
