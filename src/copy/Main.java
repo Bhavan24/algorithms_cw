@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        String file = "src/test/example4/test.txt";
+        String file = "src/inputs/test.txt";
         String[][] result = new ReadInputData().readFromFile(file, 10);
         Puzzle p = new Puzzle();
         p.setFileLocation(file);

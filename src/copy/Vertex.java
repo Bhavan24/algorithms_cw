@@ -1,6 +1,7 @@
 package copy;
 
 public class Vertex {
+
     private int label;
 
     public Vertex(int label) {

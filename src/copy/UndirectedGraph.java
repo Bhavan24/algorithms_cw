@@ -3,9 +3,11 @@ package copy;
 import java.util.*;
 
 public class UndirectedGraph {
+
     private Map<Vertex, List<Vertex>> adjVertices = new HashMap<>();
 
-    public UndirectedGraph() {}
+    public UndirectedGraph() {
+    }
 
     public UndirectedGraph(Map<Vertex, List<Vertex>> adjVertices) {
         this.adjVertices = adjVertices;
@@ -34,9 +36,9 @@ public class UndirectedGraph {
         return adjVertices.get(new Vertex(label));
     }
 
-    public Map<Integer, Integer> breadthFirstTraversal(UndirectedGraph graph, int startId, int endId) {
-        Set<Integer> visited = new LinkedHashSet<Integer>();
-        Queue<Integer> queue = new LinkedList<Integer>();
+    public Map<Integer, Integer> breadthFirstTraversal(UndirectedGraph graph, int startId) {
+        Set<Integer> visited = new LinkedHashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
         queue.add(startId);
         visited.add(startId);

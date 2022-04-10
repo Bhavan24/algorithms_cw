@@ -1,12 +1,14 @@
 package copy;
 
 public class Point {
+
     private int id;
     private int x;
     private int y;
     private String letter;
 
-    public Point() {}
+    public Point() {
+    }
 
     public Point(int id, int x, int y, String letter) {
         this.id = id;

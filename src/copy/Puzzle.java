@@ -16,6 +16,24 @@ public class Puzzle {
     private Point finishPoint;
     private String fileLocation;
 
+    public String readPuzzleFile(String filePath) {
+        String fileContents = "";
+        try {
+            Scanner reader = new Scanner(new FileReader(filePath));
+            StringBuilder stringBuilder = new StringBuilder();
+            while (reader.hasNext()) {
+                stringBuilder.append(reader.nextLine()).append("\n");
+            }
+            reader.close();
+            fileContents = stringBuilder.toString();
+            System.out.println(PUZZLE_LOADED);
+        } catch (Exception e) {
+            System.out.println(FILE_DOES_NOT_EXIST);
+            System.out.println(TRY_AGAIN);
+        }
+        return fileContents;
+    }
+
     public void initializePuzzleArray() {
         String data = "";
         int height = 0;
@@ -169,7 +187,7 @@ public class Puzzle {
 
     public List<List<Integer>> getPathList(UndirectedGraph g) {
         List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId(), finishPoint.getId());
+        Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId());
         List<Integer> pathList = g.findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
         for (Integer integer : pathList) {
             Point point = getPointFromArray(integer);
@@ -182,7 +200,7 @@ public class Puzzle {
     }
 
     public void printPathDetails(UndirectedGraph g) {
-        Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId(), finishPoint.getId());
+        Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId());
         List<Integer> pathList = g.findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
         if (pathList.isEmpty()) {
             System.out.println("There is no path!");
