@@ -11,9 +11,9 @@ import static main.GameConstants.START_VALUE;
 
 public class PuzzleSolver2 {
 
-    private PuzzleCoordinate[][] puzzleArray;
-    private PuzzleCoordinate startPoint;
-    private PuzzleCoordinate finishPoint;
+    private final PuzzleCoordinate[][] puzzleArray;
+    private final PuzzleCoordinate startPoint;
+    private final PuzzleCoordinate finishPoint;
     int[][] directions;
 
     public PuzzleSolver2(PuzzleMap puzzleMap, int[][] directions) {
@@ -187,13 +187,8 @@ public class PuzzleSolver2 {
         int start;
         int end;
         if (point.getX() == finishPoint.getX()) {
-            if (point.getY() < finishPoint.getY()) {
-                start = point.getY();
-                end = finishPoint.getY();
-            } else {
-                start = finishPoint.getY();
-                end = point.getY();
-            }
+            start = Math.min(point.getY(), finishPoint.getY());
+            end = Math.max(point.getY(), finishPoint.getY());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
                 if (p.getValue() == ROCK_VALUE) {
@@ -201,13 +196,8 @@ public class PuzzleSolver2 {
                 }
             }
         } else {
-            if (point.getX() < finishPoint.getX()) {
-                start = point.getX();
-                end = finishPoint.getX();
-            } else {
-                start = finishPoint.getX();
-                end = point.getX();
-            }
+            start = Math.min(point.getX(), finishPoint.getX());
+            end = Math.max(point.getX(), finishPoint.getX());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
                 if (p.getValue() == ROCK_VALUE) {
