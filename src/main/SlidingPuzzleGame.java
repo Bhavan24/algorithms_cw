@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static main.GameConstants.*;
+import static main.GameConstants.IceStates.FRICTION;
+import static main.GameConstants.IceStates.FRICTIONLESS;
 
 public class SlidingPuzzleGame {
 
@@ -24,6 +26,12 @@ public class SlidingPuzzleGame {
         System.out.print(THANK_YOU);
     }
 
+    public String handleUserInput(String message) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
+        return scanner.next();
+    }
+
     public void selectPuzzleFile(int puzzleFileType) {
         if (puzzleFileType == 1) {
             String puzzleFilePath = handleUserInput(ENTER_PATH);
@@ -35,19 +43,6 @@ public class SlidingPuzzleGame {
             selectPuzzleProperties(puzzleFilePath);
         } else {
             System.out.print(ENTER_VALID_VALUE);
-        }
-    }
-
-
-    public void selectPuzzleProperties(String puzzleFilePath) {
-        File file = new File(puzzleFilePath);
-        if (file.exists()) {
-            int directionType = Integer.parseInt(handleUserInput(ENTER_DIRECTION_TYPE));
-            int iceState = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
-            solvePuzzle(puzzleFilePath, directionType, iceState);
-        } else {
-            System.out.println(FILE_DOES_NOT_EXIST);
-            System.out.println(TRY_AGAIN);
         }
     }
 
@@ -69,43 +64,64 @@ public class SlidingPuzzleGame {
         return puzzleFiles;
     }
 
-    public String handleUserInput(String message) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(message);
-        return scanner.next();
+    public void selectPuzzleProperties(String puzzleFilePath) {
+        File file = new File(puzzleFilePath);
+        if (file.exists()) {
+            int directionType = Integer.parseInt(handleUserInput(ENTER_DIRECTION_TYPE));
+            int[][] directions = selectDirectionType(directionType);
+            if (directions != null) {
+                int iceStateType = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
+                IceStates iceState = selectIceStateType(iceStateType);
+                if (iceState != null) {
+                    solvePuzzle(puzzleFilePath, directions, iceState);
+                }
+            }
+        } else {
+            System.out.println(FILE_DOES_NOT_EXIST);
+            System.out.println(TRY_AGAIN);
+        }
     }
 
-    public void solvePuzzle(String puzzleFilePath, int directionType, int iceState) {
-        int[][] directions = selectDirectionType(directionType);
+    public int[][] selectDirectionType(int directionType) {
+        int[][] directions = null;
+        if (directionType == 1) {
+            directions = CARDINAL_DIRECTIONS;
+        } else if (directionType == 2) {
+            directions = ALL_DIRECTIONS;
+        } else {
+            System.out.print(ENTER_VALID_VALUE);
+        }
+        return directions;
+    }
+
+    public IceStates selectIceStateType(int iceStateType) {
+        IceStates iceState = null;
+        if (iceStateType == 1) {
+            iceState = FRICTIONLESS;
+        } else if (iceStateType == 2) {
+            iceState = FRICTION;
+        } else {
+            System.out.print(ENTER_VALID_VALUE);
+        }
+        return iceState;
+    }
+
+    public void solvePuzzle(String puzzleFilePath, int[][] directions, IceStates iceState) {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (fileContents != null) {
             PuzzleMap puzzleMap = new PuzzleMap();
             puzzleMap.initializePuzzleMap(fileContents);
-            if (iceState == 1) {
-                PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap, directions);
-                PuzzleGraph puzzleGraph = new PuzzleGraph();
-                puzzleSolver2.solve(puzzleGraph);
-            } else if (iceState == 2) {
+            if (iceState == FRICTION) {
                 PuzzleSolver puzzleSolver = new PuzzleSolver();
                 List<PuzzleCoordinate> path = puzzleSolver.solve(puzzleMap, directions);
                 puzzleMap.printPath(path);
-            } else {
-                System.out.print(ENTER_VALID_VALUE);
+            } else if (iceState == FRICTIONLESS) {
+                PuzzleSolver2 puzzleSolver2 = new PuzzleSolver2(puzzleMap, directions);
+                PuzzleGraph puzzleGraph = new PuzzleGraph();
+                puzzleSolver2.solve(puzzleGraph);
             }
         }
-    }
-
-    public int[][] selectDirectionType(int directionType) {
-        int[][] DIRECTIONS = null;
-        if (directionType == 1) {
-            DIRECTIONS = CARDINAL_DIRECTIONS;
-        } else if (directionType == 2) {
-            DIRECTIONS = ALL_DIRECTIONS;
-        } else {
-            System.out.print(ENTER_VALID_VALUE);
-        }
-        return DIRECTIONS;
     }
 
 }

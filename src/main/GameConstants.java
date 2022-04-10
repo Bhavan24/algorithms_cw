@@ -61,6 +61,10 @@ public class GameConstants {
         TOP, RIGHT, LEFT, DOWN
     }
 
+    public enum IceStates {
+        FRICTIONLESS, FRICTION
+    }
+
     // Console Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\033[1;91m";
