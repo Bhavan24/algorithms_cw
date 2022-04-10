@@ -109,10 +109,10 @@ public class PuzzleSolver {
         while (!queue.isEmpty()) {
             int vertex = queue.poll();
             for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
-                if (!visited.contains(v.getLabel())) {
-                    pastVertexMap.put(v.getLabel(), vertex);
-                    visited.add(v.getLabel());
-                    queue.add(v.getLabel());
+                if (!visited.contains(v.getId())) {
+                    pastVertexMap.put(v.getId(), vertex);
+                    visited.add(v.getId());
+                    queue.add(v.getId());
                 }
             }
         }

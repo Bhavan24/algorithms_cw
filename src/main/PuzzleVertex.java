@@ -2,14 +2,14 @@ package main;
 
 public class PuzzleVertex {
 
-    private final int label;
+    private final int id;
 
-    public PuzzleVertex(int label) {
-        this.label = label;
+    public PuzzleVertex(int id) {
+        this.id = id;
     }
 
-    public int getLabel() {
-        return label;
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -19,17 +19,17 @@ public class PuzzleVertex {
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         PuzzleVertex vertex = (PuzzleVertex) obj;
-        return (vertex.label == (this.label));
+        return (vertex.id == (this.id));
     }
 
     @Override
     public int hashCode() {
-        return this.label;
+        return this.id;
     }
 
     @Override
     public String toString() {
-        return "Vertex [label=" + label + "]";
+        return "Vertex [label=" + id + "]";
     }
 
 }
