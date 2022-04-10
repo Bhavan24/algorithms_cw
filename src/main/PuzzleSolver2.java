@@ -12,23 +12,19 @@ import static main.GameConstants.START_VALUE;
 public class PuzzleSolver2 {
 
     private PuzzleCoordinate[][] puzzleArray;
-    private int maxWidth;
-    private int maxHeight;
     private PuzzleCoordinate startPoint;
     private PuzzleCoordinate finishPoint;
-    private String fileLocation;
-    private final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-    private final int[][] CARDINAL_DIRECTIONS = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
-    int[][] directions = ALL_DIRECTIONS;
+    int[][] directions;
 
-    public PuzzleSolver2(PuzzleCoordinate[][] puzzleArray, int maxWidth, int maxHeight, PuzzleCoordinate startPoint, PuzzleCoordinate finishPoint, String fileLocation, int[][] directions) {
-        this.puzzleArray = puzzleArray;
-        this.maxWidth = maxWidth;
-        this.maxHeight = maxHeight;
-        this.startPoint = startPoint;
-        this.finishPoint = finishPoint;
-        this.fileLocation = fileLocation;
+    public PuzzleSolver2(PuzzleMap puzzleMap, int[][] directions) {
+        this.puzzleArray = puzzleMap.getPuzzleMapArray();
+        this.startPoint = puzzleMap.getStart();
+        this.finishPoint = puzzleMap.getEnd();
         this.directions = directions;
+    }
+
+    public void solve(PuzzleGraph puzzleGraph){
+
     }
 
 

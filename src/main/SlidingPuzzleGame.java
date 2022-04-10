@@ -10,6 +10,11 @@ import static main.GameConstants.IceStates.FRICTIONLESS;
 
 public class SlidingPuzzleGame {
 
+    public static void main(String[] args) {
+        SlidingPuzzleGame slidingPuzzleGame = new SlidingPuzzleGame();
+        slidingPuzzleGame.startPuzzleGame();
+    }
+
     public void startPuzzleGame() {
 
         System.out.print(WELCOME_TEXT);
