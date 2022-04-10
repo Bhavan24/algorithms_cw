@@ -24,6 +24,16 @@ public class PuzzleSolver {
         this.finishPoint = puzzleMap.getEnd();
     }
 
+    public void solveWithFrictionIce() {
+        List<PuzzleCoordinate> path = performAlgorithm();
+        puzzleMap.printPath(path);
+    }
+
+    public void solveWithFrictionlessIce() {
+        PuzzleGraph puzzleGraph = createGraph();
+        printPathDetails(puzzleGraph);
+    }
+
     public List<PuzzleCoordinate> performAlgorithm() {
 
         LinkedList<PuzzleCoordinate> nextToVisit = new LinkedList<>();
@@ -65,17 +75,6 @@ public class PuzzleSolver {
         }
 
         return path;
-    }
-
-    public void solveWithFrictionIce() {
-        List<PuzzleCoordinate> path = performAlgorithm();
-        puzzleMap.printPath(path);
-    }
-
-    public void solveWithFrictionlessIce() {
-        PuzzleGraph puzzleGraph = createGraph();
-        printPathDetails(puzzleGraph);
-        colorPrintGraph(getPathList(puzzleGraph), fileContents);
     }
 
     public void colorPrintGraph(List<List<Integer>> paths, String fileContent) {
@@ -141,21 +140,8 @@ public class PuzzleSolver {
         }
     }
 
-    public List<List<Integer>> getPathList(PuzzleGraph g) {
-        List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId());
-        List<Integer> pathList = g.findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
-        for (Integer integer : pathList) {
-            PuzzleCoordinate point = getPointFromArray(integer);
-            List<Integer> coordinates = new ArrayList<>();
-            coordinates.add(point.getX());
-            coordinates.add(point.getY());
-            result.add(coordinates);
-        }
-        return result;
-    }
-
     public void printPathDetails(PuzzleGraph g) {
+        List<List<Integer>> result = new ArrayList<>();
         Map<Integer, Integer> pastVertexMap = g.breadthFirstTraversal(g, startPoint.getId());
         List<Integer> pathList = g.findPathList(pastVertexMap, startPoint.getId(), finishPoint.getId());
         if (pathList.isEmpty()) {
@@ -185,8 +171,13 @@ public class PuzzleSolver {
                 if (i == pathList.size() - 1) {
                     System.out.println(i + 1 + ". Done!");
                 }
+                List<Integer> coordinates = new ArrayList<>();
+                coordinates.add(point.getX());
+                coordinates.add(point.getY());
+                result.add(coordinates);
             }
         }
+        colorPrintGraph(result, fileContents);
     }
 
     public PuzzleGraph createGraph() {
