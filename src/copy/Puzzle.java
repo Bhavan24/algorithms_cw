@@ -246,36 +246,4 @@ public class Puzzle {
         return b;
     }
 
-    public Point[][] getPuzzleArray() {
-        return puzzleArray;
-    }
-
-    public void setPuzzleArray(Point[][] puzzleArray) {
-        this.puzzleArray = puzzleArray;
-    }
-
-    public Point getStartPoint() {
-        return startPoint;
-    }
-
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
-    }
-
-    public Point getFinishPoint() {
-        return finishPoint;
-    }
-
-    public void setFinishPoint(Point finishPoint) {
-        this.finishPoint = finishPoint;
-    }
-
-    public String getFileLocation() {
-        return fileLocation;
-    }
-
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
-    }
-
 }
