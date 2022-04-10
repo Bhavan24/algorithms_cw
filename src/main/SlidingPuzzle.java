@@ -3,15 +3,15 @@ package main;
 import java.io.File;
 import java.util.Scanner;
 
-import static main.GameConstants.*;
-import static main.GameConstants.IceState.FRICTION;
-import static main.GameConstants.IceState.FRICTIONLESS;
+import static main.PuzzleConstants.*;
+import static main.PuzzleConstants.IceState.FRICTION;
+import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
-public class SlidingPuzzleGame {
+public class SlidingPuzzle {
 
     public static void main(String[] args) {
-        SlidingPuzzleGame slidingPuzzleGame = new SlidingPuzzleGame();
-        slidingPuzzleGame.startPuzzleGame();
+        SlidingPuzzle slidingPuzzle = new SlidingPuzzle();
+        slidingPuzzle.startPuzzleGame();
     }
 
     public void startPuzzleGame() {

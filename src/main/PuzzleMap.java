@@ -3,7 +3,7 @@ package main;
 import java.util.Arrays;
 import java.util.List;
 
-import static main.GameConstants.*;
+import static main.PuzzleConstants.*;
 
 public class PuzzleMap {
 

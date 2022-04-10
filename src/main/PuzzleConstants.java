@@ -1,6 +1,6 @@
 package main;
 
-public class GameConstants {
+public class PuzzleConstants {
 
     // Message Constants
     public static final String WELCOME_TEXT =

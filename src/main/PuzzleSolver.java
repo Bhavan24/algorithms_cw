@@ -2,9 +2,9 @@ package main;
 
 import java.util.*;
 
-import static main.GameConstants.IceState;
-import static main.GameConstants.IceState.FRICTION;
-import static main.GameConstants.IceState.FRICTIONLESS;
+import static main.PuzzleConstants.IceState;
+import static main.PuzzleConstants.IceState.FRICTION;
+import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
 public class PuzzleSolver {
 

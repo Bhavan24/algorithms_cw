@@ -3,7 +3,7 @@ package main;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import static main.GameConstants.*;
+import static main.PuzzleConstants.*;
 
 public class PuzzleFileHandler {
 
