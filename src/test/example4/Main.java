@@ -31,10 +31,14 @@ public class Main {
                 coordinates.add(j);
                 coordinates.add(i);
                 if (paths.contains(coordinates)) {
-                    System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
+                    if (map[i][j].equals("S") || map[i][j].equals("F"))
+                        System.out.print(ANSI_RED + map[i][j] + ANSI_RESET);
+                    else
+                        System.out.print(ANSI_RED + "*" + ANSI_RESET);
                 } else {
                     System.out.print(map[i][j]);
                 }
+                System.out.print(" ");
             }
             System.out.println();
         }
