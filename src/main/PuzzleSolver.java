@@ -2,10 +2,6 @@ package main;
 
 import java.util.*;
 
-import static main.GameConstants.ROCK;
-import static main.GameConstants.START;
-
-
 public class PuzzleSolver {
 
     private final PuzzleCoordinate[][] puzzleArray;
@@ -26,8 +22,6 @@ public class PuzzleSolver {
     }
 
     public void solveWithFrictionIce() {
-//        List<PuzzleCoordinate> path = performAlgorithm();
-//        puzzleMap.printPath(path);
         PuzzleGraph puzzleGraph = createGraphForSome();
         printPathDetails(puzzleGraph);
     }
@@ -35,49 +29,6 @@ public class PuzzleSolver {
     public void solveWithFrictionlessIce() {
         PuzzleGraph puzzleGraph = createGraph();
         printPathDetails(puzzleGraph);
-    }
-
-    public List<PuzzleCoordinate> performAlgorithm() {
-
-        LinkedList<PuzzleCoordinate> nextToVisit = new LinkedList<>();
-        PuzzleCoordinate start = puzzleMap.getStart();
-        nextToVisit.add(start);
-
-        while (!nextToVisit.isEmpty()) {
-            PuzzleCoordinate cur = nextToVisit.remove();
-
-            if (!puzzleMap.isValidCoordinate(cur.getX(), cur.getY()) || puzzleMap.isVisited(cur.getX(), cur.getY())) {
-                continue;
-            }
-
-            if (puzzleMap.isRock(cur.getX(), cur.getY())) {
-                puzzleMap.setVisited(cur.getX(), cur.getY(), true);
-                continue;
-            }
-
-            if (puzzleMap.isEnd(cur.getX(), cur.getY())) {
-                return backtrackPath(cur);
-            }
-
-            for (int[] direction : directions) {
-                PuzzleCoordinate coordinate = new PuzzleCoordinate(cur.getX() + direction[1], cur.getY() + direction[0], cur);
-                nextToVisit.add(coordinate);
-                puzzleMap.setVisited(cur.getX(), cur.getY(), true);
-            }
-        }
-        return Collections.emptyList();
-    }
-
-    private List<PuzzleCoordinate> backtrackPath(PuzzleCoordinate cur) {
-        List<PuzzleCoordinate> path = new ArrayList<>();
-        PuzzleCoordinate iter = cur;
-
-        while (iter != null) {
-            path.add(iter);
-            iter = iter.parent;
-        }
-
-        return path;
     }
 
     public PuzzleCoordinate getPointFromArray(int vertexId) {
@@ -103,7 +54,7 @@ public class PuzzleSolver {
     }
 
     public String getDirectionDetails(PuzzleCoordinate point, String direction) {
-        if (point.getValue() == START) {
+        if (puzzleMap.isStart(point)) {
             return "Start at (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
         } else {
             return "Move " + direction + " to (" + (point.getX() + 1) + "," + (point.getY() + 1) + ")";
@@ -270,7 +221,7 @@ public class PuzzleSolver {
             end = Math.max(point.getY(), finishPoint.getY());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(finishPoint.getX(), i);
-                if (p.getValue() == ROCK) {
+                if (puzzleMap.isRock(p)) {
                     return false;
                 }
             }
@@ -279,7 +230,7 @@ public class PuzzleSolver {
             end = Math.max(point.getX(), finishPoint.getX());
             for (int i = start; i <= end; i++) {
                 PuzzleCoordinate p = getPointFromArray(i, finishPoint.getY());
-                if (p.getValue() == ROCK) {
+                if (puzzleMap.isRock(p)) {
                     return false;
                 }
             }
@@ -300,7 +251,7 @@ public class PuzzleSolver {
         int y = point.getY() + direction[1];
         boolean canGoInThisDirection = false;
         try {
-            canGoInThisDirection = !(puzzleArray[y][x].getValue() == ROCK);
+            canGoInThisDirection = !puzzleMap.isRock(x, y);
         } catch (Exception ignored) {
         }
         return canGoInThisDirection;

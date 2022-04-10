@@ -8,7 +8,6 @@ import static main.GameConstants.*;
 public class PuzzleMap {
 
     private PuzzleCoordinate[][] puzzleMapArray;
-    private boolean[][] visitedArray;
     private PuzzleCoordinate start;
     private PuzzleCoordinate end;
 
@@ -24,7 +23,6 @@ public class PuzzleMap {
         int columns = lines[0].length();
 
         puzzleMapArray = new PuzzleCoordinate[rows][columns];
-        visitedArray = new boolean[rows][columns];
 
         int id = 0;
         for (int y = 0; y < rows; y++) {
@@ -87,9 +85,6 @@ public class PuzzleMap {
         return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
     }
 
-    public boolean isVisited(int x, int y) {
-        return visitedArray[y][x];
-    }
 
     public boolean isRock(int x, int y) {
         return puzzleMapArray[y][x].getValue() == ROCK;
@@ -111,20 +106,12 @@ public class PuzzleMap {
         return (p != null) && isValidCoordinate(p.getX(), p.getY());
     }
 
-    public boolean isVisited(PuzzleCoordinate p) {
-        return (p != null) && isVisited(p.getX(), p.getY());
-    }
-
     public boolean isRock(PuzzleCoordinate p) {
         return (p != null) && isRock(p.getX(), p.getY());
     }
 
     public boolean isIce(PuzzleCoordinate p) {
         return (p != null) && isIce(p.getX(), p.getY());
-    }
-
-    public void setVisited(int x, int y, boolean value) {
-        visitedArray[y][x] = value;
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
