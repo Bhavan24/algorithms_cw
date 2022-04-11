@@ -130,7 +130,7 @@ public class PuzzleSolver {
 
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        List<Integer> paths = breadthFirstSearch(graph, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
+        List<Integer> paths = breadthFirstSearch(graph, startPuzzleCoordinate, endPuzzleCoordinate);
         if (paths.isEmpty()) {
             System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {
@@ -166,34 +166,38 @@ public class PuzzleSolver {
         System.out.println(step);
     }
 
-    public List<Integer> breadthFirstSearch(PuzzleGraph graph, int startId, int endId) {
+    public List<Integer> breadthFirstSearch(PuzzleGraph graph, PuzzleCoordinate start, PuzzleCoordinate end) {
+
+        int startCoordinateId = start.getId();
+        int endCoordinateId = end.getId();
 
         Set<Integer> visited = new LinkedHashSet<>();
         Queue<Integer> nextToVisit = new LinkedList<>();
         Map<Integer, Integer> parentMap = new HashMap<>();
 
-        nextToVisit.add(startId);
-        visited.add(startId);
-        parentMap.put(startId, null);
+        nextToVisit.add(startCoordinateId);
+        visited.add(startCoordinateId);
+        parentMap.put(startCoordinateId, null);
 
         while (!nextToVisit.isEmpty()) {
-            int vertex = nextToVisit.poll();
-            if (vertex == endId) break;
-            for (PuzzleVertex neighbour : graph.getAdjVertices(vertex)) {
-                int neighbourId = neighbour.getId();
-                if (!visited.contains(neighbourId)) {
-                    parentMap.put(neighbourId, vertex);
-                    visited.add(neighbourId);
-                    nextToVisit.add(neighbourId);
+            int currentVertexId = nextToVisit.poll();
+            if (currentVertexId == endCoordinateId) break;
+            for (PuzzleVertex neighbourVertex : graph.getAdjVertices(currentVertexId)) {
+                int neighbourVertexId = neighbourVertex.getId();
+                if (!visited.contains(neighbourVertexId)) {
+                    parentMap.put(neighbourVertexId, currentVertexId);
+                    visited.add(neighbourVertexId);
+                    nextToVisit.add(neighbourVertexId);
                 }
             }
         }
 
         List<Integer> pathList = new ArrayList<>();
-        pathList.add(endId);
-        for (int newId = -1; newId != startId; endId = newId) {
-            newId = parentMap.get(endId);
-            pathList.add(newId);
+        pathList.add(endCoordinateId);
+        for (int coordinateId = -1; coordinateId != startCoordinateId; ) {
+            coordinateId = parentMap.get(endCoordinateId);
+            pathList.add(coordinateId);
+            endCoordinateId = coordinateId;
         }
         Collections.reverse(pathList);
         return pathList;
