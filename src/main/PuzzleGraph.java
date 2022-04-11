@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <p>The {@code PuzzleGraph} is the data structure for the bfs algorithm
+ *
+ * @author Loganathan Bhavaneetharan
+ */
+
 public class PuzzleGraph {
 
     private final Map<PuzzleVertex, List<PuzzleVertex>> adjVertices = new HashMap<>();

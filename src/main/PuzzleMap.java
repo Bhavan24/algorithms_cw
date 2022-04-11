@@ -20,6 +20,13 @@ import java.util.List;
 
 import static main.PuzzleConstants.*;
 
+/**
+ * <p>The {@code PuzzleMap} the map where the text file is converted into a 2D
+ * {@code PuzzleCoordinate} array
+ *
+ * @author Loganathan Bhavaneetharan
+ */
+
 public class PuzzleMap {
 
     private PuzzleCoordinate[][] puzzleMapArray;

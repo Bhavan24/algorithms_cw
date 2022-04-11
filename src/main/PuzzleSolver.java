@@ -21,6 +21,12 @@ import static main.PuzzleConstants.*;
 import static main.PuzzleConstants.IceState.FRICTION;
 import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
+/**
+ * <p>The {@code PuzzleSolver} is where the algorithm is performed using the data structure
+ *
+ * @author Loganathan Bhavaneetharan
+ */
+
 public class PuzzleSolver {
 
     private final PuzzleCoordinate[][] puzzleArray;

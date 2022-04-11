@@ -22,11 +22,30 @@ import static main.PuzzleConstants.*;
 import static main.PuzzleConstants.IceState.FRICTION;
 import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
+/**
+ * <p>The {@code SlidingPuzzle} class is the starting point of the program.</p>
+ *
+ * <p>By running the {@code main} method the program will begin by calling the
+ * startPuzzleGame() method. The user will be prompted a message to input how the
+ * puzzle file path should be read, after that the user will be prompted to select
+ * the puzzle moving direction, following that the user will be asked to select the
+ * state of the ice mentioned in the puzzle (friction/ frictionless)</p>
+ *
+ * <p>The inputs scenarios will be handled by {@code handleUserInput()} method.
+ * all the exceptions and failure scenarios are covered using the try catch block and the
+ * user will be prompted a failure message once an exception occurred.
+ * </p>
+ *
+ * <p>The main purpose of this class is to take the necessary user inputs and sending it to
+ * {@linkplain PuzzleSolver} class to solve and display the output of the solution </p>
+ *
+ * @author Loganathan Bhavaneetharan
+ */
+
 public class SlidingPuzzle {
 
     public static void main(String[] args) {
-        SlidingPuzzle slidingPuzzle = new SlidingPuzzle();
-        slidingPuzzle.startPuzzleGame();
+        new SlidingPuzzle().startPuzzleGame();
     }
 
     public void startPuzzleGame() {

@@ -33,12 +33,13 @@ import static main.PuzzleConstants.*;
 public class PuzzleFileHandler {
 
     /**
-     * File path value
+     * File path value of this {@code PuzzleFileHandler}.
      */
     private final String filePath;
 
     /**
-     * All the contents of the file will be stored in this String
+     * The fileContents of this {@code PuzzleFileHandler}.
+     * <p>All the contents of the file will be read and stored in this String</p>
      */
     private String fileContents;
 
@@ -52,9 +53,9 @@ public class PuzzleFileHandler {
     }
 
     /**
-     * Reads the puzzle file and stores all the content as String
+     * <p> Reads the puzzle file and stores all the content as String
      * and finally returns the string.
-     *
+     * </p>
      * The exceptions are handled by using a try catch, user will be prompted a
      * message if an exception occurred
      *
