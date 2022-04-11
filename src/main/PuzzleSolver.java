@@ -167,21 +167,24 @@ public class PuzzleSolver {
     }
 
     public List<Integer> breadthFirstSearch(PuzzleGraph graph, int startId, int endId) {
+
         Set<Integer> visited = new LinkedHashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
+        Queue<Integer> nextToVisit = new LinkedList<>();
         Map<Integer, Integer> parentMap = new HashMap<>();
-        queue.add(startId);
+
+        nextToVisit.add(startId);
         visited.add(startId);
         parentMap.put(startId, null);
 
-        while (!queue.isEmpty()) {
-            int vertex = queue.poll();
+        while (!nextToVisit.isEmpty()) {
+            int vertex = nextToVisit.poll();
             if (vertex == endId) break;
-            for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
-                if (!visited.contains(v.getId())) {
-                    parentMap.put(v.getId(), vertex);
-                    visited.add(v.getId());
-                    queue.add(v.getId());
+            for (PuzzleVertex neighbour : graph.getAdjVertices(vertex)) {
+                int neighbourId = neighbour.getId();
+                if (!visited.contains(neighbourId)) {
+                    parentMap.put(neighbourId, vertex);
+                    visited.add(neighbourId);
+                    nextToVisit.add(neighbourId);
                 }
             }
         }
