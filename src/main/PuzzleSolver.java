@@ -126,8 +126,7 @@ public class PuzzleSolver {
 
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        Map<Integer, Integer> traversalMap = breadthFirstTraversal(graph, startPuzzleCoordinate.getId());
-        List<Integer> paths = findPathList(traversalMap, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
+        List<Integer> paths = breadthFirstTraversalAlgorithm(graph, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
         if (paths.isEmpty()) {
             System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {
@@ -163,7 +162,7 @@ public class PuzzleSolver {
         System.out.println(step);
     }
 
-    public Map<Integer, Integer> breadthFirstTraversal(PuzzleGraph graph, int startId) {
+    public List<Integer> breadthFirstTraversalAlgorithm(PuzzleGraph graph, int startId, int endId) {
         Set<Integer> visited = new LinkedHashSet<>();
         Queue<Integer> queue = new LinkedList<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
@@ -180,10 +179,7 @@ public class PuzzleSolver {
                 }
             }
         }
-        return pastVertexMap;
-    }
 
-    public List<Integer> findPathList(Map<Integer, Integer> pastVertexMap, int startId, int endId) {
         int newId = -1;
         List<Integer> pathList = new ArrayList<>();
         pathList.add(endId);
