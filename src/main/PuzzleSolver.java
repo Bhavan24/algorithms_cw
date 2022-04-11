@@ -28,7 +28,7 @@ public class PuzzleSolver {
         PuzzleGraph puzzleGraph = createGraph(iceState);
         printShortestPath(puzzleGraph);
         long endTime = System.currentTimeMillis();
-        System.out.println(RUNNING_TIME + ((endTime - startTime)) + " nanoseconds");
+        System.out.println(RUNNING_TIME + ANSI_CYAN + (((float) (endTime - startTime) / 1000)) + ANSI_RESET + " seconds");
     }
 
     public PuzzleGraph createGraph(IceState iceState) {

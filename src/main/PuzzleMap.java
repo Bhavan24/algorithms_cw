@@ -149,10 +149,10 @@ public class PuzzleMap {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
                 switch (puzzleCoordinate.getValue()) {
                     case ICE:
-                        System.out.print(ICE);
+                        System.out.print(ANSI_GREEN + ICE + ANSI_RESET);
                         break;
                     case ROCK:
-                        System.out.print(ROCK);
+                        System.out.print(ANSI_BLUE + ROCK + ANSI_RESET);
                         break;
                     case START:
                         System.out.print(ANSI_RED + START + ANSI_RESET);
