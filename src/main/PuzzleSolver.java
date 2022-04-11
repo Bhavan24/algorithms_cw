@@ -24,8 +24,11 @@ public class PuzzleSolver {
     }
 
     public void solve(IceState iceState) {
+        long startTime = System.currentTimeMillis();
         PuzzleGraph puzzleGraph = createGraph(iceState);
         printPathDetails(puzzleGraph);
+        long endTime   = System.currentTimeMillis();
+        System.out.println(RUNNING_TIME + ((endTime - startTime)) + " nanoseconds");
     }
 
     public PuzzleCoordinate getPointFromArray(int vertexId) {
