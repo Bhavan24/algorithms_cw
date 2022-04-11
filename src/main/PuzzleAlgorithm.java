@@ -5,7 +5,7 @@ import java.util.*;
 public class PuzzleAlgorithm {
 
     public List<Integer> shortestPathAlgorithm(PuzzleGraph graph, int startId, int endId) {
-        return BFS(graph, startId, endId);
+        return Dijkstra(graph, startId, endId);
     }
 
     public List<Integer> BFS(PuzzleGraph graph, int startId, int endId) {
@@ -73,7 +73,34 @@ public class PuzzleAlgorithm {
     }
 
     public List<Integer> Dijkstra(PuzzleGraph graph, int startId, int endId) {
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+        Set<Integer> visited = new LinkedHashSet<>();
+        Map<Integer, Integer> pastVertexMap = new HashMap<>();
+        priorityQueue.add(startId);
+        visited.add(startId);
+        pastVertexMap.put(startId, null);
+
+        while (!priorityQueue.isEmpty()) {
+            int vertex = priorityQueue.remove();
+            if (vertex == endId) break;
+            for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
+                if (!visited.contains(v.getId())) {
+                    pastVertexMap.put(v.getId(), vertex);
+                    visited.add(v.getId());
+                    priorityQueue.add(v.getId());
+                }
+            }
+        }
+
+        int newId = -1;
         List<Integer> pathList = new ArrayList<>();
+        pathList.add(endId);
+        while (newId != startId) {
+            newId = pastVertexMap.get(endId);
+            pathList.add(newId);
+            endId = newId;
+        }
+        Collections.reverse(pathList);
         return pathList;
     }
 
