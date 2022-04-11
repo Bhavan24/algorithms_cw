@@ -125,12 +125,8 @@ public class PuzzleMap {
     }
 
     public PuzzleCoordinate getPuzzleCoordinate(int x, int y) {
-        for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
-            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
-                if (puzzleCoordinate.getX() == x && puzzleCoordinate.getY() == y) {
-                    return puzzleCoordinate;
-                }
-            }
+        if (isValidCoordinate(x, y)) {
+            return puzzleMapArray[y][x];
         }
         return null;
     }
