@@ -85,7 +85,6 @@ public class PuzzleMap {
         return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
     }
 
-
     public boolean isRock(int x, int y) {
         return puzzleMapArray[y][x].getValue() == ROCK;
     }
@@ -112,6 +111,28 @@ public class PuzzleMap {
 
     public boolean isIce(PuzzleCoordinate p) {
         return (p != null) && isIce(p.getX(), p.getY());
+    }
+
+    public PuzzleCoordinate getPuzzleCoordinate(int id) {
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
+            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
+                if (puzzleCoordinate.getId() == id) {
+                    return puzzleCoordinate;
+                }
+            }
+        }
+        return null;
+    }
+
+    public PuzzleCoordinate getPuzzleCoordinate(int x, int y) {
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
+            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
+                if (puzzleCoordinate.getX() == x && puzzleCoordinate.getY() == y) {
+                    return puzzleCoordinate;
+                }
+            }
+        }
+        return null;
     }
 
     public void printPath(List<PuzzleCoordinate> path) {

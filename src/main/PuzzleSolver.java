@@ -31,28 +31,6 @@ public class PuzzleSolver {
         System.out.println(RUNNING_TIME + ((endTime - startTime)) + " nanoseconds");
     }
 
-    public PuzzleCoordinate getPointFromArray(int vertexId) {
-        for (PuzzleCoordinate[] puzzleCoordinates : puzzleArray) {
-            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
-                if (puzzleCoordinate.getId() == vertexId) {
-                    return puzzleCoordinate;
-                }
-            }
-        }
-        return null;
-    }
-
-    public PuzzleCoordinate getPointFromArray(int x, int y) {
-        for (PuzzleCoordinate[] puzzleCoordinates : puzzleArray) {
-            for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
-                if (puzzleCoordinate.getX() == x && puzzleCoordinate.getY() == y) {
-                    return puzzleCoordinate;
-                }
-            }
-        }
-        return null;
-    }
-
     public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
         String step;
         if (puzzleMap.isStart(puzzleCoordinate)) {
@@ -76,7 +54,7 @@ public class PuzzleSolver {
             PuzzleCoordinate currentCoordinate = null;
             for (int i = 0; i < paths.size(); i++) {
                 String direction = "";
-                PuzzleCoordinate puzzleCoordinate = getPointFromArray(paths.get(i));
+                PuzzleCoordinate puzzleCoordinate = puzzleMap.getPuzzleCoordinate(paths.get(i));
                 if (currentCoordinate != null) {
                     if (puzzleCoordinate.getX() == currentCoordinate.getX()) {
                         direction = (puzzleCoordinate.getY() > currentCoordinate.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
@@ -136,7 +114,7 @@ public class PuzzleSolver {
         while (!stack.isEmpty()) {
             int vertexId = stack.pop();
             visited.add(vertexId);
-            currentPuzzleCoordinate = getPointFromArray(vertexId);
+            currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
             if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
                 graph.addVertex(endPuzzleCoordinate.getId());
                 graph.addEdge(vertexId, endPuzzleCoordinate.getId());
@@ -175,7 +153,7 @@ public class PuzzleSolver {
                 start = Math.min(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
                 end = Math.max(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
                 for (int i = start; i <= end; i++) {
-                    PuzzleCoordinate pc = getPointFromArray(endPuzzleCoordinate.getX(), i);
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(endPuzzleCoordinate.getX(), i);
                     if (puzzleMap.isRock(pc)) {
                         return false;
                     }
@@ -184,7 +162,7 @@ public class PuzzleSolver {
                 start = Math.min(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
                 end = Math.max(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
                 for (int i = start; i <= end; i++) {
-                    PuzzleCoordinate pc = getPointFromArray(i, endPuzzleCoordinate.getY());
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, endPuzzleCoordinate.getY());
                     if (puzzleMap.isRock(pc)) {
                         return false;
                     }
