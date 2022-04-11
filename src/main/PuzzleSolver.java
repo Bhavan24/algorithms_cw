@@ -26,81 +26,9 @@ public class PuzzleSolver {
     public void solve(IceState iceState) {
         long startTime = System.currentTimeMillis();
         PuzzleGraph puzzleGraph = createGraph(iceState);
-        printPathDetails(puzzleGraph);
+        printShortestPath(puzzleGraph);
         long endTime = System.currentTimeMillis();
         System.out.println(RUNNING_TIME + ((endTime - startTime)) + " nanoseconds");
-    }
-
-    public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
-        String step;
-        if (puzzleMap.isStart(puzzleCoordinate)) {
-            step = String.format("%d. Start at (%d,%d)", id, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
-        } else {
-            step = String.format("%d. Move %s to (%d,%d)", id, direction, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
-            if (puzzleMap.isEnd(puzzleCoordinate)) {
-                step += String.format("\n%d. Done!\n", (id + 1));
-            }
-        }
-        System.out.println(step);
-    }
-
-    public void printPathDetails(PuzzleGraph graph) {
-        List<PuzzleCoordinate> result = new ArrayList<>();
-        Map<Integer, Integer> traversalMap = breadthFirstTraversal(graph, startPuzzleCoordinate.getId());
-        List<Integer> paths = findPathList(traversalMap, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
-        if (paths.isEmpty()) {
-            System.out.println(CANNOT_SOLVE_PUZZLE);
-        } else {
-            PuzzleCoordinate currentCoordinate = null;
-            for (int i = 0; i < paths.size(); i++) {
-                String direction = "";
-                PuzzleCoordinate puzzleCoordinate = puzzleMap.getPuzzleCoordinate(paths.get(i));
-                if (currentCoordinate != null) {
-                    if (puzzleCoordinate.getX() == currentCoordinate.getX()) {
-                        direction = (puzzleCoordinate.getY() > currentCoordinate.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
-                    } else {
-                        direction = (puzzleCoordinate.getX() > currentCoordinate.getX()) ? PathDirection.right.toString() : PathDirection.left.toString();
-                    }
-                }
-                printStep((i + 1), puzzleCoordinate, direction);
-                currentCoordinate = puzzleCoordinate;
-                result.add(puzzleCoordinate);
-            }
-        }
-        puzzleMap.printPath(result);
-    }
-
-    public Map<Integer, Integer> breadthFirstTraversal(PuzzleGraph graph, int startId) {
-        Set<Integer> visited = new LinkedHashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
-        Map<Integer, Integer> pastVertexMap = new HashMap<>();
-        queue.add(startId);
-        visited.add(startId);
-        pastVertexMap.put(startId, null);
-        while (!queue.isEmpty()) {
-            int vertex = queue.poll();
-            for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
-                if (!visited.contains(v.getId())) {
-                    pastVertexMap.put(v.getId(), vertex);
-                    visited.add(v.getId());
-                    queue.add(v.getId());
-                }
-            }
-        }
-        return pastVertexMap;
-    }
-
-    public List<Integer> findPathList(Map<Integer, Integer> pastVertexMap, int startId, int endId) {
-        int newId = -1;
-        List<Integer> pathList = new ArrayList<>();
-        pathList.add(endId);
-        while (newId != startId) {
-            newId = pastVertexMap.get(endId);
-            pathList.add(newId);
-            endId = newId;
-        }
-        Collections.reverse(pathList);
-        return pathList;
     }
 
     public PuzzleGraph createGraph(IceState iceState) {
@@ -173,6 +101,17 @@ public class PuzzleSolver {
         return true;
     }
 
+    public boolean canGoInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
+        int x = puzzleCoordinate.getX() + direction[0];
+        int y = puzzleCoordinate.getY() + direction[1];
+        boolean canGoInThisDirection = false;
+        try {
+            canGoInThisDirection = !puzzleMap.isRock(x, y);
+        } catch (Exception ignored) {
+        }
+        return canGoInThisDirection;
+    }
+
     public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction, IceState iceState) {
         PuzzleCoordinate newPoint = puzzleCoordinate;
         if (iceState.equals(FRICTION)) {
@@ -185,15 +124,76 @@ public class PuzzleSolver {
         return newPoint;
     }
 
-    public boolean canGoInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
-        int x = puzzleCoordinate.getX() + direction[0];
-        int y = puzzleCoordinate.getY() + direction[1];
-        boolean canGoInThisDirection = false;
-        try {
-            canGoInThisDirection = !puzzleMap.isRock(x, y);
-        } catch (Exception ignored) {
+    public void printShortestPath(PuzzleGraph graph) {
+        List<PuzzleCoordinate> result = new ArrayList<>();
+        Map<Integer, Integer> traversalMap = breadthFirstTraversal(graph, startPuzzleCoordinate.getId());
+        List<Integer> paths = findPathList(traversalMap, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
+        if (paths.isEmpty()) {
+            System.out.println(CANNOT_SOLVE_PUZZLE);
+        } else {
+            PuzzleCoordinate currentCoordinate = null;
+            for (int i = 0; i < paths.size(); i++) {
+                String direction = "";
+                PuzzleCoordinate puzzleCoordinate = puzzleMap.getPuzzleCoordinate(paths.get(i));
+                if (currentCoordinate != null) {
+                    if (puzzleCoordinate.getX() == currentCoordinate.getX()) {
+                        direction = (puzzleCoordinate.getY() > currentCoordinate.getY()) ? PathDirection.down.toString() : PathDirection.up.toString();
+                    } else {
+                        direction = (puzzleCoordinate.getX() > currentCoordinate.getX()) ? PathDirection.right.toString() : PathDirection.left.toString();
+                    }
+                }
+                printStep((i + 1), puzzleCoordinate, direction);
+                currentCoordinate = puzzleCoordinate;
+                result.add(puzzleCoordinate);
+            }
         }
-        return canGoInThisDirection;
+        puzzleMap.printPath(result);
+    }
+
+    public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
+        String step;
+        if (puzzleMap.isStart(puzzleCoordinate)) {
+            step = String.format("%d. Start at (%d,%d)", id, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
+        } else {
+            step = String.format("%d. Move %s to (%d,%d)", id, direction, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
+            if (puzzleMap.isEnd(puzzleCoordinate)) {
+                step += String.format("\n%d. Done!\n", (id + 1));
+            }
+        }
+        System.out.println(step);
+    }
+
+    public Map<Integer, Integer> breadthFirstTraversal(PuzzleGraph graph, int startId) {
+        Set<Integer> visited = new LinkedHashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Integer> pastVertexMap = new HashMap<>();
+        queue.add(startId);
+        visited.add(startId);
+        pastVertexMap.put(startId, null);
+        while (!queue.isEmpty()) {
+            int vertex = queue.poll();
+            for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
+                if (!visited.contains(v.getId())) {
+                    pastVertexMap.put(v.getId(), vertex);
+                    visited.add(v.getId());
+                    queue.add(v.getId());
+                }
+            }
+        }
+        return pastVertexMap;
+    }
+
+    public List<Integer> findPathList(Map<Integer, Integer> pastVertexMap, int startId, int endId) {
+        int newId = -1;
+        List<Integer> pathList = new ArrayList<>();
+        pathList.add(endId);
+        while (newId != startId) {
+            newId = pastVertexMap.get(endId);
+            pathList.add(newId);
+            endId = newId;
+        }
+        Collections.reverse(pathList);
+        return pathList;
     }
 
 }
