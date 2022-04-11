@@ -21,6 +21,7 @@ public class SlidingPuzzle {
             int puzzleFileType = Integer.parseInt(handleUserInput(ENTER_PUZZLE_FILE_TYPE));
             selectPuzzleFile(puzzleFileType);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.print(ENTER_VALID_VALUE);
         }
 

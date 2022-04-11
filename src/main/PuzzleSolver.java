@@ -27,7 +27,7 @@ public class PuzzleSolver {
         long startTime = System.currentTimeMillis();
         PuzzleGraph puzzleGraph = createGraph(iceState);
         printPathDetails(puzzleGraph);
-        long endTime   = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
         System.out.println(RUNNING_TIME + ((endTime - startTime)) + " nanoseconds");
     }
 
@@ -137,7 +137,7 @@ public class PuzzleSolver {
             int vertexId = stack.pop();
             visited.add(vertexId);
             currentPuzzleCoordinate = getPointFromArray(vertexId);
-            if (canFinishInThisPath(currentPuzzleCoordinate, iceState)) {
+            if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
                 graph.addVertex(endPuzzleCoordinate.getId());
                 graph.addEdge(vertexId, endPuzzleCoordinate.getId());
                 pathPresent = true;
@@ -159,7 +159,7 @@ public class PuzzleSolver {
         return (pathPresent) ? graph : null;
     }
 
-    public boolean canFinishInThisPath(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
+    public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
         if (iceState.equals(FRICTION)) {
             return puzzleMap.isEnd(puzzleCoordinate);
         } else if (iceState.equals(FRICTIONLESS)) {
