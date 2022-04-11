@@ -32,13 +32,17 @@ package main;
  *     <li>State of the ice (the character which has the value of '.')</li>
  *     <li>Path directions (up, down, left, right)</li>
  * </ul>
- *
+ * <p>
  * Using constants makes the program more scalable and the code more reusable
+ *
+ * @author Loganathan Bhavaneetharan
  */
 
 public final class PuzzleConstants {
 
-    // Prompting Message Constants
+    /**
+     * Prompting Message Constants
+     */
     public static final String WELCOME_TEXT =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|                    PUZZLE FILES                   |\n" +
@@ -76,18 +80,24 @@ public final class PuzzleConstants {
     public static final String RUNNING_TIME = "\nALGORITHM RUNNING TIME: ";
     public static final String PUZZLE_FILES = "\n--------PUZZLE FILES--------";
 
-    // Map Constants
+    /**
+     * Characters in the input map file
+     */
     public static final char ICE = '.';
     public static final char ROCK = '0';
     public static final char START = 'S';
     public static final char FINISH = 'F';
     public static final char SHORTEST_PATH = '*';
 
-    // Direction coordinates
+    /**
+     * Direction coordinates, indicates the moving directions of the puzzle pathfinder
+     */
     public static final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     public static final int[][] CARDINAL_DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
-    // Console Colors
+    /**
+     * ANSI escape codes for printing color text in console
+     */
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\033[1;91m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -98,11 +108,13 @@ public final class PuzzleConstants {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    // EOF Regex
+    /**
+     * Regex for End of the file/line
+     */
     public static final String EOF_REGEX = "[\r]?\n";
 
     /**
-     * Enum type that indicates the state of the ICE
+     * Enum type that indicates the state of the ice
      */
     public enum IceState {
         FRICTIONLESS, FRICTION
