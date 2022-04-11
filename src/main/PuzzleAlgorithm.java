@@ -122,25 +122,27 @@ public class PuzzleAlgorithm {
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
 
         openNodes.add(start);
+        start.setOpen();
         pastVertexMap.put(start.getId(), null);
         start.setCostFromStart(0);
         start.setTotalCost(start.getCostFromStart() + calculateDistance(start.getPosition(), target.getPosition()));
 
         while (!openNodes.isEmpty()) {
             PuzzleCoordinate current = openNodes.remove();
+            current.setClosed();
             closedNodes.add(current);
             if (current == target) break;
             for (PuzzleVertex v : graph.getAdjVertices(current.getId())) {
                 PuzzleCoordinate neighbour = puzzleMap.getPuzzleCoordinate(v.getId());
-                if (!closedNodes.contains(neighbour)) {
+                if (!neighbour.isClosed()) {
                     double tentativeCost = current.getCostFromStart() + calculateDistance(current.getPosition(), neighbour.getPosition());
                     pastVertexMap.put(neighbour.getId(), current.getId());
                     closedNodes.add(neighbour);
                     openNodes.add(neighbour);
-                    if ((tentativeCost < neighbour.getCostFromStart())) {
+                    if ((!neighbour.isOpen()) || (tentativeCost < neighbour.getCostFromStart())) {
                         neighbour.setCostFromStart(tentativeCost);
                         neighbour.setTotalCost(neighbour.getCostFromStart() + calculateDistance(neighbour.getPosition(), start.getPosition()));
-                        openNodes.add(neighbour);
+                        if (!neighbour.isOpen()) openNodes.add(neighbour);
                     }
                 }
             }

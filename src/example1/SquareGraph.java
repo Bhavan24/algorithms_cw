@@ -68,7 +68,7 @@ public class SquareGraph {
 
     public Set<Node> getNeighbours(Node n) {
         Set<Node> neighbours = new HashSet<>();
-        int[][] DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};;
+        int[][] DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 //        int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         for (int[] d : DIRECTIONS) {
             if (!(d[0] == 0 && d[1] == 0)) {

@@ -1,5 +1,7 @@
 package main;
 
+import static main.PuzzleConstants.ICE;
+import static main.PuzzleConstants.ROCK;
 
 public class PuzzleCoordinate implements Comparable<PuzzleCoordinate> {
 
@@ -10,6 +12,7 @@ public class PuzzleCoordinate implements Comparable<PuzzleCoordinate> {
     private double costFromStart;
     private double costToTarget;
     private double totalCost;
+    private State state;
 
     public PuzzleCoordinate(int id, int x, int y, char value) {
         this.id = id;
@@ -19,6 +22,7 @@ public class PuzzleCoordinate implements Comparable<PuzzleCoordinate> {
         this.costFromStart = 0;
         this.costToTarget = 0;
         this.totalCost = 0;
+        this.state = State.UNVISITED;
     }
 
     public int getId() {
@@ -77,4 +81,33 @@ public class PuzzleCoordinate implements Comparable<PuzzleCoordinate> {
             return firstPosition.equals(secondPosition);
         }
     }
+
+    public boolean isNormal() {
+        return this.value == ICE;
+    }
+
+    public boolean isObstacle() {
+        return this.value == ROCK;
+    }
+
+    public boolean isOpen() {
+        return this.value == ICE;
+    }
+
+    public boolean isClosed() {
+        return this.state == State.CLOSED;
+    }
+
+    public void setOpen() {
+        this.state = State.OPEN;
+    }
+
+    public void setClosed() {
+        this.state = State.CLOSED;
+    }
+
+    private enum State {
+        UNVISITED, OPEN, CLOSED
+    }
+
 }
