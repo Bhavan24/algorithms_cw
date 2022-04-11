@@ -4,11 +4,23 @@ import java.util.*;
 
 public class PuzzleAlgorithm {
 
-    public List<Integer> shortestPathAlgorithm(PuzzleGraph graph, int startId, int endId) {
-        return Dijkstra(graph, startId, endId);
+    PuzzleMap puzzleMap;
+    PuzzleGraph graph;
+    int startId;
+    int endId;
+    PuzzleCoordinate start;
+    PuzzleCoordinate target;
+
+    public PuzzleAlgorithm(PuzzleMap puzzleMap, PuzzleGraph graph, PuzzleCoordinate start, PuzzleCoordinate target) {
+        this.puzzleMap = puzzleMap;
+        this.graph = graph;
+        this.start = start;
+        this.target = target;
+        this.startId = start.getId();
+        this.endId = target.getId();
     }
 
-    public List<Integer> BFS(PuzzleGraph graph, int startId, int endId) {
+    public List<Integer> BFS() {
         Set<Integer> visited = new LinkedHashSet<>();
         Queue<Integer> queue = new LinkedList<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
@@ -40,7 +52,7 @@ public class PuzzleAlgorithm {
         return pathList;
     }
 
-    public List<Integer> DFS(PuzzleGraph graph, int startId, int endId) {
+    public List<Integer> DFS() {
         Set<Integer> visited = new LinkedHashSet<>();
         Stack<Integer> stack = new Stack<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
@@ -72,7 +84,7 @@ public class PuzzleAlgorithm {
         return pathList;
     }
 
-    public List<Integer> Dijkstra(PuzzleGraph graph, int startId, int endId) {
+    public List<Integer> Dijkstra() {
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
         Set<Integer> visited = new LinkedHashSet<>();
         Map<Integer, Integer> pastVertexMap = new HashMap<>();
@@ -104,9 +116,51 @@ public class PuzzleAlgorithm {
         return pathList;
     }
 
-    public List<Integer> AStar(PuzzleGraph graph, int startId, int endId) {
+    public List<Integer> AStar() {
+        PriorityQueue<PuzzleCoordinate> openNodes = new PriorityQueue<>();
+        Set<PuzzleCoordinate> closedNodes = new HashSet<>();
+        Map<Integer, Integer> pastVertexMap = new HashMap<>();
+
+        openNodes.add(start);
+        pastVertexMap.put(start.getId(), null);
+        start.setCostFromStart(0);
+        start.setTotalCost(start.getCostFromStart() + calculateDistance(start.getPosition(), target.getPosition()));
+
+        while (!openNodes.isEmpty()) {
+            PuzzleCoordinate current = openNodes.remove();
+            closedNodes.add(current);
+            if (current == target) break;
+            for (PuzzleVertex v : graph.getAdjVertices(current.getId())) {
+                PuzzleCoordinate neighbour = puzzleMap.getPuzzleCoordinate(v.getId());
+                if (!closedNodes.contains(neighbour)) {
+                    double tentativeCost = current.getCostFromStart() + calculateDistance(current.getPosition(), neighbour.getPosition());
+                    pastVertexMap.put(neighbour.getId(), current.getId());
+                    closedNodes.add(neighbour);
+                    openNodes.add(neighbour);
+                    if ((tentativeCost < neighbour.getCostFromStart())) {
+                        neighbour.setCostFromStart(tentativeCost);
+                        neighbour.setTotalCost(neighbour.getCostFromStart() + calculateDistance(neighbour.getPosition(), start.getPosition()));
+                        openNodes.add(neighbour);
+                    }
+                }
+            }
+        }
+
+        int newId = -1;
         List<Integer> pathList = new ArrayList<>();
+        int endId = target.getId();
+        pathList.add(endId);
+        while (newId != start.getId()) {
+            newId = pastVertexMap.get(endId);
+            pathList.add(newId);
+            endId = newId;
+        }
+        Collections.reverse(pathList);
         return pathList;
+    }
+
+    private double calculateDistance(PuzzleCoordinate from, PuzzleCoordinate to) {
+        return Math.pow(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2), 0.5);
     }
 
 }

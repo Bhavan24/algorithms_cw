@@ -169,8 +169,8 @@ public class PuzzleSolver {
     }
 
     public List<Integer> performAlgorithm(PuzzleGraph graph, int startId, int endId) {
-        PuzzleAlgorithm puzzleAlgorithm = new PuzzleAlgorithm();
-        return puzzleAlgorithm.shortestPathAlgorithm(graph, startId, endId);
+        PuzzleAlgorithm puzzleAlgorithm = new PuzzleAlgorithm(puzzleMap, graph, startPuzzleCoordinate, endPuzzleCoordinate);
+        return puzzleAlgorithm.AStar();
     }
 
 }
