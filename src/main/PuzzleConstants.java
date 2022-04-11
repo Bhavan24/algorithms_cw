@@ -1,3 +1,10 @@
+/*
+ * Name: Loganathan Bhavaneetharan
+ * UOW ID: w1810599
+ * IIT ID: 20201212
+ * B.Eng.Software Engineering, 2nd Year
+ */
+
 package main;
 
 public class PuzzleConstants {
@@ -5,25 +12,25 @@ public class PuzzleConstants {
     // Message Constants
     public static final String WELCOME_TEXT =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|                    PUZZLE FILES                   |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|  1. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
-                    "|  2. RUN A PUZZLE FROM FILE PATH                   |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+            "|                    PUZZLE FILES                   |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "|  1. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
+            "|  2. RUN A PUZZLE FROM FILE PATH                   |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String SELECT_MOVABLE_TYPE =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|                 MOVING DIRECTIONS                 |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|  1. 4-CARDINAL DIRECTIONS (TOP,DOWN,RIGHT,LEFT)   |\n" +
-                    "|  2. 8-CARDINAL DIRECTIONS (ALL DIRECTIONS)        |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+            "|                 MOVING DIRECTIONS                 |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "|  1. 4-CARDINAL DIRECTIONS (TOP,DOWN,RIGHT,LEFT)   |\n" +
+            "|  2. 8-CARDINAL DIRECTIONS (ALL DIRECTIONS)        |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String SELECT_ALGORITHM_TYPE =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|             STATE OF THE PUZZLE ICE               |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
-                    "|  1. FRICTIONLESS ICE (USER WILL SLIDE)            |\n" +
-                    "|  2. ICE WITH FRICTION (USER WILL NOT SLIDE)       |\n" +
-                    "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
+            "|             STATE OF THE PUZZLE ICE               |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
+            "|  1. FRICTIONLESS ICE (USER WILL SLIDE)            |\n" +
+            "|  2. ICE WITH FRICTION (USER WILL NOT SLIDE)       |\n" +
+            "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
     public static final String ENTER_PUZZLE_FILE_TYPE = "\nPLEASE ENTER THE PUZZLE FILE TYPE: ";
     public static final String ENTER_DIRECTION_TYPE = "\nPLEASE ENTER THE MOVING DIRECTION TYPE: ";
     public static final String ENTER_ICE_STATE_TYPE = "\nPLEASE ENTER THE PUZZLE ICE STATE TYPE: ";
