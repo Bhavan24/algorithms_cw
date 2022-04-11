@@ -25,13 +25,17 @@ public class PuzzleSolver {
 
     public void solve(IceState iceState) {
         long startTime = System.currentTimeMillis();
-        PuzzleGraph puzzleGraph = createGraph(iceState);
+        PuzzleGraph puzzleGraph = createPuzzleGraph(iceState);
         printShortestPath(puzzleGraph);
         long endTime = System.currentTimeMillis();
+        printRunningTime(startTime, endTime);
+    }
+
+    public void printRunningTime(long startTime, long endTime) {
         System.out.println(RUNNING_TIME + ANSI_CYAN + (((float) (endTime - startTime) / 1000)) + ANSI_RESET + " seconds");
     }
 
-    public PuzzleGraph createGraph(IceState iceState) {
+    public PuzzleGraph createPuzzleGraph(IceState iceState) {
         PuzzleGraph graph = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
