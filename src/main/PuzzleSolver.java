@@ -170,7 +170,7 @@ public class PuzzleSolver {
 
     public List<Integer> performAlgorithm(PuzzleGraph graph, int startId, int endId) {
         PuzzleAlgorithm puzzleAlgorithm = new PuzzleAlgorithm();
-        return puzzleAlgorithm.BFS(graph, startId, endId);
+        return puzzleAlgorithm.shortestPathAlgorithm(graph, startId, endId);
     }
 
 }
