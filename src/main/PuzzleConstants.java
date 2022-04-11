@@ -1,15 +1,44 @@
-/*
+/******************************************************************************
  * Name: Loganathan Bhavaneetharan
  * UOW ID: w1810599
  * IIT ID: 20201212
  * B.Eng.Software Engineering, 2nd Year
- */
+ *
+ *  Description:
+ *        The programs takes the filepath, moving direction, state of the ice
+ *		  as inputs and will provide the shortest path from point 'S' to
+ *		  point 'F' using breadth-first search algorithm
+ *
+ * Run the program by running SlidingPuzzle.main()
+ *
+ *****************************************************************************/
 
 package main;
 
-public class PuzzleConstants {
+/**
+ * <p>The {@code PuzzleConstants} class contains the constants used
+ * in this project.</p>
+ *
+ * <ul>
+ *     This class provides the constants related to,
+ *     <li>User prompting messages</li>
+ *     <li>Puzzle map text file characters</li>
+ *     <li>Moving direction coordinates</li>
+ *     <li>Java console colors, eof regex strings </li>
+ * </ul>
+ *
+ * <ul>
+ *     This class also provides the enums related to,
+ *     <li>State of the ice (the character which has the value of '.')</li>
+ *     <li>Path directions (up, down, left, right)</li>
+ * </ul>
+ *
+ * Using constants makes the program more scalable and the code more reusable
+ */
 
-    // Message Constants
+public final class PuzzleConstants {
+
+    // Prompting Message Constants
     public static final String WELCOME_TEXT =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|                    PUZZLE FILES                   |\n" +
@@ -54,17 +83,9 @@ public class PuzzleConstants {
     public static final char FINISH = 'F';
     public static final char SHORTEST_PATH = '*';
 
-    // Directions
+    // Direction coordinates
     public static final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     public static final int[][] CARDINAL_DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
-    public enum IceState {
-        FRICTIONLESS, FRICTION
-    }
-
-    public enum PathDirection {
-        up, down, left, right
-    }
 
     // Console Colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -79,5 +100,19 @@ public class PuzzleConstants {
 
     // EOF Regex
     public static final String EOF_REGEX = "[\r]?\n";
+
+    /**
+     * Enum type that indicates the state of the ICE
+     */
+    public enum IceState {
+        FRICTIONLESS, FRICTION
+    }
+
+    /**
+     * Enum type that indicates all the four path directions
+     */
+    public enum PathDirection {
+        up, down, left, right
+    }
 
 }
