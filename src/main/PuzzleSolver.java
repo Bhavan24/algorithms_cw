@@ -1,8 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import static main.PuzzleConstants.*;
 import static main.PuzzleConstants.IceState.FRICTION;
@@ -132,7 +130,7 @@ public class PuzzleSolver {
 
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        List<Integer> paths = performAlgorithm(graph, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
+        List<Integer> paths = breadthFirstSearch(graph, startPuzzleCoordinate.getId(), endPuzzleCoordinate.getId());
         if (paths.isEmpty()) {
             System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {
@@ -168,9 +166,35 @@ public class PuzzleSolver {
         System.out.println(step);
     }
 
-    public List<Integer> performAlgorithm(PuzzleGraph graph, int startId, int endId) {
-        PuzzleAlgorithm puzzleAlgorithm = new PuzzleAlgorithm();
-        return puzzleAlgorithm.shortestPathAlgorithm(graph, startId, endId);
-    }
+    public List<Integer> breadthFirstSearch(PuzzleGraph graph, int startId, int endId) {
+        Set<Integer> visited = new LinkedHashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Integer> pastVertexMap = new HashMap<>();
+        queue.add(startId);
+        visited.add(startId);
+        pastVertexMap.put(startId, null);
 
+        while (!queue.isEmpty()) {
+            int vertex = queue.poll();
+            if (vertex == endId) break;
+            for (PuzzleVertex v : graph.getAdjVertices(vertex)) {
+                if (!visited.contains(v.getId())) {
+                    pastVertexMap.put(v.getId(), vertex);
+                    visited.add(v.getId());
+                    queue.add(v.getId());
+                }
+            }
+        }
+
+        int newId = -1;
+        List<Integer> pathList = new ArrayList<>();
+        pathList.add(endId);
+        while (newId != startId) {
+            newId = pastVertexMap.get(endId);
+            pathList.add(newId);
+            endId = newId;
+        }
+        Collections.reverse(pathList);
+        return pathList;
+    }
 }
