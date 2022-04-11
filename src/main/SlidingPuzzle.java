@@ -16,11 +16,8 @@ public class SlidingPuzzle {
 
     public void startPuzzleGame() {
 
-        System.out.print(WELCOME_TEXT);
-        System.out.print(SELECT_MOVABLE_TYPE);
-        System.out.print(SELECT_ALGORITHM_TYPE);
-
         try {
+            System.out.print(WELCOME_TEXT);
             int puzzleFileType = Integer.parseInt(handleUserInput(ENTER_PUZZLE_FILE_TYPE));
             selectPuzzleFile(puzzleFileType);
         } catch (Exception e) {
@@ -71,9 +68,11 @@ public class SlidingPuzzle {
     public void selectPuzzleProperties(String puzzleFilePath) {
         File file = new File(puzzleFilePath);
         if (file.exists()) {
+            System.out.print(SELECT_MOVABLE_TYPE);
             int directionType = Integer.parseInt(handleUserInput(ENTER_DIRECTION_TYPE));
             int[][] directions = selectDirectionType(directionType);
             if (directions != null) {
+                System.out.print(SELECT_ALGORITHM_TYPE);
                 int iceStateType = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
                 IceState iceState = selectIceStateType(iceStateType);
                 if (iceState != null) {
