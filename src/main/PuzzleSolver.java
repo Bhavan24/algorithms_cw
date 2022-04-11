@@ -38,33 +38,33 @@ public class PuzzleSolver {
     public PuzzleGraph createPuzzleGraph(IceState iceState) {
 
         PuzzleGraph graph = new PuzzleGraph();
-        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> nextToVisit = new Stack<>();
         List<Integer> visited = new ArrayList<>();
 
         PuzzleCoordinate currentPuzzleCoordinate = startPuzzleCoordinate;
-        stack.push(currentPuzzleCoordinate.getId());
+        nextToVisit.push(currentPuzzleCoordinate.getId());
         graph.addVertex(currentPuzzleCoordinate.getId());
 
-        boolean pathPresent = false;
+        boolean pathExists = false;
 
-        while (!stack.isEmpty()) {
+        while (!nextToVisit.isEmpty()) {
 
-            int vertexId = stack.pop();
+            int vertexId = nextToVisit.pop();
             visited.add(vertexId);
             currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
 
             if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
                 graph.addVertex(endPuzzleCoordinate.getId());
                 graph.addEdge(vertexId, endPuzzleCoordinate.getId());
-                pathPresent = true;
-                stack.clear();
+                pathExists = true;
+                nextToVisit.clear();
                 break;
             } else {
                 for (int[] direction : directions) {
                     if (canGoInThisDirection(currentPuzzleCoordinate, direction)) {
                         PuzzleCoordinate newPuzzleCoordinate = goInThisDirection(currentPuzzleCoordinate, direction, iceState);
                         if (!visited.contains(newPuzzleCoordinate.getId())) {
-                            stack.push(newPuzzleCoordinate.getId());
+                            nextToVisit.push(newPuzzleCoordinate.getId());
                             graph.addVertex(newPuzzleCoordinate.getId());
                             graph.addEdge(vertexId, newPuzzleCoordinate.getId());
                         }
@@ -73,34 +73,35 @@ public class PuzzleSolver {
             }
         }
 
-        return (pathPresent) ? graph : null;
+        return (pathExists) ? graph : null;
     }
 
     public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
+
         if (iceState.equals(FRICTION)) {
             return puzzleMap.isEnd(puzzleCoordinate);
-        } else if (iceState.equals(FRICTIONLESS)) {
+        }
+
+        if (iceState.equals(FRICTIONLESS)) {
             if (puzzleMap.isEnd(puzzleCoordinate)) {
                 return true;
             }
             if (!(puzzleCoordinate.getX() == endPuzzleCoordinate.getX() || puzzleCoordinate.getY() == endPuzzleCoordinate.getY())) {
                 return false;
             }
-            int start;
-            int end;
             if (puzzleCoordinate.getX() == endPuzzleCoordinate.getX()) {
-                start = Math.min(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
-                end = Math.max(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
-                for (int i = start; i <= end; i++) {
+                int startingCoordinate = Math.min(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
+                int endingCoordinate = Math.max(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
+                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
                     PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(endPuzzleCoordinate.getX(), i);
                     if (puzzleMap.isRock(pc)) {
                         return false;
                     }
                 }
             } else {
-                start = Math.min(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
-                end = Math.max(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
-                for (int i = start; i <= end; i++) {
+                int startingCoordinate = Math.min(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
+                int endingCoordinate = Math.max(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
+                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
                     PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, endPuzzleCoordinate.getY());
                     if (puzzleMap.isRock(pc)) {
                         return false;
@@ -122,13 +123,17 @@ public class PuzzleSolver {
 
     public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction, IceState iceState) {
         PuzzleCoordinate newPoint = puzzleCoordinate;
+
         if (iceState.equals(FRICTION)) {
             newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];
-        } else if (iceState.equals(FRICTIONLESS)) {
+        }
+
+        if (iceState.equals(FRICTIONLESS)) {
             while (canGoInThisDirection(newPoint, direction)) {
                 newPoint = puzzleArray[newPoint.getY() + direction[1]][newPoint.getX() + direction[0]];
             }
         }
+
         return newPoint;
     }
 
