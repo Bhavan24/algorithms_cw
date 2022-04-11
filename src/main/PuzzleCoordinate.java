@@ -3,10 +3,10 @@ package main;
 
 public class PuzzleCoordinate {
 
-    int id;
-    int x;
-    int y;
-    char value;
+    private final int id;
+    private final int x;
+    private final int y;
+    private final char value;
 
     public PuzzleCoordinate(int id, int x, int y, char value) {
         this.id = id;

@@ -36,17 +36,23 @@ public class PuzzleSolver {
     }
 
     public PuzzleGraph createPuzzleGraph(IceState iceState) {
+
         PuzzleGraph graph = new PuzzleGraph();
         Stack<Integer> stack = new Stack<>();
         List<Integer> visited = new ArrayList<>();
+
         PuzzleCoordinate currentPuzzleCoordinate = startPuzzleCoordinate;
         stack.push(currentPuzzleCoordinate.getId());
         graph.addVertex(currentPuzzleCoordinate.getId());
+
         boolean pathPresent = false;
+
         while (!stack.isEmpty()) {
+
             int vertexId = stack.pop();
             visited.add(vertexId);
             currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
+
             if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
                 graph.addVertex(endPuzzleCoordinate.getId());
                 graph.addEdge(vertexId, endPuzzleCoordinate.getId());
@@ -66,6 +72,7 @@ public class PuzzleSolver {
                 }
             }
         }
+
         return (pathPresent) ? graph : null;
     }
 
@@ -106,13 +113,10 @@ public class PuzzleSolver {
     }
 
     public boolean canGoInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
+        boolean canGoInThisDirection;
         int x = puzzleCoordinate.getX() + direction[0];
         int y = puzzleCoordinate.getY() + direction[1];
-        boolean canGoInThisDirection = false;
-        try {
-            canGoInThisDirection = !puzzleMap.isRock(x, y);
-        } catch (Exception ignored) {
-        }
+        canGoInThisDirection = puzzleMap.isValidCoordinate(x, y) && !puzzleMap.isRock(x, y);
         return canGoInThisDirection;
     }
 
@@ -180,10 +184,14 @@ public class PuzzleSolver {
         parentMap.put(startCoordinateId, null);
 
         while (!nextToVisit.isEmpty()) {
+
             int currentVertexId = nextToVisit.poll();
+
             if (currentVertexId == endCoordinateId) break;
+
             for (PuzzleVertex neighbourVertex : graph.getAdjVertices(currentVertexId)) {
                 int neighbourVertexId = neighbourVertex.getId();
+
                 if (!visited.contains(neighbourVertexId)) {
                     parentMap.put(neighbourVertexId, currentVertexId);
                     visited.add(neighbourVertexId);
@@ -192,14 +200,17 @@ public class PuzzleSolver {
             }
         }
 
-        List<Integer> pathList = new ArrayList<>();
-        pathList.add(endCoordinateId);
+        List<Integer> paths = new ArrayList<>();
+        paths.add(endCoordinateId);
+
         for (int coordinateId = -1; coordinateId != startCoordinateId; ) {
             coordinateId = parentMap.get(endCoordinateId);
-            pathList.add(coordinateId);
+            paths.add(coordinateId);
             endCoordinateId = coordinateId;
         }
-        Collections.reverse(pathList);
-        return pathList;
+
+        Collections.reverse(paths);
+        return paths;
     }
+
 }

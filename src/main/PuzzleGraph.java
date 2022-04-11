@@ -12,14 +12,12 @@ public class PuzzleGraph {
     public PuzzleGraph() {
     }
 
-    public void addVertex(int label) {
-        adjVertices.putIfAbsent(new PuzzleVertex(label), new ArrayList<>());
+    public void addVertex(int id) {
+        adjVertices.putIfAbsent(new PuzzleVertex(id), new ArrayList<>());
     }
 
-    public void addEdge(int label1, int label2) {
-        PuzzleVertex v1 = new PuzzleVertex(label1);
-        PuzzleVertex v2 = new PuzzleVertex(label2);
-        adjVertices.get(v1).add(v2);
+    public void addEdge(int id1, int id2) {
+        adjVertices.get(new PuzzleVertex(id1)).add(new PuzzleVertex(id2));
     }
 
     public List<PuzzleVertex> getAdjVertices(int label) {
