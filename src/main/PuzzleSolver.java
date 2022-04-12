@@ -100,8 +100,18 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param iceState
-     * @return PuzzleGraph
+     * The core method to create the graph using {@linkplain PuzzleGraph} data structure
+     * <br/>
+     * Using {@linkplain Stack}, the next to visit coordinate ids will be tracked.
+     * <br/>
+     * Using {@linkplain List}, already visited coordinate ids will be tracked.
+     *
+     * <b>beginning from the starting coordinate, until the next to visit stack becomes empty,
+     * the possible path coordinate ids will be added to the graph.
+     * </b>
+     *
+     * @param iceState the state of the ice will be considered when deciding possible path coordinates
+     * @return PuzzleGraph which contains the possible vertices
      */
     public PuzzleGraph createPuzzleGraph(IceState iceState) {
 
@@ -145,9 +155,17 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param puzzleCoordinate
-     * @param iceState
-     * @return PuzzleGraph
+     * By taking the current path coordinate and ice state as arguments, this method
+     * will return a boolean whether the path ends if we continue going on this direction
+     * <p>
+     * if the ice is with friction it only checks whether the current coordinate is the end or not
+     * <p>
+     * if the ice is frictionless it will check the current coordinate and the remaining coordinates
+     * in the specific directions
+     *
+     * @param puzzleCoordinate the current coordinate
+     * @param iceState         the state of the ice
+     * @return boolean value whether the path ends in the direction or not
      */
     public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
 
@@ -187,9 +205,11 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param puzzleCoordinate
-     * @param direction
-     * @return PuzzleGraph
+     * Verify whether we can go on this direction without any obstacles
+     *
+     * @param puzzleCoordinate which holds the current PuzzleCoordinate
+     * @param direction        the array which contains the [x,y] coordinate values
+     * @return boolean value indicating whether we can go on this direction or not
      */
     public boolean canGoInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
         boolean canGoInThisDirection;
@@ -200,10 +220,17 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param puzzleCoordinate
-     * @param iceState
-     * @param direction
-     * @return iceState
+     * Travel in the selected direction from the current puzzle coordinate
+     * <p>
+     * if the ice is with friction it will only move one tile from the current coordinate to the
+     * selected direction
+     * <p>
+     * if the ice is frictionless the last point which we slide (go) upto will be returned
+     *
+     * @param puzzleCoordinate current path coordinate
+     * @param iceState         the state of the ice
+     * @param direction        the path directions
+     * @return puzzle coordinate of the next/ last possible coordinate
      */
     public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction, IceState iceState) {
         PuzzleCoordinate newPoint = puzzleCoordinate;
@@ -222,7 +249,11 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param graph
+     * Prints the shortest path in both text format and graph format
+     * <p>
+     * {@linkplain PathDirection} enum is being used for the directions
+     *
+     * @param graph the graph which holds the details about the vertices and edges
      */
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
@@ -250,28 +281,12 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param id
-     * @param puzzleCoordinate
-     * @param direction
-     */
-    public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
-        String step;
-        if (puzzleMap.isStart(puzzleCoordinate)) {
-            step = String.format("%d. Start at (%d,%d)", id, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
-        } else {
-            step = String.format("%d. Move %s to (%d,%d)", id, direction, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
-            if (puzzleMap.isEnd(puzzleCoordinate)) {
-                step += String.format("\n%d. Done!\n", (id + 1));
-            }
-        }
-        System.out.println(step);
-    }
-
-    /**
-     * @param graph
-     * @param start
-     * @param end
-     * @return paths
+     * Breath first search algorithm to calculate the shortest path
+     *
+     * @param graph the puzzle graph
+     * @param start the starting coordinate
+     * @param end   the ending coordinate
+     * @return the shortest path puzzle coordinate ids to a list
      */
     public List<Integer> breadthFirstSearch(PuzzleGraph graph, PuzzleCoordinate start, PuzzleCoordinate end) {
 
@@ -314,6 +329,26 @@ public class PuzzleSolver {
 
         Collections.reverse(paths);
         return paths;
+    }
+
+    /**
+     * Printing the puzzle coordinate in text format
+     *
+     * @param id               the id of each step
+     * @param puzzleCoordinate the puzzle coordinate of each step
+     * @param direction        the path direction of each step
+     */
+    public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
+        String step;
+        if (puzzleMap.isStart(puzzleCoordinate)) {
+            step = String.format("%d. Start at (%d,%d)", id, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
+        } else {
+            step = String.format("%d. Move %s to (%d,%d)", id, direction, (puzzleCoordinate.getX() + 1), (puzzleCoordinate.getY() + 1));
+            if (puzzleMap.isEnd(puzzleCoordinate)) {
+                step += String.format("\n%d. Done!\n", (id + 1));
+            }
+        }
+        System.out.println(step);
     }
 
 }
