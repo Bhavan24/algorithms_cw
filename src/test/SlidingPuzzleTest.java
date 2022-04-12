@@ -1,8 +1,29 @@
+/******************************************************************************
+ * Name: Loganathan Bhavaneetharan
+ * UOW ID: w1810599
+ * IIT ID: 20201212
+ * B.Eng.Software Engineering, 2nd Year
+ *
+ *  Description:
+ *        The programs takes the filepath, moving direction, state of the ice
+ *		  as inputs and will provide the shortest path from point 'S' to
+ *		  point 'F' using breadth-first search algorithm
+ *
+ * Run the test by running SlidingPuzzleTest.main()
+ *
+ *****************************************************************************/
+
 package test;
 
 import main.PuzzleConstants.IceState;
 import main.SlidingPuzzle;
 
+/**
+ * <p>The {@code SlidingPuzzleTest} class contains the tests for the
+ * sliding puzzle</p>
+ *
+ * @author Loganathan Bhavaneetharan
+ */
 public class SlidingPuzzleTest {
 
     private static final int directionType = 1;
