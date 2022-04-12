@@ -39,7 +39,7 @@ public class PuzzleSolver {
         this.directions = directions;
         this.puzzleMap = new PuzzleMap();
         this.puzzleMap.initializePuzzleMap(fileContents);
-        this.puzzleArray = puzzleMap.getPuzzleMapArray();
+        this.puzzleArray = puzzleMap.getPuzzleCoordinatesMap();
         this.start = puzzleMap.getStart();
         this.end = puzzleMap.getEnd();
     }

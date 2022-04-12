@@ -88,7 +88,7 @@ public class PuzzleMap {
         }
     }
 
-    public PuzzleCoordinate[][] getPuzzleMapArray() {
+    public PuzzleCoordinate[][] getPuzzleCoordinatesMap() {
         return puzzleCoordinatesMap;
     }
 
@@ -167,19 +167,19 @@ public class PuzzleMap {
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
-        PuzzleCoordinate[][] tempPuzzleMapArray = Arrays.stream(puzzleCoordinatesMap).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
+        PuzzleCoordinate[][] tempPuzzleCoordinatesMap = Arrays.stream(puzzleCoordinatesMap).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
         int id = 0;
         for (PuzzleCoordinate coordinate : path) {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
                 continue;
             }
-            tempPuzzleMapArray[coordinate.getY()][coordinate.getX()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH);
+            tempPuzzleCoordinatesMap[coordinate.getY()][coordinate.getX()] = new PuzzleCoordinate(id, coordinate.getX(), coordinate.getY(), SHORTEST_PATH);
             id++;
         }
-        printPuzzleMap(tempPuzzleMapArray);
+        printPuzzleCoordinatesMap(tempPuzzleCoordinatesMap);
     }
 
-    public void printPuzzleMap(PuzzleCoordinate[][] puzzleCoordinatesMap) {
+    public void printPuzzleCoordinatesMap(PuzzleCoordinate[][] puzzleCoordinatesMap) {
         for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
                 switch (puzzleCoordinate.getValue()) {
