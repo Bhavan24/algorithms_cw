@@ -190,34 +190,89 @@ public class PuzzleMap {
         return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
     }
 
+    /**
+     * Returns whether the provided x, y coordinates indicate a rock in {@code PuzzleCoordinate} map
+     * by checking the value (character) is equal to rock
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} value is equal to a rock value or not
+     */
     public boolean isRock(int x, int y) {
         return puzzleCoordinatesMap[y][x].getValue() == ROCK;
     }
 
+    /**
+     * Returns whether the provided x, y coordinates indicate an ice in {@code PuzzleCoordinate} map
+     * by checking the value (character) is equal to ice
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} value is equal to ice value or not
+     */
     public boolean isIce(int x, int y) {
         return puzzleCoordinatesMap[y][x].getValue() == ICE;
     }
 
+    /**
+     * Returns whether the provided {@code PuzzleCoordinate} indicate the starting {@code PuzzleCoordinate}
+     *
+     * @param p {@code PuzzleCoordinate}
+     * @return starting {@code PuzzleCoordinate} is equal to the provided {@code PuzzleCoordinate}
+     */
     public boolean isStart(PuzzleCoordinate p) {
         return (p != null) && isStart(p.getX(), p.getY());
     }
 
+    /**
+     * Returns whether the provided {@code PuzzleCoordinate} indicate the ending {@code PuzzleCoordinate}
+     *
+     * @param p {@code PuzzleCoordinate}
+     * @return ending {@code PuzzleCoordinate} is equal to the provided {@code PuzzleCoordinate}
+     */
     public boolean isEnd(PuzzleCoordinate p) {
         return (p != null) && isEnd(p.getX(), p.getY());
     }
 
+    /**
+     * Returns whether the provided {@code PuzzleCoordinate} is a valid {@code PuzzleCoordinate}
+     *
+     * @param p {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} is valid or not
+     */
     public boolean isValidCoordinate(PuzzleCoordinate p) {
         return (p != null) && isValidCoordinate(p.getX(), p.getY());
     }
 
+    /**
+     * Returns whether the provided {@code PuzzleCoordinate} indicate a rock in {@code PuzzleCoordinate} map
+     * by checking the value (character) is equal to rock
+     *
+     * @param p {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} value is equal to a rock value or not
+     */
     public boolean isRock(PuzzleCoordinate p) {
         return (p != null) && isRock(p.getX(), p.getY());
     }
 
+    /**
+     * Returns whether the provided {@code PuzzleCoordinate} indicate an ice in {@code PuzzleCoordinate} map
+     * by checking the value (character) is equal to ice
+     *
+     * @param p {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} value is equal to ice value or not
+     */
     public boolean isIce(PuzzleCoordinate p) {
         return (p != null) && isIce(p.getX(), p.getY());
     }
 
+    /**
+     * Returns the {@code PuzzleCoordinate} which has the provided id
+     * by looping through the array checking whether the id is equal to {@code PuzzleCoordinate} id
+     *
+     * @param id {@code PuzzleCoordinate} id
+     * @return {@code PuzzleCoordinate} which has the provided id
+     */
     public PuzzleCoordinate getPuzzleCoordinate(int id) {
         for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
@@ -229,6 +284,14 @@ public class PuzzleMap {
         return null;
     }
 
+    /**
+     * Returns the {@code PuzzleCoordinate} which has the provided x, y coordinates at their
+     * respective places.
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return {@code PuzzleCoordinate} which has the provided x, y values for it's x, y values
+     */
     public PuzzleCoordinate getPuzzleCoordinate(int x, int y) {
         if (isValidCoordinate(x, y)) {
             return puzzleCoordinatesMap[y][x];
@@ -236,6 +299,9 @@ public class PuzzleMap {
         return null;
     }
 
+    /**
+     * @param path {@code List<PuzzleCoordinate>}
+     */
     public void printPath(List<PuzzleCoordinate> path) {
         PuzzleCoordinate[][] tempPuzzleCoordinatesMap = Arrays.stream(puzzleCoordinatesMap).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
         int id = 0;
@@ -249,6 +315,9 @@ public class PuzzleMap {
         printPuzzleCoordinatesMap(tempPuzzleCoordinatesMap);
     }
 
+    /**
+     * @param puzzleCoordinatesMap {@code PuzzleCoordinate[][]}
+     */
     public void printPuzzleCoordinatesMap(PuzzleCoordinate[][] puzzleCoordinatesMap) {
         for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
