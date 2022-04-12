@@ -300,7 +300,13 @@ public class PuzzleMap {
     }
 
     /**
-     * @param path {@code List<PuzzleCoordinate>}
+     * The values of puzzleCoordinatesMap will be copied to a temporary array and the shortest path points
+     * will be changed with '*' character instead of '.' for clear indications. then the temporary array will be
+     * sent to {@code printPuzzleCoordinatesMap} to be printed as a colorful graph.
+     * <br/>
+     * A temporary array is used so that we do not modify the existing data of the puzzleCoordinatesMap array
+     *
+     * @param path {@code List<PuzzleCoordinate>} the PuzzleCoordinates of the shortest path
      */
     public void printPath(List<PuzzleCoordinate> path) {
         PuzzleCoordinate[][] tempPuzzleCoordinatesMap = Arrays.stream(puzzleCoordinatesMap).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
@@ -316,7 +322,11 @@ public class PuzzleMap {
     }
 
     /**
-     * @param puzzleCoordinatesMap {@code PuzzleCoordinate[][]}
+     * By taking the puzzleCoordinatesMap array as a parameter this method prints out the map
+     * by comparing each value of the array to their respective characters giving them a special
+     * color in the console
+     *
+     * @param puzzleCoordinatesMap temporary puzzleCoordinatesMap provided by {@code printPath} method
      */
     public void printPuzzleCoordinatesMap(PuzzleCoordinate[][] puzzleCoordinatesMap) {
         for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
