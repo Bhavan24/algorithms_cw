@@ -22,7 +22,9 @@ import static main.PuzzleConstants.IceState.FRICTION;
 import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
 /**
- * <p>The {@code PuzzleSolver} is where the algorithm is performed using the data structure
+ * <p>The {@code PuzzleSolver} is where the bfs algorithm is performed
+ * to determine the shortest path using the graph data structure and puzzleCoordinate
+ * 2D array.</p>
  *
  * @author Loganathan Bhavaneetharan
  */
@@ -54,35 +56,36 @@ public class PuzzleSolver {
      */
     private final int[][] directions;
 
+    /**
+     * The ice state of the current {@code PuzzleMap}. (friction/ frictionless)
+     */
     private final IceState iceState;
 
     /**
      * Constructs and initializes a {@code PuzzleSolver}.
      * <br/>
      * On initialization the puzzleMap will be initiated.
-     * puzzleArray, start, end, directions will be assigned the initial values
+     * puzzleArray, start, end, directions, iceState will be assigned the relevant values
      *
      * @param fileContents the file contents of the text file
      * @param directions   array containing movement coordinates of this {@code PuzzleSolver}.
+     * @param iceState     the state of the ice (friction/ frictionless) of this {@code PuzzleSolver}.
      */
     public PuzzleSolver(String fileContents, int[][] directions, IceState iceState) {
         this.directions = directions;
+        this.iceState = iceState;
         this.puzzleMap = new PuzzleMap(fileContents);
         this.puzzleArray = puzzleMap.getPuzzleCoordinatesMap();
         this.start = puzzleMap.getStart();
         this.end = puzzleMap.getEnd();
-        this.iceState = iceState;
     }
 
     /**
      * The core methods where the puzzle map is converted to a graph
      * and the bfs algorithm finds the and prints the shortest path of that graph
      * <br/>
-     * The algorithm running time is calculated by {@linkplain System#currentTimeMillis()} and finally
-     * the time is printed out by calling the {@linkplain #printRunningTime(long start, long end)} method
-     * <p>
-     * //     * @param iceState the state of the which will be used to determine how the algorithm
-     * //     *                 is considered the ice when creating the graph
+     * If graph is not null the algorithm running time is calculated by {@linkplain System#currentTimeMillis()}and
+     * finally the time is printed out by calling the {@linkplain #printRunningTime(long start, long end)} method
      */
     public void solve() {
         long startTime = System.currentTimeMillis();
@@ -112,13 +115,10 @@ public class PuzzleSolver {
      * Using {@linkplain Stack}, the next to visit coordinate ids will be tracked.
      * <br/>
      * Using {@linkplain List}, already visited coordinate ids will be tracked.
-     *
+     * <br/>
      * <b>beginning from the starting coordinate, until the next to visit stack becomes empty,
      * the possible path coordinate ids will be added to the graph.
      * </b>
-     * <p>
-     * //     * @param iceState the state of the ice will be considered when deciding possible path coordinates
-     * //     * @return PuzzleGraph which contains the possible vertices
      */
     public PuzzleGraph createPuzzleGraph() {
 
@@ -171,7 +171,6 @@ public class PuzzleSolver {
      * in the specific directions
      *
      * @param puzzleCoordinate the current coordinate
-     *                         //     * @param iceState         the state of the ice
      * @return boolean value whether the path ends in the direction or not
      */
     public boolean endingCoordinateFound(PuzzleCoordinate puzzleCoordinate) {
@@ -226,7 +225,6 @@ public class PuzzleSolver {
      * if the ice is frictionless the last point which we slide (go) upto will be returned
      *
      * @param puzzleCoordinate current path coordinate
-     *                         //     * @param iceState         the state of the ice
      * @param direction        the path directions
      * @return puzzle coordinate of the next/ last possible coordinate
      */
