@@ -29,12 +29,40 @@ import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
 public class PuzzleSolver {
 
+    /**
+     * The 2D array of PuzzleCoordinates of this {@code PuzzleSolver}.
+     */
     private final PuzzleCoordinate[][] puzzleArray;
+
+    /**
+     * The starting PuzzleCoordinate {@code PuzzleCoordinate}.
+     */
     private final PuzzleCoordinate start;
+
+    /**
+     * The ending PuzzleCoordinate {@code PuzzleCoordinate}.
+     */
     private final PuzzleCoordinate end;
+
+    /**
+     * The puzzleMap object to initialize {@code PuzzleMap}.
+     */
     private final PuzzleMap puzzleMap;
+
+    /**
+     * The int[][] array which contains the movement coordinates of this {@code PuzzleSolver}.
+     */
     private final int[][] directions;
 
+    /**
+     * Constructs and initializes a {@code PuzzleSolver}.
+     * <br/>
+     * On initialization the puzzleMap will be initiated.
+     * puzzleArray, start, end, directions will be assigned the initial values
+     *
+     * @param fileContents the file contents of the text file
+     * @param directions   array containing movement coordinates of this {@code PuzzleSolver}.
+     */
     public PuzzleSolver(String fileContents, int[][] directions) {
         this.directions = directions;
         this.puzzleMap = new PuzzleMap(fileContents);
@@ -43,6 +71,9 @@ public class PuzzleSolver {
         this.end = puzzleMap.getEnd();
     }
 
+    /**
+     * @param iceState
+     */
     public void solve(IceState iceState) {
         long startTime = System.currentTimeMillis();
         PuzzleGraph puzzleGraph = createPuzzleGraph(iceState);
@@ -51,10 +82,18 @@ public class PuzzleSolver {
         printRunningTime(startTime, endTime);
     }
 
+    /**
+     * @param startTime
+     * @param endTime
+     */
     public void printRunningTime(long startTime, long endTime) {
         System.out.println(RUNNING_TIME + ANSI_CYAN + (((float) (endTime - startTime) / 1000)) + ANSI_RESET + " seconds");
     }
 
+    /**
+     * @param iceState
+     * @return PuzzleGraph
+     */
     public PuzzleGraph createPuzzleGraph(IceState iceState) {
 
         PuzzleGraph graph = new PuzzleGraph();
@@ -96,6 +135,11 @@ public class PuzzleSolver {
         return (pathExists) ? graph : null;
     }
 
+    /**
+     * @param puzzleCoordinate
+     * @param iceState
+     * @return PuzzleGraph
+     */
     public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
 
         if (iceState.equals(FRICTION)) {
@@ -133,6 +177,11 @@ public class PuzzleSolver {
         return true;
     }
 
+    /**
+     * @param puzzleCoordinate
+     * @param direction
+     * @return PuzzleGraph
+     */
     public boolean canGoInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
         boolean canGoInThisDirection;
         int x = puzzleCoordinate.getX() + direction[0];
@@ -141,6 +190,12 @@ public class PuzzleSolver {
         return canGoInThisDirection;
     }
 
+    /**
+     * @param puzzleCoordinate
+     * @param iceState
+     * @param direction
+     * @return iceState
+     */
     public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction, IceState iceState) {
         PuzzleCoordinate newPoint = puzzleCoordinate;
 
@@ -157,6 +212,9 @@ public class PuzzleSolver {
         return newPoint;
     }
 
+    /**
+     * @param graph
+     */
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
         List<Integer> paths = breadthFirstSearch(graph, start, end);
@@ -182,6 +240,11 @@ public class PuzzleSolver {
         puzzleMap.printPath(result);
     }
 
+    /**
+     * @param id
+     * @param puzzleCoordinate
+     * @param direction
+     */
     public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
         String step;
         if (puzzleMap.isStart(puzzleCoordinate)) {
@@ -195,6 +258,12 @@ public class PuzzleSolver {
         System.out.println(step);
     }
 
+    /**
+     * @param graph
+     * @param start
+     * @param end
+     * @return paths
+     */
     public List<Integer> breadthFirstSearch(PuzzleGraph graph, PuzzleCoordinate start, PuzzleCoordinate end) {
 
         int startCoordinateId = start.getId();
