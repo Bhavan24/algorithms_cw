@@ -11,5 +11,6 @@ public class Test {
 //        Point
 //        Scanner
 //        Graphics
+//        System system = new System();
     }
 }

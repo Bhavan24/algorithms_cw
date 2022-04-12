@@ -43,21 +43,21 @@ public final class PuzzleConstants {
     /**
      * Prompting Message Constants
      */
-    public static final String WELCOME_TEXT =
+    public static final String SELECT_PUZZLE_FILE_TYPE =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|                    PUZZLE FILES                   |\n" +
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|  1. SELECT A PUZZLE FROM ALL PUZZLES              |\n" +
             "|  2. RUN A PUZZLE FROM FILE PATH                   |\n" +
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
-    public static final String SELECT_MOVABLE_TYPE =
+    public static final String SELECT_MOVING_DIRECTION_TYPE =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|                 MOVING DIRECTIONS                 |\n" +
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|  1. 4-CARDINAL DIRECTIONS (TOP,DOWN,RIGHT,LEFT)   |\n" +
             "|  2. 8-CARDINAL DIRECTIONS (ALL DIRECTIONS)        |\n" +
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n";
-    public static final String SELECT_ALGORITHM_TYPE =
+    public static final String SELECT_ICE_STATE_TYPE =
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
             "|             STATE OF THE PUZZLE ICE               |\n" +
             "+ - - - - - - - - - - - - - - - - - - - - - - - - - +\n" +
@@ -91,6 +91,7 @@ public final class PuzzleConstants {
 
     /**
      * Direction coordinates, indicates the moving directions of the puzzle pathfinder
+     * The arrays contains all possible movements from a cell
      */
     public static final int[][] ALL_DIRECTIONS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     public static final int[][] CARDINAL_DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};

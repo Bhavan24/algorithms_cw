@@ -44,14 +44,26 @@ import static main.PuzzleConstants.IceState.FRICTIONLESS;
 
 public class SlidingPuzzle {
 
+    /**
+     * Launcher for the application. Initializes the Command Line version.
+     * calls the {@code startPuzzleGame} method to launch the game
+     */
     public static void main(String[] args) {
         new SlidingPuzzle().startPuzzleGame();
     }
 
+    /**
+     * Core method of the program. By prompting and taking the user input for
+     * Puzzle file type it will call the {@code selectPuzzleFile} method to select the
+     * puzzle file type according to the user input
+     * <br/>
+     * Exceptions are handled using a try catch block and a message will be displayed in
+     * the console indicating failure scenarios
+     */
     public void startPuzzleGame() {
 
         try {
-            System.out.print(WELCOME_TEXT);
+            System.out.print(SELECT_PUZZLE_FILE_TYPE);
             int puzzleFileType = Integer.parseInt(handleUserInput(ENTER_PUZZLE_FILE_TYPE));
             selectPuzzleFile(puzzleFileType);
         } catch (Exception e) {
@@ -62,12 +74,32 @@ public class SlidingPuzzle {
         System.out.print(THANK_YOU);
     }
 
+    /**
+     * User inputs will be handled by prompting a message and returning the
+     * input provided by the user
+     *
+     * @param message the prompting message needs to be displayed on the console
+     * @return a string representation of the user input
+     */
     public String handleUserInput(String message) {
+        String userInput;
         Scanner scanner = new Scanner(System.in);
         System.out.print(message);
-        return scanner.next();
+        userInput = scanner.next();
+        return userInput;
     }
 
+    /**
+     * According to the user input the puzzle file paths will be taken
+     * by prompting either to select a file from the list or provide a file path.
+     * <br/>
+     * This will call the {@code selectPuzzleProperties} method with selected/ provided
+     * filepath
+     * <br/>
+     * If the user entered an invalid value for puzzleFileType, an error message will be displayed
+     *
+     * @param puzzleFileType the file type value (provided by the user)
+     */
     public void selectPuzzleFile(int puzzleFileType) {
         if (puzzleFileType == 1) {
             String[] puzzleFiles = loadPuzzleFiles();
@@ -82,6 +114,14 @@ public class SlidingPuzzle {
         }
     }
 
+    /**
+     * All the files in the "src/inputs/" directory will be displayed with an id
+     * for the user to select the file of their choice. <br/>
+     * The puzzle file paths will be saved to an array which we will use
+     * to access the path from the user input of the file id in {@code selectPuzzleFile} method
+     *
+     * @return an array of the files in "src/inputs/" directory
+     */
     public String[] loadPuzzleFiles() {
         String basePath = "src/inputs/";
         File[] files = new File(basePath).listFiles();
@@ -100,14 +140,23 @@ public class SlidingPuzzle {
         return puzzleFiles;
     }
 
+    /**
+     * By taking the puzzle file path as a parameter, if the file exists,
+     * the user will be asked to select the moving direction and after that if the
+     * user input is a valid value, the user will be asked to select the state of the ice
+     * by taking these valid input values, this will call the {@code solvePuzzle} to solve
+     * the puzzle problem and output the result
+     *
+     * @param puzzleFilePath file path of the puzzle
+     */
     public void selectPuzzleProperties(String puzzleFilePath) {
         File file = new File(puzzleFilePath);
         if (file.exists()) {
-            System.out.print(SELECT_MOVABLE_TYPE);
+            System.out.print(SELECT_MOVING_DIRECTION_TYPE);
             int directionType = Integer.parseInt(handleUserInput(ENTER_DIRECTION_TYPE));
             int[][] directions = selectDirectionType(directionType);
             if (directions != null) {
-                System.out.print(SELECT_ALGORITHM_TYPE);
+                System.out.print(SELECT_ICE_STATE_TYPE);
                 int iceStateType = Integer.parseInt(handleUserInput(ENTER_ICE_STATE_TYPE));
                 IceState iceState = selectIceStateType(iceStateType);
                 if (iceState != null) {
@@ -120,6 +169,14 @@ public class SlidingPuzzle {
         }
     }
 
+    /**
+     * By taking directionType as the input this will return the 2D array
+     * which contains all possible movements from a cell
+     * These 2D arrays are provided in the {@code PuzzleConstants} class
+     *
+     * @param directionType user input of the direction type
+     * @return 2D array which holds the direction coordinates
+     */
     public int[][] selectDirectionType(int directionType) {
         int[][] directions = null;
         if (directionType == 1) {
@@ -132,6 +189,14 @@ public class SlidingPuzzle {
         return directions;
     }
 
+    /**
+     * By taking iceStateType as the input this will return the Ice State enum
+     * which will be used to decide whether the ice in the puzzle is frictionless or with friction
+     * These enums are provided in the {@code PuzzleConstants} class
+     *
+     * @param iceStateType user input of the ice state type
+     * @return IceState of the selected ice state type
+     */
     public IceState selectIceStateType(int iceStateType) {
         IceState iceState = null;
         if (iceStateType == 1) {
@@ -144,10 +209,21 @@ public class SlidingPuzzle {
         return iceState;
     }
 
+    /**
+     * Core method of the puzzle solving.
+     * which will be using {@code PuzzleFileHandler} class to read the puzzle file and
+     * if the file has contents this will initialize {@code PuzzleSolver} object with the
+     * file contents and directions is using the {@code  solve} method to solve the actual
+     * puzzle using the state of the ice
+     *
+     * @param puzzleFilePath file path of the puzzle
+     * @param directions     possible movements from a cell in 2D array
+     * @param iceState       state of the ice enum
+     */
     public void solvePuzzle(String puzzleFilePath, int[][] directions, IceState iceState) {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
-        if (fileContents != null) {
+        if (!fileContents.equals("")) {
             PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions);
             puzzleSolver.solve(iceState);
         }
