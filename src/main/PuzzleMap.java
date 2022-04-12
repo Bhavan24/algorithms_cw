@@ -46,6 +46,20 @@ public class PuzzleMap {
      */
     private PuzzleCoordinate end;
 
+    public PuzzleMap(String fileContents) {
+        initializePuzzleMap(fileContents);
+    }
+
+    /**
+     * Populate the puzzleCoordinatesMap 2D array with PuzzleCoordinates
+     * puzzleCoordinatesMap has the rows value which is equal to the lines in the
+     * file contents and columns value is the length of a single line of that text file
+     * <br/>
+     * if the text file contains in consistent values the program will display an error message
+     * each array is populated with a {@code PuzzleCoordinate(id, x-coordinate, y-coordinate, character);}
+     *
+     * @param fileContents the file contents of the puzzle text file
+     */
     public void initializePuzzleMap(String fileContents) {
 
         if (fileContents == null || fileContents.trim().equals("")) {
@@ -88,6 +102,11 @@ public class PuzzleMap {
         }
     }
 
+    /**
+     * Returns the data populated the puzzleCoordinatesMap of this {@code PuzzleMap}.
+     *
+     * @return the puzzleCoordinatesMap (2D Array)
+     */
     public PuzzleCoordinate[][] getPuzzleCoordinatesMap() {
         return puzzleCoordinatesMap;
     }

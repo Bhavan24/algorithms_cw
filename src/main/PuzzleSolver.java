@@ -37,8 +37,7 @@ public class PuzzleSolver {
 
     public PuzzleSolver(String fileContents, int[][] directions) {
         this.directions = directions;
-        this.puzzleMap = new PuzzleMap();
-        this.puzzleMap.initializePuzzleMap(fileContents);
+        this.puzzleMap = new PuzzleMap(fileContents);
         this.puzzleArray = puzzleMap.getPuzzleCoordinatesMap();
         this.start = puzzleMap.getStart();
         this.end = puzzleMap.getEnd();
