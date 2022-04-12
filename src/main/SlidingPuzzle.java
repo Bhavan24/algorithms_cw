@@ -224,8 +224,8 @@ public class SlidingPuzzle {
         PuzzleFileHandler fileHandler = new PuzzleFileHandler(puzzleFilePath);
         String fileContents = fileHandler.readPuzzleFile();
         if (!fileContents.equals("")) {
-            PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions);
-            puzzleSolver.solve(iceState);
+            PuzzleSolver puzzleSolver = new PuzzleSolver(fileContents, directions, iceState);
+            puzzleSolver.solve();
         }
     }
 

@@ -54,6 +54,8 @@ public class PuzzleSolver {
      */
     private final int[][] directions;
 
+    private final IceState iceState;
+
     /**
      * Constructs and initializes a {@code PuzzleSolver}.
      * <br/>
@@ -63,12 +65,13 @@ public class PuzzleSolver {
      * @param fileContents the file contents of the text file
      * @param directions   array containing movement coordinates of this {@code PuzzleSolver}.
      */
-    public PuzzleSolver(String fileContents, int[][] directions) {
+    public PuzzleSolver(String fileContents, int[][] directions, IceState iceState) {
         this.directions = directions;
         this.puzzleMap = new PuzzleMap(fileContents);
         this.puzzleArray = puzzleMap.getPuzzleCoordinatesMap();
         this.start = puzzleMap.getStart();
         this.end = puzzleMap.getEnd();
+        this.iceState = iceState;
     }
 
     /**
@@ -77,13 +80,13 @@ public class PuzzleSolver {
      * <br/>
      * The algorithm running time is calculated by {@linkplain System#currentTimeMillis()} and finally
      * the time is printed out by calling the {@linkplain #printRunningTime(long start, long end)} method
-     *
-     * @param iceState the state of the which will be used to determine how the algorithm
-     *                 is considered the ice when creating the graph
+     * <p>
+     * //     * @param iceState the state of the which will be used to determine how the algorithm
+     * //     *                 is considered the ice when creating the graph
      */
-    public void solve(IceState iceState) {
+    public void solve() {
         long startTime = System.currentTimeMillis();
-        PuzzleGraph puzzleGraph = createPuzzleGraph(iceState);
+        PuzzleGraph puzzleGraph = createPuzzleGraph();
         if (puzzleGraph != null) {
             printShortestPath(puzzleGraph);
             long endTime = System.currentTimeMillis();
@@ -113,11 +116,11 @@ public class PuzzleSolver {
      * <b>beginning from the starting coordinate, until the next to visit stack becomes empty,
      * the possible path coordinate ids will be added to the graph.
      * </b>
-     *
-     * @param iceState the state of the ice will be considered when deciding possible path coordinates
-     * @return PuzzleGraph which contains the possible vertices
+     * <p>
+     * //     * @param iceState the state of the ice will be considered when deciding possible path coordinates
+     * //     * @return PuzzleGraph which contains the possible vertices
      */
-    public PuzzleGraph createPuzzleGraph(IceState iceState) {
+    public PuzzleGraph createPuzzleGraph() {
 
         PuzzleGraph graph = new PuzzleGraph();
         Stack<Integer> nextToVisit = new Stack<>();
@@ -135,7 +138,7 @@ public class PuzzleSolver {
             visited.add(vertexId);
             currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
 
-            if (endingCoordinateFound(currentPuzzleCoordinate, iceState)) {
+            if (endingCoordinateFound(currentPuzzleCoordinate)) {
                 graph.addVertex(end.getId());
                 graph.addEdge(vertexId, end.getId());
                 pathExists = true;
@@ -144,7 +147,7 @@ public class PuzzleSolver {
             } else {
                 for (int[] direction : directions) {
                     if (canGoInThisDirection(currentPuzzleCoordinate, direction)) {
-                        PuzzleCoordinate newPuzzleCoordinate = goInThisDirection(currentPuzzleCoordinate, direction, iceState);
+                        PuzzleCoordinate newPuzzleCoordinate = goInThisDirection(currentPuzzleCoordinate, direction);
                         if (!visited.contains(newPuzzleCoordinate.getId())) {
                             nextToVisit.push(newPuzzleCoordinate.getId());
                             graph.addVertex(newPuzzleCoordinate.getId());
@@ -168,10 +171,10 @@ public class PuzzleSolver {
      * in the specific directions
      *
      * @param puzzleCoordinate the current coordinate
-     * @param iceState         the state of the ice
+     *                         //     * @param iceState         the state of the ice
      * @return boolean value whether the path ends in the direction or not
      */
-    public boolean endingCoordinateFound(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
+    public boolean endingCoordinateFound(PuzzleCoordinate puzzleCoordinate) {
 
         if (iceState.equals(FRICTION)) {
             return puzzleMap.isEnd(puzzleCoordinate);
@@ -223,11 +226,11 @@ public class PuzzleSolver {
      * if the ice is frictionless the last point which we slide (go) upto will be returned
      *
      * @param puzzleCoordinate current path coordinate
-     * @param iceState         the state of the ice
+     *                         //     * @param iceState         the state of the ice
      * @param direction        the path directions
      * @return puzzle coordinate of the next/ last possible coordinate
      */
-    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction, IceState iceState) {
+    public PuzzleCoordinate goInThisDirection(PuzzleCoordinate puzzleCoordinate, int[] direction) {
         PuzzleCoordinate newPoint = puzzleCoordinate;
 
         if (iceState.equals(FRICTION)) {
