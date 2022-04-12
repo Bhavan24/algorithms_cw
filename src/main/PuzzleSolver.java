@@ -84,9 +84,13 @@ public class PuzzleSolver {
     public void solve(IceState iceState) {
         long startTime = System.currentTimeMillis();
         PuzzleGraph puzzleGraph = createPuzzleGraph(iceState);
-        printShortestPath(puzzleGraph);
-        long endTime = System.currentTimeMillis();
-        printRunningTime(startTime, endTime);
+        if (puzzleGraph != null) {
+            printShortestPath(puzzleGraph);
+            long endTime = System.currentTimeMillis();
+            printRunningTime(startTime, endTime);
+        } else {
+            System.out.println(CANNOT_SOLVE_PUZZLE);
+        }
     }
 
     /**
