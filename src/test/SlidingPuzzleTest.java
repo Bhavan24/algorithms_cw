@@ -6,9 +6,9 @@ import main.SlidingPuzzle;
 public class SlidingPuzzleTest {
 
     private static final int directionType = 1;
-    private static final int iceStateType = 2;
-    private static final boolean runAllFiles = true;
-    private static final int fileIndex = 10;
+    private static final int iceStateType = 1;
+    private static final boolean runAllFiles = false;
+    private static final int fileIndex = 33;
 
     public static void main(String[] args) {
         SlidingPuzzle slidingPuzzle = new SlidingPuzzle();
@@ -19,7 +19,7 @@ public class SlidingPuzzleTest {
                 runSlidingPuzzle(slidingPuzzle, directionType, iceStateType, file);
             }
         } else {
-            String file = files[fileIndex];
+            String file = files[fileIndex - 1];
             runSlidingPuzzle(slidingPuzzle, directionType, iceStateType, file);
         }
     }

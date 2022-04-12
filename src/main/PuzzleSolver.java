@@ -106,7 +106,8 @@ public class PuzzleSolver {
      * @param endTime   ending time of the algorithm
      */
     public void printRunningTime(long startTime, long endTime) {
-        System.out.println(RUNNING_TIME + ANSI_CYAN + (((float) (endTime - startTime) / 1000)) + ANSI_RESET + " seconds");
+        long elapsedTime = (endTime - startTime);
+        System.out.println(RUNNING_TIME + ANSI_CYAN + elapsedTime + ANSI_RESET + " milliseconds");
     }
 
     /**
