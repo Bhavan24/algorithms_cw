@@ -8,7 +8,7 @@ public class SlidingPuzzleTest {
     private static final int directionType = 1;
     private static final int iceStateType = 1;
     private static final boolean runAllFiles = false;
-    private static final int fileIndex = 33;
+    private static final int fileIndex = 29;
 
     public static void main(String[] args) {
         SlidingPuzzle slidingPuzzle = new SlidingPuzzle();

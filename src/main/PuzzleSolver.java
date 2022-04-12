@@ -100,7 +100,7 @@ public class PuzzleSolver {
     }
 
     /**
-     * The elapsed time is calculated by start time and end time and converted into milliseconds to seconds
+     * The elapsed time is calculated by start time and end time and the output is displayed in milliseconds
      *
      * @param startTime staring time of the algorithm
      * @param endTime   ending time of the algorithm
@@ -120,6 +120,9 @@ public class PuzzleSolver {
      * <b>beginning from the starting coordinate, until the next to visit stack becomes empty,
      * the possible path coordinate ids will be added to the graph.
      * </b>
+     * If the path ends in the current coordinate the graph will be returned and the stack will
+     * be cleared. otherwise, the all the possible coordinates of the selected direction will be
+     * gone through and if a coordinate is not in the visited list it will be added to the graph
      */
     public PuzzleGraph createPuzzleGraph() {
 
@@ -169,7 +172,8 @@ public class PuzzleSolver {
      * if the ice is with friction it only checks whether the current coordinate is the end or not
      * <p>
      * if the ice is frictionless it will check the current coordinate and the remaining coordinates
-     * in the specific directions
+     * in the specific directions and if the ending coordinate found in the specific direction it will
+     * return true otherwise false
      *
      * @param puzzleCoordinate the current coordinate
      * @return boolean value whether the path ends in the direction or not
@@ -204,6 +208,8 @@ public class PuzzleSolver {
 
     /**
      * Verify whether we can go on this direction without any obstacles
+     * if the next possible coordinate is not valid or it is a rock the method
+     * will return false otherwise true
      *
      * @param puzzleCoordinate which holds the current PuzzleCoordinate
      * @param direction        the array which contains the [x,y] coordinate values
@@ -248,7 +254,16 @@ public class PuzzleSolver {
     /**
      * Prints the shortest path in both text format and graph format
      * <p>
-     * {@linkplain PathDirection} enum is being used for the directions
+     * {@linkplain PathDirection} enum is being used for the directions <br/>
+     * the {@linkplain #breadthFirstSearch(PuzzleGraph, PuzzleCoordinate, PuzzleCoordinate)}
+     * will be used here and all the possible paths will be returned, if the paths are empty
+     * the specific message will be displayed.
+     * <br/>
+     * by looping through the array if the direction will be calculated based on the x, y
+     * coordinates
+     * <br/>
+     * For printing the steps the {@linkplain #printStep} method will be called <br/>
+     * For printing the map the {@code puzzleMap.printPath()} method will be called.
      *
      * @param graph the graph which holds the details about the vertices and edges
      */
@@ -279,11 +294,23 @@ public class PuzzleSolver {
 
     /**
      * Breath first search algorithm to calculate the shortest path
+     * <br/>
+     * <ul>
+     *     <li>The {@linkplain Queue} will contain the next to visit list</li>
+     *     <li>The {@linkplain Set} will contain the visited list</li>
+     *     <li>The {@linkplain Map} will contain the key, value pairs of the coordinates</li>
+     * </ul>
+     * <p>
+     * The algorithm will start at a particular vertex and explore all of its neighbors at the present depth before moving on to
+     * the vertices in the next level. by repeating the steps until the next to visit queue is empty we will get the final
+     * parentMap which holds all the possible values of the puzzle coordinates
+     * <br/>
+     * Finally, by backtracking from the Map the values will be put to {@code  List<Integer>}
      *
      * @param graph the puzzle graph
      * @param start the starting coordinate
      * @param end   the ending coordinate
-     * @return the shortest path puzzle coordinate ids to a list
+     * @return the shortest path puzzle coordinate ids list
      */
     public List<Integer> breadthFirstSearch(PuzzleGraph graph, PuzzleCoordinate start, PuzzleCoordinate end) {
 
@@ -329,11 +356,11 @@ public class PuzzleSolver {
     }
 
     /**
-     * Printing the puzzle coordinate in text format
+     * Printing the puzzle coordinate in text format by using string formatting
      *
-     * @param id               the id of each step
-     * @param puzzleCoordinate the puzzle coordinate of each step
-     * @param direction        the path direction of each step
+     * @param id               the id of the current step
+     * @param puzzleCoordinate the puzzle coordinate of the current step
+     * @param direction        the path direction of the current step
      */
     public void printStep(int id, PuzzleCoordinate puzzleCoordinate, String direction) {
         String step;
