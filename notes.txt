@@ -61,3 +61,89 @@ src/test.example5.txt
 0 . . . . * . * . .
 . 0 0 . . * * * 0 .
 1 2 3 4 5 6 7 8 9 10
+
+
+
+ public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
+
+        if (iceState.equals(FRICTION)) {
+            return puzzleMap.isEnd(puzzleCoordinate);
+        }
+
+        if (iceState.equals(FRICTIONLESS)) {
+            if (puzzleMap.isEnd(puzzleCoordinate)) {
+                return true;
+            }
+//            if (!(puzzleCoordinate.getX() == end.getX() || puzzleCoordinate.getY() == end.getY())) {
+//                return false;
+//            }
+            if (puzzleCoordinate.getX() == end.getX()) {
+                int startingCoordinate = Math.min(puzzleCoordinate.getY(), end.getY());
+                int endingCoordinate = Math.max(puzzleCoordinate.getY(), end.getY());
+                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(end.getX(), i);
+                    if (puzzleMap.isRock(pc)) {
+                        return false;
+                    }
+                }
+            } else if (puzzleCoordinate.getY() == end.getY()) {
+                int startingCoordinate = Math.min(puzzleCoordinate.getX(), end.getX());
+                int endingCoordinate = Math.max(puzzleCoordinate.getX(), end.getX());
+                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, end.getY());
+                    if (puzzleMap.isRock(pc)) {
+                        return false;
+                    }
+                }
+            } else {
+                if (puzzleCoordinate.getY() < end.getY() && puzzleCoordinate.getX() < end.getX()) {
+                    PuzzleCoordinate coordinate = puzzleCoordinate;
+                    int i = 0;
+                    while (!coordinate.equals(end)) {
+                        coordinate = puzzleMap.getPuzzleCoordinate(coordinate.getX() + i, coordinate.getY() + i);
+                        if (coordinate == null) break;
+                        if (puzzleMap.isRock(coordinate)) {
+                            return false;
+                        }
+                        i++;
+                    }
+                } else if (puzzleCoordinate.getY() > end.getY() && puzzleCoordinate.getX() < end.getX()) {
+                    PuzzleCoordinate coordinate = puzzleCoordinate;
+                    int i = 0;
+                    while (!coordinate.equals(end)) {
+                        coordinate = puzzleMap.getPuzzleCoordinate(coordinate.getX() + i, coordinate.getY() - i);
+                        if (coordinate == null) break;
+                        if (puzzleMap.isRock(coordinate)) {
+                            return false;
+                        }
+                        i++;
+                    }
+                } else if (puzzleCoordinate.getY() < end.getY() && puzzleCoordinate.getX() > end.getX()) {
+                    PuzzleCoordinate coordinate = puzzleCoordinate;
+                    int i = 0;
+                    while (!coordinate.equals(end)) {
+                        coordinate = puzzleMap.getPuzzleCoordinate(coordinate.getX() - i, coordinate.getY() + i);
+                        if (coordinate == null) break;
+                        if (puzzleMap.isRock(coordinate)) {
+                            return false;
+                        }
+                        i++;
+                    }
+                } else if (puzzleCoordinate.getY() > end.getY() && puzzleCoordinate.getX() > end.getX()) {
+                    PuzzleCoordinate coordinate = puzzleCoordinate;
+                    int i = 0;
+                    while (!coordinate.equals(end)) {
+                        coordinate = puzzleMap.getPuzzleCoordinate(coordinate.getX() - i, coordinate.getY() - i);
+                        if (coordinate == null) break;
+                        if (puzzleMap.isRock(coordinate)) {
+                            return false;
+                        }
+                        i++;
+                    }
+                }
+                return true;
+            }
+            return true;
+        }
+        return true;
+    }

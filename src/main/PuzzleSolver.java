@@ -131,7 +131,7 @@ public class PuzzleSolver {
             visited.add(vertexId);
             currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
 
-            if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
+            if (endingCoordinateFound(currentPuzzleCoordinate, iceState)) {
                 graph.addVertex(end.getId());
                 graph.addEdge(vertexId, end.getId());
                 pathExists = true;
@@ -167,7 +167,7 @@ public class PuzzleSolver {
      * @param iceState         the state of the ice
      * @return boolean value whether the path ends in the direction or not
      */
-    public boolean pathEndsInThisDirection(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
+    public boolean endingCoordinateFound(PuzzleCoordinate puzzleCoordinate, IceState iceState) {
 
         if (iceState.equals(FRICTION)) {
             return puzzleMap.isEnd(puzzleCoordinate);
@@ -177,25 +177,16 @@ public class PuzzleSolver {
             if (puzzleMap.isEnd(puzzleCoordinate)) {
                 return true;
             }
-            if (!(puzzleCoordinate.getX() == end.getX() || puzzleCoordinate.getY() == end.getY())) {
-                return false;
-            }
-            if (puzzleCoordinate.getX() == end.getX()) {
-                int startingCoordinate = Math.min(puzzleCoordinate.getY(), end.getY());
-                int endingCoordinate = Math.max(puzzleCoordinate.getY(), end.getY());
-                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
-                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(end.getX(), i);
-                    if (puzzleMap.isRock(pc)) {
+            for (int[] direction : directions) {
+                PuzzleCoordinate coordinate = puzzleCoordinate;
+                while (!coordinate.equals(end)) {
+                    coordinate = puzzleMap.getPuzzleCoordinate(coordinate.getX() + direction[0], coordinate.getY() + direction[1]);
+                    if (coordinate == null) break;
+                    if (puzzleMap.isRock(coordinate)) {
                         return false;
                     }
-                }
-            } else {
-                int startingCoordinate = Math.min(puzzleCoordinate.getX(), end.getX());
-                int endingCoordinate = Math.max(puzzleCoordinate.getX(), end.getX());
-                for (int i = startingCoordinate; i <= endingCoordinate; i++) {
-                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, end.getY());
-                    if (puzzleMap.isRock(pc)) {
-                        return false;
+                    if (puzzleMap.isEnd(coordinate)) {
+                        return true;
                     }
                 }
             }
