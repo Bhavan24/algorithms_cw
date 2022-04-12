@@ -22,7 +22,10 @@ import static main.PuzzleConstants.*;
 
 /**
  * <p>The {@code PuzzleMap} the map where the text file is converted into a 2D
- * {@code PuzzleCoordinate} array
+ * {@code PuzzleCoordinate} array, contains methods to check whether the puzzle coordinate
+ * is rock / ice/ valid coordinate, also holds the information about start and end puzzle
+ * coordinates. specific puzzle coordinate can be retrieved. also contains methods to print out
+ * the puzzle coordinate map in the same format of the text file.
  *
  * @author Loganathan Bhavaneetharan
  */
@@ -46,6 +49,11 @@ public class PuzzleMap {
      */
     private PuzzleCoordinate end;
 
+    /**
+     * Constructs and initializes a {@code PuzzleMap}.
+     * <br/>
+     * On initialization the {@code initializePuzzleMap} will be called.
+     */
     public PuzzleMap(String fileContents) {
         initializePuzzleMap(fileContents);
     }
@@ -111,30 +119,73 @@ public class PuzzleMap {
         return puzzleCoordinatesMap;
     }
 
+    /**
+     * Returns the rows count of the {@code puzzleCoordinatesMap} 2D array.
+     *
+     * @return rows of puzzleCoordinatesMap (2D Array)
+     */
     public int getRows() {
         return puzzleCoordinatesMap.length;
     }
 
+    /**
+     * Returns the columns count of the {@code puzzleCoordinatesMap} 2D array.
+     *
+     * @return columns of puzzleCoordinatesMap (2D Array)
+     */
     public int getColumns() {
         return puzzleCoordinatesMap[0].length;
     }
 
+    /**
+     * Returns the starting {@code PuzzleCoordinate}
+     *
+     * @return start of {@code PuzzleCoordinate}
+     */
     public PuzzleCoordinate getStart() {
         return start;
     }
 
+    /**
+     * Returns the ending {@code PuzzleCoordinate}
+     *
+     * @return end of {@code PuzzleCoordinate}
+     */
     public PuzzleCoordinate getEnd() {
         return end;
     }
 
+    /**
+     * Returns whether the provided x, y coordinates indicate the starting {@code PuzzleCoordinate}
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return start of {@code PuzzleCoordinate} is equal to the {@code PuzzleCoordinate} of the values x, y
+     */
     public boolean isStart(int x, int y) {
         return x == start.getX() && y == start.getY();
     }
 
+    /**
+     * Returns whether the provided x, y coordinates indicate the ending {@code PuzzleCoordinate}
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return end of {@code PuzzleCoordinate} is equal to the {@code PuzzleCoordinate} of the values x, y
+     */
     public boolean isEnd(int x, int y) {
         return x == end.getX() && y == end.getY();
     }
 
+    /**
+     * Returns whether the provided x, y coordinates indicate a valid {@code PuzzleCoordinate}
+     * by validating the x, y values are greater than 0 and x value is less than the rows count
+     * and the y value is less than the columns count
+     *
+     * @param x x coordinate of the {@code PuzzleCoordinate}
+     * @param y y coordinate of the {@code PuzzleCoordinate}
+     * @return whether the {@code PuzzleCoordinate} is valid or not
+     */
     public boolean isValidCoordinate(int x, int y) {
         return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
     }
