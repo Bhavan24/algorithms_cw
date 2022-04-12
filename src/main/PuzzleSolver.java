@@ -30,8 +30,8 @@ import static main.PuzzleConstants.IceState.FRICTIONLESS;
 public class PuzzleSolver {
 
     private final PuzzleCoordinate[][] puzzleArray;
-    private final PuzzleCoordinate startPuzzleCoordinate;
-    private final PuzzleCoordinate endPuzzleCoordinate;
+    private final PuzzleCoordinate start;
+    private final PuzzleCoordinate end;
     private final PuzzleMap puzzleMap;
     private final int[][] directions;
 
@@ -40,8 +40,8 @@ public class PuzzleSolver {
         this.puzzleMap = new PuzzleMap();
         this.puzzleMap.initializePuzzleMap(fileContents);
         this.puzzleArray = puzzleMap.getPuzzleMapArray();
-        this.startPuzzleCoordinate = puzzleMap.getStart();
-        this.endPuzzleCoordinate = puzzleMap.getEnd();
+        this.start = puzzleMap.getStart();
+        this.end = puzzleMap.getEnd();
     }
 
     public void solve(IceState iceState) {
@@ -62,7 +62,7 @@ public class PuzzleSolver {
         Stack<Integer> nextToVisit = new Stack<>();
         List<Integer> visited = new ArrayList<>();
 
-        PuzzleCoordinate currentPuzzleCoordinate = startPuzzleCoordinate;
+        PuzzleCoordinate currentPuzzleCoordinate = start;
         nextToVisit.push(currentPuzzleCoordinate.getId());
         graph.addVertex(currentPuzzleCoordinate.getId());
 
@@ -75,8 +75,8 @@ public class PuzzleSolver {
             currentPuzzleCoordinate = puzzleMap.getPuzzleCoordinate(vertexId);
 
             if (pathEndsInThisDirection(currentPuzzleCoordinate, iceState)) {
-                graph.addVertex(endPuzzleCoordinate.getId());
-                graph.addEdge(vertexId, endPuzzleCoordinate.getId());
+                graph.addVertex(end.getId());
+                graph.addEdge(vertexId, end.getId());
                 pathExists = true;
                 nextToVisit.clear();
                 break;
@@ -107,23 +107,23 @@ public class PuzzleSolver {
             if (puzzleMap.isEnd(puzzleCoordinate)) {
                 return true;
             }
-            if (!(puzzleCoordinate.getX() == endPuzzleCoordinate.getX() || puzzleCoordinate.getY() == endPuzzleCoordinate.getY())) {
+            if (!(puzzleCoordinate.getX() == end.getX() || puzzleCoordinate.getY() == end.getY())) {
                 return false;
             }
-            if (puzzleCoordinate.getX() == endPuzzleCoordinate.getX()) {
-                int startingCoordinate = Math.min(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
-                int endingCoordinate = Math.max(puzzleCoordinate.getY(), endPuzzleCoordinate.getY());
+            if (puzzleCoordinate.getX() == end.getX()) {
+                int startingCoordinate = Math.min(puzzleCoordinate.getY(), end.getY());
+                int endingCoordinate = Math.max(puzzleCoordinate.getY(), end.getY());
                 for (int i = startingCoordinate; i <= endingCoordinate; i++) {
-                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(endPuzzleCoordinate.getX(), i);
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(end.getX(), i);
                     if (puzzleMap.isRock(pc)) {
                         return false;
                     }
                 }
             } else {
-                int startingCoordinate = Math.min(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
-                int endingCoordinate = Math.max(puzzleCoordinate.getX(), endPuzzleCoordinate.getX());
+                int startingCoordinate = Math.min(puzzleCoordinate.getX(), end.getX());
+                int endingCoordinate = Math.max(puzzleCoordinate.getX(), end.getX());
                 for (int i = startingCoordinate; i <= endingCoordinate; i++) {
-                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, endPuzzleCoordinate.getY());
+                    PuzzleCoordinate pc = puzzleMap.getPuzzleCoordinate(i, end.getY());
                     if (puzzleMap.isRock(pc)) {
                         return false;
                     }
@@ -160,7 +160,7 @@ public class PuzzleSolver {
 
     public void printShortestPath(PuzzleGraph graph) {
         List<PuzzleCoordinate> result = new ArrayList<>();
-        List<Integer> paths = breadthFirstSearch(graph, startPuzzleCoordinate, endPuzzleCoordinate);
+        List<Integer> paths = breadthFirstSearch(graph, start, end);
         if (paths.isEmpty()) {
             System.out.println(CANNOT_SOLVE_PUZZLE);
         } else {

@@ -29,8 +29,21 @@ import static main.PuzzleConstants.*;
 
 public class PuzzleMap {
 
-    private PuzzleCoordinate[][] puzzleMapArray;
+    /**
+     * The 2D array of PuzzleCoordinates of this {@code PuzzleMap}.
+     */
+    private PuzzleCoordinate[][] puzzleCoordinatesMap;
+
+    /**
+     * The starting PuzzleCoordinate {@code PuzzleMap}.
+     * The PuzzleCoordinate which has the character 'S'
+     */
     private PuzzleCoordinate start;
+
+    /**
+     * The ending PuzzleCoordinate {@code PuzzleMap}.
+     * The PuzzleCoordinate which has the character 'F'
+     */
     private PuzzleCoordinate end;
 
     public void initializePuzzleMap(String fileContents) {
@@ -44,7 +57,7 @@ public class PuzzleMap {
         int rows = lines.length;
         int columns = lines[0].length();
 
-        puzzleMapArray = new PuzzleCoordinate[rows][columns];
+        puzzleCoordinatesMap = new PuzzleCoordinate[rows][columns];
 
         int id = 0;
         for (int y = 0; y < rows; y++) {
@@ -55,18 +68,18 @@ public class PuzzleMap {
                 for (int x = 0; x < columns; x++) {
                     switch (lines[y].charAt(x)) {
                         case ICE:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ICE);
+                            puzzleCoordinatesMap[y][x] = new PuzzleCoordinate(id, x, y, ICE);
                             break;
                         case ROCK:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, ROCK);
+                            puzzleCoordinatesMap[y][x] = new PuzzleCoordinate(id, x, y, ROCK);
                             break;
                         case START:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, START);
-                            start = puzzleMapArray[y][x];
+                            puzzleCoordinatesMap[y][x] = new PuzzleCoordinate(id, x, y, START);
+                            start = puzzleCoordinatesMap[y][x];
                             break;
                         case FINISH:
-                            puzzleMapArray[y][x] = new PuzzleCoordinate(id, x, y, FINISH);
-                            end = puzzleMapArray[y][x];
+                            puzzleCoordinatesMap[y][x] = new PuzzleCoordinate(id, x, y, FINISH);
+                            end = puzzleCoordinatesMap[y][x];
                             break;
                     }
                     id++;
@@ -76,15 +89,15 @@ public class PuzzleMap {
     }
 
     public PuzzleCoordinate[][] getPuzzleMapArray() {
-        return puzzleMapArray;
+        return puzzleCoordinatesMap;
     }
 
     public int getRows() {
-        return puzzleMapArray.length;
+        return puzzleCoordinatesMap.length;
     }
 
     public int getColumns() {
-        return puzzleMapArray[0].length;
+        return puzzleCoordinatesMap[0].length;
     }
 
     public PuzzleCoordinate getStart() {
@@ -108,11 +121,11 @@ public class PuzzleMap {
     }
 
     public boolean isRock(int x, int y) {
-        return puzzleMapArray[y][x].getValue() == ROCK;
+        return puzzleCoordinatesMap[y][x].getValue() == ROCK;
     }
 
     public boolean isIce(int x, int y) {
-        return puzzleMapArray[y][x].getValue() == ICE;
+        return puzzleCoordinatesMap[y][x].getValue() == ICE;
     }
 
     public boolean isStart(PuzzleCoordinate p) {
@@ -136,7 +149,7 @@ public class PuzzleMap {
     }
 
     public PuzzleCoordinate getPuzzleCoordinate(int id) {
-        for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
                 if (puzzleCoordinate.getId() == id) {
                     return puzzleCoordinate;
@@ -148,13 +161,13 @@ public class PuzzleMap {
 
     public PuzzleCoordinate getPuzzleCoordinate(int x, int y) {
         if (isValidCoordinate(x, y)) {
-            return puzzleMapArray[y][x];
+            return puzzleCoordinatesMap[y][x];
         }
         return null;
     }
 
     public void printPath(List<PuzzleCoordinate> path) {
-        PuzzleCoordinate[][] tempPuzzleMapArray = Arrays.stream(puzzleMapArray).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
+        PuzzleCoordinate[][] tempPuzzleMapArray = Arrays.stream(puzzleCoordinatesMap).map(PuzzleCoordinate[]::clone).toArray(PuzzleCoordinate[][]::new);
         int id = 0;
         for (PuzzleCoordinate coordinate : path) {
             if (isStart(coordinate.getX(), coordinate.getY()) || isEnd(coordinate.getX(), coordinate.getY())) {
@@ -166,8 +179,8 @@ public class PuzzleMap {
         printPuzzleMap(tempPuzzleMapArray);
     }
 
-    public void printPuzzleMap(PuzzleCoordinate[][] puzzleMapArray) {
-        for (PuzzleCoordinate[] puzzleCoordinates : puzzleMapArray) {
+    public void printPuzzleMap(PuzzleCoordinate[][] puzzleCoordinatesMap) {
+        for (PuzzleCoordinate[] puzzleCoordinates : puzzleCoordinatesMap) {
             for (PuzzleCoordinate puzzleCoordinate : puzzleCoordinates) {
                 switch (puzzleCoordinate.getValue()) {
                     case ICE:

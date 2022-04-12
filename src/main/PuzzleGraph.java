@@ -44,7 +44,7 @@ public class PuzzleGraph {
     /**
      * Constructs and initializes a PuzzleGraph
      * <br/>
-     * On initialization the adjVertices will be inisiated with a HashMap to store te
+     * On initialization the adjVertices will be initiated with a HashMap to store te
      * vertex details
      */
     public PuzzleGraph() {
