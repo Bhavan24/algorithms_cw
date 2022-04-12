@@ -72,7 +72,14 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param iceState
+     * The core methods where the puzzle map is converted to a graph
+     * and the bfs algorithm finds the and prints the shortest path of that graph
+     * <br/>
+     * The algorithm running time is calculated by {@linkplain System#currentTimeMillis()} and finally
+     * the time is printed out by calling the {@linkplain #printRunningTime(long start, long end)} method
+     *
+     * @param iceState the state of the which will be used to determine how the algorithm
+     *                 is considered the ice when creating the graph
      */
     public void solve(IceState iceState) {
         long startTime = System.currentTimeMillis();
@@ -83,8 +90,10 @@ public class PuzzleSolver {
     }
 
     /**
-     * @param startTime
-     * @param endTime
+     * The elapsed time is calculated by start time and end time and converted into milliseconds to seconds
+     *
+     * @param startTime staring time of the algorithm
+     * @param endTime   ending time of the algorithm
      */
     public void printRunningTime(long startTime, long endTime) {
         System.out.println(RUNNING_TIME + ANSI_CYAN + (((float) (endTime - startTime) / 1000)) + ANSI_RESET + " seconds");
