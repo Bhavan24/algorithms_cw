@@ -71,7 +71,7 @@ public final class PuzzleConstants {
     public static final String PUZZLE_LOADED = "\nPUZZLE LOADED!\n";
     public static final String FILE_DOES_NOT_EXIST = "\nFILE DOES NOT EXIST!";
     public static final String TRY_AGAIN = "\nPLEASE TRY AGAIN!";
-    public static final String THANK_YOU = "\nTHANK YOU!";
+    public static final String THANK_YOU = "\nTHANK YOU!\n";
     public static final String FILE_IS_EMPTY = "\nPUZZLE FILE IS EMPTY!";
     public static final String CANNOT_SOLVE_PUZZLE = "\nCANNOT SOLVE PUZZLE!";
     public static final String INVALID_DATA = "\nPUZZLE FILE CONTAINS INVALID DATA!";
